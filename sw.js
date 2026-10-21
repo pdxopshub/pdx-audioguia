@@ -1,7 +1,7 @@
 /* Paradox — audioguía: caché para que funcione sin cobertura (sótano incluido).
    IMPORTANTE: sube el número de VERSION cada vez que publiques cambios,
    o los visitantes seguirán viendo la versión antigua guardada en su móvil. */
-const VERSION = "pdx-guia-v3";
+const VERSION = "pdx-guia-v4";
 
 const SHELL = [
   "./",
