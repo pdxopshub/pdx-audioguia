@@ -54,10 +54,19 @@ header{flex:0 0 auto;background:var(--bg);border-bottom:1px solid var(--line);
   display:flex;flex-direction:column;gap:9px;z-index:5}
 .top{display:flex;align-items:center;gap:12px}
 .top img{height:25px;width:auto;display:block}
-.langs{display:flex;gap:2px;border:1px solid var(--line);padding:2px;margin-left:auto}
-.langs button{padding:5px 9px;font-family:var(--f-mono);font-size:10.5px;font-weight:600;
-  letter-spacing:.1em;color:var(--muted);transition:.12s}
-.langs button[aria-pressed="true"]{background:var(--acc);color:var(--accink)}
+.fl{display:inline-block;width:21px;height:14px;flex:0 0 auto;line-height:0;
+  box-shadow:0 0 0 1px #00000033}
+.fl svg{width:100%;height:100%;display:block}
+.langbtn{margin-left:auto;display:flex;align-items:center;gap:7px;border:1px solid var(--line);
+  padding:5px 8px;font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.08em}
+.langbtn i{font-style:normal;font-size:9px;opacity:.7}
+.langmenu{position:absolute;top:46px;right:max(16px,env(safe-area-inset-right,0px));z-index:30;
+  background:var(--panel2);border:1px solid var(--line);min-width:172px;
+  box-shadow:0 14px 34px #0006}
+.langmenu button{display:flex;align-items:center;gap:10px;width:100%;padding:11px 13px;
+  font-size:13.5px;font-weight:600;border-bottom:1px solid var(--line)}
+.langmenu button:last-child{border-bottom:none}
+.langmenu button[aria-current="true"]{background:var(--acc);color:var(--accink)}
 .tabs{display:flex;gap:22px}
 .tabs button{padding:0 0 9px;font-size:13px;font-weight:700;color:var(--muted);
   border-bottom:2px solid transparent;margin-bottom:-1px}
@@ -200,6 +209,7 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
   border:1px solid #ffffff38;padding:15px 16px;font-size:15.5px;font-weight:700}
 #gate .opts button u{text-decoration:none;margin-left:auto;font-family:var(--f-mono);
   font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--acc)}
+#gate .opts .fl{width:26px;height:17px}
 #gate .opts button:hover{background:var(--acc);border-color:var(--acc);color:var(--accink)}
 #gate .opts button:hover u{color:#000}
 #gate .foot{margin-top:24px;color:#ffffff80}
@@ -250,11 +260,9 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
   <header>
     <div class="top">
       <img id="logo" alt="Paradox Museum">
-      <div class="langs" id="langs" role="group" aria-label="Idioma">
-        <button data-l="es" aria-pressed="true">ES</button>
-        <button data-l="ca" aria-pressed="false">CA</button>
-        <button data-l="en" aria-pressed="false">EN</button>
-      </div>
+      <button class="langbtn" id="langbtn" aria-haspopup="true" aria-expanded="false">
+        <span class="fl" id="langflag"></span><span id="langcode">ES</span><i>▾</i></button>
+      <div class="langmenu" id="langmenu" hidden role="menu"></div>
     </div>
     <div class="tabs" role="tablist">
       <button data-tab="route" role="tab" aria-selected="true" id="tabRoute">Recorrido</button>
@@ -287,11 +295,7 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
       <p>Aquí dentro nada es lo que parece. Esta guía te acompaña exhibición
          por exhibición y te cuenta cómo sacarles partido.</p>
       <div class="lbl pick">Elige idioma · Tria idioma · Choose language</div>
-      <div class="opts">
-        <button data-l="es">Español <u>ES</u></button>
-        <button data-l="ca">Català <u>CA</u></button>
-        <button data-l="en">English <u>EN</u></button>
-      </div>
+      <div class="opts" id="gateopts"></div>
       <div class="lbl foot">Paradox Museum Barcelona</div>
     </div>
   </section>
@@ -311,61 +315,196 @@ document.getElementById("logo").src=LOGO;
 document.getElementById("gateLogo").src=LOGO;
 
 const UI={
- es:{route:"Recorrido",rooms:"Salas",style:"Estilo",of:"de",
-     done:"Marcar como vista",undone:"✓ Vista",reset:"Reiniciar",
-     stops:"paradas",visited:"vistas",photo:"Ilustración de ejemplo",
-     next:"Siguiente exhibición",end:"Fin del recorrido",
-     lblHook:"El truco",lblHow:"Cómo hacerla bien",lblQuiz:"Reto",
-     lblIncl:"Incluye",lblFotos:"Cómo queda",lblInfo:"Qué está pasando",reveal:"Ver la respuesta",
-     pendHook:"Texto divertido pendiente. Nos lo pasáis y lo montamos aquí.",
-     pendHow:"Pendientes las indicaciones de cómo se hace.",
-     photoPend:"Foto pendiente",
-     styleTitle:"Estilo de ilustración",
-     styleIntro:"Las fotos reales se convertirán en dibujo. Elige el estilo y toda la guía cambia al instante.",
-     styleNote:"Son bocetos hechos con formas, no con vuestras fotos. En cuanto me paséis las fotos dibujo las ilustraciones de verdad en el estilo que elijáis.",
-     palette:"Paleta corporativa"},
- ca:{route:"Recorregut",rooms:"Sales",style:"Estil",of:"de",
-     done:"Marcar com a vista",undone:"✓ Vista",reset:"Reiniciar",
-     stops:"parades",visited:"vistes",photo:"Il·lustració d'exemple",
-     next:"Següent exhibició",end:"Fi del recorregut",
-     lblHook:"El truc",lblHow:"Com fer-la bé",lblQuiz:"Repte",
-     lblIncl:"Inclou",lblFotos:"Com queda",lblInfo:"Què està passant",reveal:"Veure la resposta",
-     pendHook:"Text divertit pendent. Ens el passeu i el muntem aquí.",
-     pendHow:"Pendents les indicacions de com es fa.",
-     photoPend:"Foto pendent",
-     styleTitle:"Estil d'il·lustració",
-     styleIntro:"Les fotos reals es convertiran en dibuix. Tria l'estil i tota la guia canvia a l'instant.",
-     styleNote:"Són esbossos fets amb formes, no amb les vostres fotos. Quan em passeu les fotos dibuixo les il·lustracions de debò en l'estil que trieu.",
-     palette:"Paleta corporativa"},
- en:{route:"Tour",rooms:"Rooms",style:"Style",of:"of",
-     done:"Mark as seen",undone:"✓ Seen",reset:"Reset",
-     stops:"stops",visited:"seen",photo:"Sample illustration",
-     next:"Next exhibit",end:"End of the tour",
-     lblHook:"The trick",lblHow:"How to nail it",lblQuiz:"Challenge",
-     lblIncl:"Includes",lblFotos:"How it looks",lblInfo:"What is going on",reveal:"Show the answer",
-     pendHook:"Fun copy pending. Send it over and it goes here.",
-     pendHow:"How-to steps still to come.",
-     photoPend:"Photo pending",
-     styleTitle:"Illustration style",
-     styleIntro:"Real photos will be turned into drawings. Pick a style and the whole guide switches instantly.",
-     styleNote:"These are sketches built from shapes, not from your photos. Once you send the photos I will draw the real illustrations in whichever style you pick.",
-     palette:"Brand palette"}
+ "es": {
+  "route": "Recorrido",
+  "rooms": "Salas",
+  "style": "Estilo",
+  "of": "de",
+  "done": "Marcar como vista",
+  "undone": "✓ Vista",
+  "reset": "Reiniciar",
+  "stops": "paradas",
+  "visited": "vistas",
+  "photo": "Ilustración de ejemplo",
+  "next": "Siguiente exhibición",
+  "end": "Fin del recorrido",
+  "lblHook": "El truco",
+  "lblHow": "Cómo hacerla bien",
+  "lblQuiz": "Reto",
+  "lblIncl": "Incluye",
+  "lblInfo": "Qué está pasando",
+  "lblFotos": "Cómo queda",
+  "reveal": "Ver la respuesta",
+  "pendHook": "Texto divertido pendiente.",
+  "pendHow": "Pendientes las indicaciones de cómo se hace.",
+  "photoPend": "Foto pendiente",
+  "styleTitle": "Estilo de ilustración",
+  "styleIntro": "Las fotos reales se convertirán en dibujo. Elige el estilo y toda la guía cambia al instante.",
+  "styleNote": "Son bocetos hechos con formas, no con vuestras fotos.",
+  "palette": "Paleta corporativa",
+  "lang": "Idioma"
+ },
+ "ca": {
+  "route": "Recorregut",
+  "rooms": "Sales",
+  "style": "Estil",
+  "of": "de",
+  "done": "Marcar com a vista",
+  "undone": "✓ Vista",
+  "reset": "Reiniciar",
+  "stops": "parades",
+  "visited": "vistes",
+  "photo": "Il·lustració d'exemple",
+  "next": "Següent exhibició",
+  "end": "Fi del recorregut",
+  "lblHook": "El truc",
+  "lblHow": "Com fer-la bé",
+  "lblQuiz": "Repte",
+  "lblIncl": "Inclou",
+  "lblInfo": "Què està passant",
+  "lblFotos": "Com queda",
+  "reveal": "Veure la resposta",
+  "pendHook": "Text divertit pendent.",
+  "pendHow": "Pendents les indicacions de com es fa.",
+  "photoPend": "Foto pendent",
+  "styleTitle": "Estil d'il·lustració",
+  "styleIntro": "Les fotos reals es convertiran en dibuix. Tria l'estil i tota la guia canvia a l'instant.",
+  "styleNote": "Són esbossos fets amb formes, no amb les vostres fotos.",
+  "palette": "Paleta corporativa",
+  "lang": "Idioma"
+ },
+ "en": {
+  "route": "Tour",
+  "rooms": "Rooms",
+  "style": "Style",
+  "of": "of",
+  "done": "Mark as seen",
+  "undone": "✓ Seen",
+  "reset": "Reset",
+  "stops": "stops",
+  "visited": "seen",
+  "photo": "Sample illustration",
+  "next": "Next exhibit",
+  "end": "End of the tour",
+  "lblHook": "The trick",
+  "lblHow": "How to nail it",
+  "lblQuiz": "Challenge",
+  "lblIncl": "Includes",
+  "lblInfo": "What is going on",
+  "lblFotos": "How it looks",
+  "reveal": "Show the answer",
+  "pendHook": "Fun copy pending.",
+  "pendHow": "How-to steps still to come.",
+  "photoPend": "Photo pending",
+  "styleTitle": "Illustration style",
+  "styleIntro": "Real photos will be turned into drawings. Pick a style and the whole guide switches instantly.",
+  "styleNote": "These are sketches built from shapes, not from your photos.",
+  "palette": "Brand palette",
+  "lang": "Language"
+ },
+ "fr": {
+  "route": "Parcours",
+  "rooms": "Salles",
+  "style": "Style",
+  "of": "sur",
+  "done": "Marquer comme vue",
+  "undone": "✓ Vue",
+  "reset": "Réinitialiser",
+  "stops": "étapes",
+  "visited": "vues",
+  "photo": "Illustration d'exemple",
+  "next": "Expérience suivante",
+  "end": "Fin du parcours",
+  "lblHook": "L'astuce",
+  "lblHow": "Comment bien la réussir",
+  "lblQuiz": "Défi",
+  "lblIncl": "Comprend",
+  "lblInfo": "Ce qui se passe",
+  "lblFotos": "Le rendu",
+  "reveal": "Voir la réponse",
+  "pendHook": "Texte à venir.",
+  "pendHow": "Consignes à venir.",
+  "photoPend": "Photo à venir",
+  "styleTitle": "Style d'illustration",
+  "styleIntro": "Les photos réelles seront converties en dessin. Choisissez le style et tout le guide change aussitôt.",
+  "styleNote": "Ce sont des esquisses faites de formes, pas vos photos.",
+  "palette": "Palette de la marque",
+  "lang": "Langue"
+ },
+ "it": {
+  "route": "Percorso",
+  "rooms": "Sale",
+  "style": "Stile",
+  "of": "di",
+  "done": "Segna come vista",
+  "undone": "✓ Vista",
+  "reset": "Azzera",
+  "stops": "tappe",
+  "visited": "viste",
+  "photo": "Illustrazione di esempio",
+  "next": "Prossima installazione",
+  "end": "Fine del percorso",
+  "lblHook": "Il trucco",
+  "lblHow": "Come farla bene",
+  "lblQuiz": "Sfida",
+  "lblIncl": "Comprende",
+  "lblInfo": "Che cosa sta succedendo",
+  "lblFotos": "Come viene",
+  "reveal": "Vedi la risposta",
+  "pendHook": "Testo in arrivo.",
+  "pendHow": "Istruzioni in arrivo.",
+  "photoPend": "Foto in arrivo",
+  "styleTitle": "Stile di illustrazione",
+  "styleIntro": "Le foto reali diventeranno disegni. Scegli lo stile e tutta la guida cambia all'istante.",
+  "styleNote": "Sono bozzetti fatti di forme, non le vostre foto.",
+  "palette": "Palette del marchio",
+  "lang": "Lingua"
+ },
+ "de": {
+  "route": "Rundgang",
+  "rooms": "Räume",
+  "style": "Stil",
+  "of": "von",
+  "done": "Als gesehen markieren",
+  "undone": "✓ Gesehen",
+  "reset": "Zurücksetzen",
+  "stops": "Stationen",
+  "visited": "gesehen",
+  "photo": "Beispielillustration",
+  "next": "Nächstes Exponat",
+  "end": "Ende des Rundgangs",
+  "lblHook": "Der Trick",
+  "lblHow": "So gelingt es",
+  "lblQuiz": "Rätsel",
+  "lblIncl": "Enthält",
+  "lblInfo": "Was hier passiert",
+  "lblFotos": "So sieht es aus",
+  "reveal": "Antwort anzeigen",
+  "pendHook": "Text folgt.",
+  "pendHow": "Anleitung folgt.",
+  "photoPend": "Foto folgt",
+  "styleTitle": "Illustrationsstil",
+  "styleIntro": "Die echten Fotos werden zu Zeichnungen. Stil wählen und der ganze Guide wechselt sofort.",
+  "styleNote": "Das sind Skizzen aus Formen, nicht eure Fotos.",
+  "palette": "Markenfarben",
+  "lang": "Sprache"
+ }
 };
 
 const C={blue:"#3737FF",mint:"#00FFB9",yellow:"#FFDB00",magenta:"#FB48C4",
          orange:"#FF4C2A",white:"#FFFFFF"};
 const ROOMS={
- entrada:{c:"#FFFFFF",ink:"#14141c",tc:"#FFFFFF",  n:{es:"Entrada",ca:"Entrada",en:"Entrance"}},
- tienda:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{es:"Paradox Boutique",ca:"Paradox Boutique",en:"Paradox Boutique"}},
- s3:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{es:"Sala 3 · Green Room",ca:"Sala 3 · Green Room",en:"Room 3 · Green Room"}},
- s2:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{es:"Sala 2 · Eixample",ca:"Sala 2 · Eixample",en:"Room 2 · Eixample"}},
- s4:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{es:"Sala 4 · Dodecaedro",ca:"Sala 4 · Dodecàedre",en:"Room 4 · Dodecahedron"}},
- s5:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{es:"Sala 5 · Túnel",ca:"Sala 5 · Túnel",en:"Room 5 · Tunnel"}},
- zg:{c:"#FF4C2A",ink:"#FFFFFF",tc:"#FFDB00", n:{es:"Zero Gravity",ca:"Zero Gravity",en:"Zero Gravity"}},
- s6:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{es:"Sala 6 · Planta −1",ca:"Sala 6 · Planta −1",en:"Room 6 · Lower floor"}},
- s7:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{es:"Sala 7 · Planta −1",ca:"Sala 7 · Planta −1",en:"Room 7 · Lower floor"}},
- s1:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{es:"Sala 1 · Naranja",ca:"Sala 1 · Taronja",en:"Room 1 · Orange"}},
- salida:{c:"#FF4C2A",ink:"#FFFFFF",tc:"#FFFFFF", n:{es:"Salida",ca:"Sortida",en:"Exit"}}
+ entrada:{c:"#FFFFFF",ink:"#14141c",tc:"#FFFFFF",  n:{"es": "Entrada", "ca": "Entrada", "en": "Entrance", "fr": "Entrée", "it": "Ingresso", "de": "Eingang"}},
+ tienda:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{"es": "Paradox Boutique", "ca": "Paradox Boutique", "en": "Paradox Boutique", "fr": "Paradox Boutique", "it": "Paradox Boutique", "de": "Paradox Boutique"}},
+ s3:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{"es": "Sala 3 · Green Room", "ca": "Sala 3 · Green Room", "en": "Room 3 · Green Room", "fr": "Salle 3 · Green Room", "it": "Sala 3 · Green Room", "de": "Raum 3 · Green Room"}},
+ s2:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{"es": "Sala 2 · Eixample", "ca": "Sala 2 · Eixample", "en": "Room 2 · Eixample", "fr": "Salle 2 · Eixample", "it": "Sala 2 · Eixample", "de": "Raum 2 · Eixample"}},
+ s4:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{"es": "Sala 4 · Dodecaedro", "ca": "Sala 4 · Dodecàedre", "en": "Room 4 · Dodecahedron", "fr": "Salle 4 · Dodécaèdre", "it": "Sala 4 · Dodecaedro", "de": "Raum 4 · Dodekaeder"}},
+ s5:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{"es": "Sala 5 · Túnel", "ca": "Sala 5 · Túnel", "en": "Room 5 · Tunnel", "fr": "Salle 5 · Tunnel", "it": "Sala 5 · Tunnel", "de": "Raum 5 · Tunnel"}},
+ zg:{c:"#FF4C2A",ink:"#FFFFFF",tc:"#FFDB00", n:{"es": "Zero Gravity", "ca": "Zero Gravity", "en": "Zero Gravity", "fr": "Zero Gravity", "it": "Zero Gravity", "de": "Zero Gravity"}},
+ s6:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{"es": "Sala 6 · Planta −1", "ca": "Sala 6 · Planta −1", "en": "Room 6 · Lower floor", "fr": "Salle 6 · Niveau −1", "it": "Sala 6 · Piano −1", "de": "Raum 6 · Untergeschoss"}},
+ s7:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{"es": "Sala 7 · Planta −1", "ca": "Sala 7 · Planta −1", "en": "Room 7 · Lower floor", "fr": "Salle 7 · Niveau −1", "it": "Sala 7 · Piano −1", "de": "Raum 7 · Untergeschoss"}},
+ s1:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{"es": "Sala 1 · Naranja", "ca": "Sala 1 · Taronja", "en": "Room 1 · Orange", "fr": "Salle 1 · Orange", "it": "Sala 1 · Arancione", "de": "Raum 1 · Orange"}},
+ salida:{c:"#FF4C2A",ink:"#FFFFFF",tc:"#FFFFFF", n:{"es": "Salida", "ca": "Sortida", "en": "Exit", "fr": "Sortie", "it": "Uscita", "de": "Ausgang"}}
 };
 
 /* hook = the fun line that replaces the wall text
@@ -613,6 +752,718 @@ const S=[
     ca:"Si t'ha agradat, explica-ho. I si alguna cosa no t'ha quadrat, pregunta'ns: a l'equip li encanta esbudellar qualsevol de les peces.",
     en:"If you enjoyed it, say so. And if something did not add up, ask us: the team loves giving away how any of it works."}}
 ];
+
+/* ── Carteles del museo: instrucciones y explicación (tanda A) ─ */
+const PANELES_A = {
+ "Escape": {
+  "todo": {
+   "es": "Identifica el bloque de escape. Desliza los bloques hacia los huecos para abrirle camino y sácalo por la abertura del marco.",
+   "ca": "Identifica el bloc d'escapament. Llisca els blocs cap als buits per obrir-li camí i treu-lo per l'obertura del marc.",
+   "en": "Find the escape block. Slide the blocks into the empty spaces to open a path, then slide it out through the opening in the frame.",
+   "fr": "Repérez le bloc à libérer. Faites glisser les blocs vers les espaces vides pour lui ouvrir un passage, puis sortez-le par l'ouverture du cadre.",
+   "it": "Individua il blocco da liberare. Fai scorrere i blocchi negli spazi vuoti per aprirgli un varco ed estrailo dall'apertura della cornice.",
+   "de": "Finde den Fluchtblock. Schiebe die Blöcke in die Lücken, um ihm einen Weg zu bahnen, und schiebe ihn durch die Öffnung im Rahmen hinaus."
+  },
+  "info": {
+   "es": "Sólo se permiten movimientos deslizantes: no puedes levantar las fichas ni saltar unas sobre otras, y cada bloque se mueve de uno en uno hacia un hueco adyacente.",
+   "ca": "Només es permeten moviments lliscants: no pots aixecar les fitxes ni saltar les unes sobre les altres, i cada bloc es mou d'un en un cap a un buit adjacent.",
+   "en": "Only sliding moves are allowed: you cannot lift the pieces or jump one over another, and each block moves one at a time into an adjacent gap.",
+   "fr": "Seuls les mouvements glissés sont permis : on ne soulève pas les pièces et on ne saute pas par-dessus ; chaque bloc se déplace un à un vers un espace voisin.",
+   "it": "Sono ammesse solo mosse a scorrimento: non puoi sollevare i pezzi né scavalcarli, e ogni blocco si muove uno alla volta verso uno spazio adiacente.",
+   "de": "Erlaubt sind nur Schiebezüge: Die Teile dürfen weder angehoben noch übersprungen werden, und jeder Block rückt einzeln in eine freie Nachbarlücke."
+  }
+ },
+ "Cylinder PDX": {
+  "todo": {
+   "es": "Mira el dibujo del suelo. Ahora mira su imagen reflejada en el cilindro del centro. ¿Qué ves?",
+   "ca": "Mira el dibuix del terra. Ara mira la seva imatge reflectida al cilindre del centre. Què hi veus?",
+   "en": "Look at the graphic. Now look at the image on the cylinder in the centre. What do you see?",
+   "fr": "Regardez le dessin. Regardez maintenant son image sur le cylindre au centre. Que voyez-vous ?",
+   "it": "Guarda il disegno. Ora guarda la sua immagine sul cilindro al centro. Che cosa vedi?",
+   "de": "Sieh dir die Grafik an. Schau nun auf das Bild im Zylinder in der Mitte. Was erkennst du?"
+  },
+  "info": {
+   "es": "La imagen de la superficie plana está deformada hasta que se mira reflejada en el cilindro. Es un tipo de anamorfosis: una imagen distorsionada que parece normal vista como reflejo sobre un objeto curvo.",
+   "ca": "La imatge de la superfície plana està deformada fins que es mira reflectida al cilindre. És un tipus d'anamorfosi: una imatge distorsionada que sembla normal vista com a reflex sobre un objecte corbat.",
+   "en": "The image on the flat surface is distorted until it is viewed on the cylinder in the centre. This is a type of anamorphosis: a distorted image that appears normal when seen as a reflection on a curved object.",
+   "fr": "L'image sur la surface plane est déformée jusqu'à ce qu'on la regarde sur le cylindre central. C'est une anamorphose : une image distordue qui paraît normale vue en reflet sur un objet courbe.",
+   "it": "L'immagine sulla superficie piana è deformata finché non la si guarda sul cilindro centrale. È un tipo di anamorfosi: un'immagine distorta che appare normale vista come riflesso su un oggetto curvo.",
+   "de": "Das Bild auf der flachen Fläche ist verzerrt, bis man es im Zylinder in der Mitte betrachtet. Das ist eine Anamorphose: ein verzerrtes Bild, das als Spiegelung auf einem gewölbten Objekt normal aussieht."
+  }
+ },
+ "Paradox Rings": {
+  "todo": {
+   "es": "Observa los aros. ¿Cómo describirías su movimiento?",
+   "ca": "Observa els cèrcols. Com descriuries el seu moviment?",
+   "en": "Observe the rings. How would you describe their motion?",
+   "fr": "Observez les anneaux. Comment décririez-vous leur mouvement ?",
+   "it": "Osserva gli anelli. Come descriveresti il loro movimento?",
+   "de": "Beobachte die Ringe. Wie würdest du ihre Bewegung beschreiben?"
+  },
+  "info": {
+   "es": "La placa con los tres aros gira mientras los aros giran alrededor de sus propios ejes. Durante la rotación, las elipses dan la impresión de que cada aro es un objeto independiente que orbita armoniosamente alrededor de los demás. Se parece mucho al giro de una moneda que, al caer al suelo, rota sobre su eje un rato hasta pararse.",
+   "ca": "La placa amb els tres cèrcols gira mentre els cèrcols giren al voltant dels seus propis eixos. Durant la rotació, les el·lipses donen la impressió que cada cèrcol és un objecte independent que orbita harmoniosament al voltant dels altres. S'assembla molt al gir d'una moneda que, en caure a terra, rota sobre el seu eix una estona fins que s'atura.",
+   "en": "The plate with the three rings spins around while the rings revolve around their own axes. During rotation, ellipses give the impression of each ring rotating as a free-standing object, harmoniously revolving around each other. This paradox strongly resembles the rotation of a coin that, when it falls to the ground, revolves around its axis for a while until it finally comes to a stop.",
+   "fr": "Le plateau portant les trois anneaux tourne pendant que les anneaux pivotent sur leurs propres axes. Les ellipses donnent alors l'impression que chaque anneau est un objet indépendant qui gravite harmonieusement autour des autres. Cela rappelle beaucoup une pièce de monnaie qui, en tombant, tourne sur son axe avant de s'immobiliser.",
+   "it": "Il piatto con i tre anelli ruota mentre gli anelli girano attorno ai propri assi. Durante la rotazione le ellissi danno l'impressione che ogni anello sia un oggetto indipendente che orbita armoniosamente attorno agli altri. Ricorda molto la rotazione di una moneta che, cadendo a terra, gira sul proprio asse finché non si ferma.",
+   "de": "Die Platte mit den drei Ringen dreht sich, während die Ringe um ihre eigenen Achsen rotieren. Durch die Ellipsen wirkt jeder Ring wie ein eigenständiger Körper, der harmonisch um die anderen kreist. Das Ganze erinnert stark an eine Münze, die zu Boden fällt und noch eine Weile um ihre Achse kreiselt, bis sie liegen bleibt."
+  }
+ },
+ "Moire Animation": {
+  "todo": {
+   "es": "Mueve el tirador de lado a lado. ¿Qué observas?",
+   "ca": "Mou el tirador de costat a costat. Què observes?",
+   "en": "Moving the handle side-to-side, what do you observe?",
+   "fr": "Déplacez la poignée d'un côté à l'autre. Qu'observez-vous ?",
+   "it": "Muovi la maniglia da un lato all'altro. Che cosa osservi?",
+   "de": "Bewege den Griff hin und her. Was beobachtest du?"
+  },
+  "info": {
+   "es": "La imagen está formada por dos capas transparentes de patrones opacos relacionados entre sí. El patrón de arriba son líneas rectas; el de abajo representa un objeto. Cuando mueves la capa superior, el objeto de debajo parece moverse, como si estuviera animado.",
+   "ca": "La imatge està formada per dues capes transparents de patrons opacs relacionats entre si. El patró de dalt són línies rectes; el de baix representa un objecte. Quan mous la capa superior, l'objecte de sota sembla moure's, com si estigués animat.",
+   "en": "The picture is made up of two transparent layers of correlated opaque patterns. The upper pattern consists of straight lines, while the lower depicts an object. When the upper layer moves, the object beneath it appears to move, as if animated.",
+   "fr": "L'image est composée de deux couches transparentes aux motifs opaques corrélés. Le motif supérieur est fait de lignes droites, celui du dessous représente un objet. Lorsque la couche supérieure se déplace, l'objet du dessous semble bouger, comme animé.",
+   "it": "L'immagine è formata da due strati trasparenti con motivi opachi correlati. Il motivo superiore è fatto di linee rette, quello inferiore raffigura un oggetto. Quando lo strato superiore si muove, l'oggetto sottostante sembra muoversi, come animato.",
+   "de": "Das Bild besteht aus zwei transparenten Schichten mit aufeinander abgestimmten, undurchsichtigen Mustern. Oben verlaufen gerade Linien, unten liegt ein Motiv. Bewegt sich die obere Schicht, scheint sich das Motiv darunter zu bewegen, als wäre es animiert."
+  }
+ },
+ "PDX Stick": {
+  "todo": {
+   "es": "Acércate y observa lo que ocurre. ¿Cómo puede pasar un palo recto por una abertura curva?",
+   "ca": "Apropa't i observa què passa. Com pot passar un pal recte per una obertura corba?",
+   "en": "Take a close look and observe what is going on. How can a straight stick go through a curved opening?",
+   "fr": "Approchez-vous et observez. Comment un bâton droit peut-il passer par une ouverture courbe ?",
+   "it": "Avvicinati e osserva. Come può un bastone dritto passare attraverso un'apertura curva?",
+   "de": "Schau genau hin. Wie kann ein gerader Stab durch eine gebogene Öffnung passen?"
+  },
+  "info": {
+   "es": "Esta pieza juega con tu sentido del espacio. Un palo fijado a un tablero horizontal que gira sí encaja en un agujero curvo mientras se mueve. El cerebro humano da por hecho automáticamente que el palo no va a caber.",
+   "ca": "Aquesta peça juga amb el teu sentit de l'espai. Un pal fixat a un tauler horitzontal que gira sí que encaixa en un forat corbat mentre es mou. El cervell humà dona per fet automàticament que el pal no hi cabrà.",
+   "en": "This exhibit plays with your sense of space. A stick fixed to a rotating horizontal board actually does fit through a curved hole as it moves. The human brain automatically believes that the stick will not fit through the hole.",
+   "fr": "Cette installation joue avec votre sens de l'espace. Un bâton fixé à un plateau horizontal en rotation passe bel et bien dans un trou courbe pendant qu'il tourne. Le cerveau humain suppose d'emblée que ce sera impossible.",
+   "it": "Questa installazione gioca con il tuo senso dello spazio. Un bastone fissato a un piano orizzontale rotante passa davvero attraverso un foro curvo mentre si muove. Il cervello umano dà automaticamente per scontato che non ci possa passare.",
+   "de": "Dieses Exponat spielt mit deinem Raumgefühl. Ein Stab, der auf einer rotierenden waagerechten Scheibe sitzt, passt beim Drehen tatsächlich durch eine gebogene Öffnung. Das menschliche Gehirn geht automatisch davon aus, dass das nicht gehen kann."
+  }
+ },
+ "Shadow Freeze": {
+  "todo": {
+   "es": "Entra en la sala oscura y pulsa el interruptor. Cierra la cortina para que no entre luz. Ponte delante de la pared blanca y cierra los ojos: el flash se dispara a los 10 segundos e imprime tu sombra en la pared. Haz todas las fotos que quieras antes de abrir la cortina.",
+   "ca": "Entra a la sala fosca i prem l'interruptor. Tanca la cortina perquè no hi entri llum. Posa't davant de la paret blanca i tanca els ulls: el flaix es dispara als 10 segons i imprimeix la teva ombra a la paret. Fes totes les fotos que vulguis abans d'obrir la cortina.",
+   "en": "Get in the dark room and push the switch. Close the curtains to avoid light passing through. Stand in front of the white wall and close your eyes: the flash activates after 10 seconds and prints your shadow on the wall. Take as many pictures as you need before opening the curtain.",
+   "fr": "Entrez dans la pièce sombre et appuyez sur l'interrupteur. Fermez le rideau pour empêcher la lumière d'entrer. Placez-vous devant le mur blanc et fermez les yeux : le flash se déclenche au bout de 10 secondes et imprime votre ombre sur le mur. Prenez autant de photos que vous voulez avant d'ouvrir le rideau.",
+   "it": "Entra nella stanza buia e premi l'interruttore. Chiudi la tenda per non far passare la luce. Mettiti davanti alla parete bianca e chiudi gli occhi: il flash scatta dopo 10 secondi e stampa la tua ombra sul muro. Fai tutte le foto che vuoi prima di aprire la tenda.",
+   "de": "Betritt den dunklen Raum und drücke den Schalter. Schließe den Vorhang, damit kein Licht hereinfällt. Stell dich vor die weiße Wand und schließe die Augen: Nach 10 Sekunden löst der Blitz aus und druckt deinen Schatten an die Wand. Mach so viele Fotos, wie du willst, bevor du den Vorhang öffnest."
+  }
+ },
+ "Stroop Effect": {
+  "todo": {
+   "es": "Lee lo que está escrito. Ahora intenta decir el color de cada palabra. No es tan fácil como parece.",
+   "ca": "Llegeix el que hi ha escrit. Ara intenta dir el color de cada paraula. No és tan fàcil com sembla.",
+   "en": "Read what's written. Then try to name the colour of each word. Not as easy as it seems.",
+   "fr": "Lisez ce qui est écrit. Essayez ensuite de nommer la couleur de chaque mot. Ce n'est pas si simple.",
+   "it": "Leggi quello che c'è scritto. Ora prova a dire il colore di ogni parola. Non è così facile come sembra.",
+   "de": "Lies, was dasteht. Versuche nun, die Farbe jedes Wortes zu benennen. Nicht so leicht, wie es aussieht."
+  },
+  "info": {
+   "es": "El efecto Stroop es el retraso en el tiempo de reacción entre estímulos congruentes e incongruentes. Aparece cuando hay un desajuste entre el nombre de un color y el color de la tinta con la que está impreso: por ejemplo, la palabra «rojo» escrita en tinta azul. Al pedirte que digas el color, tardas más y cometes más errores. Es simplemente tu cerebro tomándose más tiempo para procesar la información.",
+   "ca": "L'efecte Stroop és el retard en el temps de reacció entre estímuls congruents i incongruents. Apareix quan hi ha un desajustament entre el nom d'un color i el color de la tinta amb què està imprès: per exemple, la paraula «vermell» escrita en tinta blava. En demanar-te que diguis el color, trigues més i comets més errors. És simplement el teu cervell prenent-se més temps per processar la informació.",
+   "en": "The Stroop effect is the delay in reaction time between congruent and incongruent stimuli. It occurs when there is a mismatch between the name of a colour and the colour it is printed in (for example, the word 'red' printed in blue ink instead of red ink). When asked to name the colour of the word it takes longer and is more prone to errors. It's just our brain being slow and taking more time to process given information.",
+   "fr": "L'effet Stroop est le ralentissement du temps de réaction entre stimuli congruents et incongruents. Il apparaît quand le nom d'une couleur ne correspond pas à l'encre dans laquelle il est imprimé : par exemple le mot « rouge » écrit en bleu. Nommer la couleur devient plus lent et plus sujet aux erreurs. C'est simplement le cerveau qui met plus de temps à traiter l'information.",
+   "it": "L'effetto Stroop è il ritardo nel tempo di reazione tra stimoli congruenti e incongruenti. Si verifica quando il nome di un colore non corrisponde all'inchiostro con cui è stampato: per esempio la parola «rosso» scritta in blu. Nel dire il colore si impiega più tempo e si sbaglia più spesso. È semplicemente il cervello che impiega più tempo a elaborare l'informazione.",
+   "de": "Der Stroop-Effekt ist die verlängerte Reaktionszeit bei widersprüchlichen Reizen. Er tritt auf, wenn der Name einer Farbe nicht zur Druckfarbe passt – etwa das Wort „rot“ in blauer Tinte. Soll man die Farbe nennen, dauert es länger und man macht mehr Fehler. Das Gehirn braucht schlicht mehr Zeit, um die Information zu verarbeiten."
+  }
+ },
+ "Infinity Window": {
+  "todo": {
+   "es": "Asómate a la ventana. ¿Puedes ver dónde termina?",
+   "ca": "Treu el cap per la finestra. Pots veure on acaba?",
+   "en": "Have a look inside the window — can you see where it ends?",
+   "fr": "Regardez à l'intérieur de la fenêtre : voyez-vous où elle s'arrête ?",
+   "it": "Guarda dentro la finestra: riesci a vedere dove finisce?",
+   "de": "Schau in das Fenster hinein – erkennst du, wo es endet?"
+  },
+  "info": {
+   "es": "El truco es posible porque el cristal frontal es a la vez parcialmente transparente y parcialmente reflectante, mientras que el cristal del fondo es un espejo normal. Aunque la pieza sólo tiene 25 cm de profundidad, al combinar los dos tipos de cristal se consigue la sensación de infinito: la luz rebota una y otra vez y las reflexiones se repiten en una profundidad exagerada.",
+   "ca": "El truc és possible perquè el vidre frontal és alhora parcialment transparent i parcialment reflectant, mentre que el vidre del fons és un mirall normal. Encara que la peça només té 25 cm de profunditat, en combinar els dos tipus de vidre s'aconsegueix la sensació d'infinit: la llum rebota una vegada i una altra i els reflexos es repeteixen en una profunditat exagerada.",
+   "en": "This visual trick is possible because the partially transparent and partially reflective front glass allows a certain percentage of light transmission, while the inside glass is a basic mirror. Even though the exhibit is only 25 cm deep, when the two types of glass are combined into a whole, the feeling of infinity is achieved. In addition to the transmission of light, a series of reflections is repeated through exaggerated depth.",
+   "fr": "L'astuce fonctionne parce que la vitre avant est à la fois partiellement transparente et partiellement réfléchissante, tandis que la vitre du fond est un simple miroir. Bien que l'installation ne fasse que 25 cm de profondeur, la combinaison des deux verres crée la sensation d'infini : la lumière rebondit et les reflets se répètent dans une profondeur exagérée.",
+   "it": "Il trucco funziona perché il vetro frontale è insieme parzialmente trasparente e parzialmente riflettente, mentre quello di fondo è un semplice specchio. Anche se l'installazione è profonda solo 25 cm, unendo i due tipi di vetro si ottiene la sensazione di infinito: la luce rimbalza e i riflessi si ripetono in una profondità esagerata.",
+   "de": "Der Trick funktioniert, weil die vordere Scheibe teils durchlässig und teils spiegelnd ist, während die hintere Scheibe ein normaler Spiegel ist. Obwohl das Exponat nur 25 cm tief ist, entsteht durch die Kombination beider Gläser der Eindruck von Unendlichkeit: Das Licht wird immer wieder zurückgeworfen und die Spiegelungen wiederholen sich in übertriebener Tiefe."
+  }
+ },
+ "Infinity Dodecahedron": {
+  "todo": {
+   "es": "Mira dentro. ¿Puedes ver dónde termina?",
+   "ca": "Mira a dins. Pots veure on acaba?",
+   "en": "Look inside — can you see where it ends?",
+   "fr": "Regardez à l'intérieur : voyez-vous où cela s'arrête ?",
+   "it": "Guarda dentro: riesci a vedere dove finisce?",
+   "de": "Schau hinein – erkennst du, wo es endet?"
+  },
+  "info": {
+   "es": "El truco se debe al cristal, que deja pasar un porcentaje de luz siendo a la vez parcialmente transparente y parcialmente reflectante. Así se consigue la apariencia de profundidad y de reflexión infinita, dando sensación de espacio infinito dentro de una geometría limitada.",
+   "ca": "El truc es deu al vidre, que deixa passar un percentatge de llum essent alhora parcialment transparent i parcialment reflectant. Així s'aconsegueix l'aparença de profunditat i de reflexió infinita, donant sensació d'espai infinit dins d'una geometria limitada.",
+   "en": "This visual trick is possible because of the specific glass, which allows a certain percentage of light transmission as it is partially transparent and partially reflective. The appearance of depth and infinite reflection is achieved, giving the feeling of infinite space inside limited geometry.",
+   "fr": "L'astuce tient au verre employé, qui laisse passer une partie de la lumière tout en étant partiellement réfléchissant. On obtient ainsi une impression de profondeur et de reflets infinis, et donc d'espace illimité dans une géométrie pourtant limitée.",
+   "it": "Il trucco dipende dal vetro impiegato, che lascia passare una parte della luce pur essendo in parte riflettente. Si ottengono così profondità e riflessi infiniti, con la sensazione di uno spazio sconfinato dentro una geometria limitata.",
+   "de": "Möglich macht das ein spezielles Glas, das einen Teil des Lichts durchlässt und zugleich teilweise spiegelt. So entstehen Tiefe und unendliche Spiegelungen – das Gefühl von grenzenlosem Raum in einer begrenzten Geometrie."
+  }
+ },
+ "Infinity Tunnel": {
+  "todo": {
+   "es": "Mira dentro. ¿Ves el final del túnel?",
+   "ca": "Mira a dins. Veus el final del túnel?",
+   "en": "Look inside. Can you see the end of the tunnel?",
+   "fr": "Regardez à l'intérieur. Voyez-vous le bout du tunnel ?",
+   "it": "Guarda dentro. Riesci a vedere la fine del tunnel?",
+   "de": "Schau hinein. Siehst du das Ende des Tunnels?"
+  },
+  "info": {
+   "es": "Tu ojo se deja engañar hasta concluir que los dos objetos visibles son los dos extremos de un único túnel curvado que en realidad no existe. Si miras por detrás verás que son dos cajas pegadas a la pared. El cristal frontal es parcialmente transparente y parcialmente reflectante, y el del fondo es un espejo normal: al combinarlos se consigue la sensación de profundidad infinita y una serie de reflejos.",
+   "ca": "El teu ull es deixa enganyar fins a concloure que els dos objectes visibles són els dos extrems d'un únic túnel corbat que en realitat no existeix. Si mires per darrere veuràs que són dues caixes enganxades a la paret. El vidre frontal és parcialment transparent i parcialment reflectant, i el del fons és un mirall normal: en combinar-los s'aconsegueix la sensació de profunditat infinita i una sèrie de reflexos.",
+   "en": "Your eye is tricked in such a way that it concludes that these two visible objects are the two ends of one bent tunnel, that actually doesn't even exist. If you look behind the exhibit, you will see that the objects are boxes attached to the wall. This paradox is possible because the specific front glass allows a certain percentage of light transmission, since it is partially transparent and partially reflective, while the inside glass is a basic mirror. By combining these two types of glass, the feeling of infinite depth is achieved, as well as a series of reflections.",
+   "fr": "Votre œil se laisse tromper au point de conclure que les deux objets visibles sont les deux extrémités d'un tunnel courbe qui n'existe pas. Regardez derrière l'installation : ce sont deux caissons fixés au mur. La vitre avant est partiellement transparente et réfléchissante, celle du fond est un simple miroir ; leur combinaison crée une profondeur infinie et une série de reflets.",
+   "it": "Il tuo occhio viene ingannato al punto da concludere che i due oggetti visibili siano le due estremità di un unico tunnel curvo che in realtà non esiste. Guardando dietro l'installazione vedrai che sono due scatole fissate al muro. Il vetro frontale è in parte trasparente e in parte riflettente, quello di fondo è un semplice specchio: unendoli si ottengono profondità infinita e una serie di riflessi.",
+   "de": "Dein Auge wird so getäuscht, dass es die beiden sichtbaren Objekte für die zwei Enden eines gebogenen Tunnels hält, den es gar nicht gibt. Schaust du hinter das Exponat, siehst du zwei Kästen an der Wand. Die vordere Scheibe ist teils durchlässig, teils spiegelnd, die hintere ein einfacher Spiegel: zusammen erzeugen sie unendliche Tiefe und eine Reihe von Spiegelungen."
+  }
+ },
+ "Digital Form": {
+  "todo": {
+   "es": "Asómate y verás una forma que parece más grande que la propia pieza.",
+   "ca": "Treu el cap i veuràs una forma que sembla més gran que la mateixa peça.",
+   "en": "Take a look inside and you'll see a form that appears larger than the actual exhibit.",
+   "fr": "Regardez à l'intérieur : vous verrez une forme qui paraît plus grande que l'installation elle-même.",
+   "it": "Guarda dentro e vedrai una forma che sembra più grande dell'installazione stessa.",
+   "de": "Schau hinein – du siehst eine Form, die größer wirkt als das Exponat selbst."
+  },
+  "info": {
+   "es": "Es una pirámide truncada de cuatro caras formada por un monitor y espejos dispuestos de una manera concreta. El monitor del centro proyecta imágenes o patrones que se reflejan en los espejos de alrededor. Aunque sólo hay una fuente de imagen, el resultado es paradójico: el observador ve una forma que parece mayor que la propia pieza.",
+   "ca": "És una piràmide truncada de quatre cares formada per un monitor i miralls disposats d'una manera concreta. El monitor del centre projecta imatges o patrons que es reflecteixen als miralls del voltant. Encara que només hi ha una font d'imatge, el resultat és paradoxal: l'observador veu una forma que sembla més gran que la mateixa peça.",
+   "en": "This exhibit is a four-sided truncated pyramid that consists of a monitor and mirrors arranged in a certain way to create a specific effect. The monitor in the middle projects specific pictures or patterns that are reflected in the surrounding mirrors. Although there is only one picture source, the object is a paradoxical experience as a result of the mirror reflection — the observer sees a form that seems to be larger than the exhibit itself.",
+   "fr": "C'est une pyramide tronquée à quatre faces composée d'un écran et de miroirs disposés de façon précise. L'écran central projette des images ou des motifs que les miroirs renvoient. Bien qu'il n'y ait qu'une seule source d'image, le résultat est paradoxal : on voit une forme qui semble plus grande que l'installation.",
+   "it": "È una piramide tronca a quattro facce composta da un monitor e da specchi disposti in modo preciso. Il monitor centrale proietta immagini o motivi che gli specchi intorno riflettono. Pur essendoci una sola sorgente d'immagine, il risultato è paradossale: si vede una forma che sembra più grande dell'installazione.",
+   "de": "Das Exponat ist eine vierseitige Pyramide mit abgeschnittener Spitze aus einem Monitor und gezielt angeordneten Spiegeln. Der Monitor in der Mitte zeigt Bilder oder Muster, die ringsum gespiegelt werden. Obwohl es nur eine Bildquelle gibt, entsteht ein Paradox: Man sieht eine Form, die größer wirkt als das Exponat selbst."
+  }
+ },
+ "Ambiguous Shapes": {
+  "todo": {
+   "es": "Gira el objeto moviendo el tirador a izquierda o derecha. ¿Qué forma ves? ¿Qué está pasando?",
+   "ca": "Gira l'objecte movent el tirador cap a l'esquerra o cap a la dreta. Quina forma hi veus? Què passa?",
+   "en": "Rotate the object by moving the handle left or right. What shape do you see? What is happening?",
+   "fr": "Faites tourner l'objet en déplaçant la poignée à gauche ou à droite. Quelle forme voyez-vous ? Que se passe-t-il ?",
+   "it": "Ruota l'oggetto muovendo la maniglia a sinistra o a destra. Che forma vedi? Che cosa succede?",
+   "de": "Drehe das Objekt, indem du den Griff nach links oder rechts bewegst. Welche Form siehst du? Was passiert?"
+  },
+  "info": {
+   "es": "Dentro de la caja hay un solo objeto que parece distinto según desde dónde se mire. Su geometría está diseñada para que veas dos objetos completamente diferentes: uno delante de ti y otro en el reflejo. Al mover el tirador la situación cambia, y el objeto que veías reflejado aparece ahora delante.",
+   "ca": "Dins de la caixa hi ha un sol objecte que sembla diferent segons des d'on es miri. La seva geometria està dissenyada perquè vegis dos objectes completament diferents: un davant teu i un altre en el reflex. En moure el tirador la situació canvia, i l'objecte que veies reflectit apareix ara al davant.",
+   "en": "Inside the box, there is one object that looks different from two different perspectives. Geometry is shaped in such a way that you can see two completely different objects, one standing in front of you and the other in reflection. When you move the handle, the situation changes; the object you saw in reflection now appears in front of you.",
+   "fr": "Dans la boîte se trouve un seul objet qui paraît différent selon le point de vue. Sa géométrie est conçue pour qu'on voie deux objets totalement différents : l'un devant soi, l'autre dans le reflet. En bougeant la poignée, la situation s'inverse : l'objet que vous voyiez en reflet se trouve maintenant devant vous.",
+   "it": "Dentro la scatola c'è un solo oggetto che appare diverso da due punti di vista. La sua geometria è pensata perché tu veda due oggetti completamente diversi: uno davanti a te e uno nel riflesso. Muovendo la maniglia la situazione cambia e l'oggetto che vedevi riflesso ora ti appare davanti.",
+   "de": "In der Box steckt ein einziges Objekt, das aus zwei Blickwinkeln völlig verschieden aussieht. Seine Geometrie ist so gebaut, dass du zwei ganz unterschiedliche Körper siehst: einen vor dir und einen in der Spiegelung. Bewegst du den Griff, kehrt sich das um – was eben noch Spiegelbild war, steht nun vor dir."
+  }
+ },
+ "Out of the Box": {
+  "todo": {
+   "es": "Acércate y verás que no es un cuadro.",
+   "ca": "Apropa't i veuràs que no és un quadre.",
+   "en": "Have a look and you'll see it's not a picture!",
+   "fr": "Approchez-vous : vous verrez que ce n'est pas un tableau.",
+   "it": "Avvicinati e vedrai che non è un quadro.",
+   "de": "Komm näher – du wirst sehen, dass es kein Bild ist."
+  },
+  "info": {
+   "es": "A primera vista parece un cuadro colgado en la pared, pero en realidad es una caja. Las palabras de arriba y de abajo parecen escritas enteras; en realidad sólo está escrita la mitad de cada palabra y la otra mitad es un reflejo.",
+   "ca": "A primera vista sembla un quadre penjat a la paret, però en realitat és una caixa. Les paraules de dalt i de baix semblen escrites senceres; en realitat només hi ha escrita la meitat de cada paraula i l'altra meitat és un reflex.",
+   "en": "At first, the exhibit looks like a picture on the wall, but it is actually a box on the wall. The top and bottom words look like they are fully written out, but in fact only half of the word is written; the other half is a reflection.",
+   "fr": "Au premier regard, on croit voir un tableau accroché au mur, mais c'est en réalité une boîte. Les mots du haut et du bas semblent écrits en entier : seule la moitié l'est, l'autre moitié est un reflet.",
+   "it": "A prima vista sembra un quadro appeso al muro, ma in realtà è una scatola. Le parole in alto e in basso sembrano scritte per intero: in realtà ne è scritta solo metà, l'altra metà è un riflesso.",
+   "de": "Auf den ersten Blick wirkt es wie ein Bild an der Wand, tatsächlich ist es ein Kasten. Die Wörter oben und unten scheinen vollständig geschrieben – in Wahrheit ist nur die Hälfte gedruckt, die andere Hälfte ist eine Spiegelung."
+  }
+ },
+ "Infinity Room": {
+  "todo": {
+   "es": "Colócate en el centro de la sala y mira los espejos de alrededor. Busca el espejo en el que tus reflejos no se acaban nunca.",
+   "ca": "Col·loca't al centre de la sala i mira els miralls del voltant. Busca el mirall en què els teus reflexos no s'acaben mai.",
+   "en": "Stand in the middle of the room and look at the mirrors around you. Spot the mirror that has infinite reflections of you.",
+   "fr": "Placez-vous au centre de la salle et regardez les miroirs autour de vous. Repérez celui où vos reflets ne s'arrêtent jamais.",
+   "it": "Mettiti al centro della sala e guarda gli specchi intorno a te. Individua lo specchio in cui i tuoi riflessi non finiscono mai.",
+   "de": "Stell dich in die Mitte des Raums und sieh dich in den Spiegeln um. Finde den Spiegel, in dem sich deine Spiegelbilder endlos wiederholen."
+  },
+  "info": {
+   "es": "Todas las paredes de esta sala están cubiertas de espejos, lo que da la impresión de un espacio infinito gracias a sus reflejos repetidos.",
+   "ca": "Totes les parets d'aquesta sala estan cobertes de miralls, la qual cosa dona la impressió d'un espai infinit gràcies als seus reflexos repetits.",
+   "en": "All the walls in this room are covered in mirrors, giving the impression of infinite space because of its infinite reflections.",
+   "fr": "Tous les murs de cette salle sont couverts de miroirs, ce qui donne l'impression d'un espace infini grâce aux reflets répétés.",
+   "it": "Tutte le pareti di questa sala sono rivestite di specchi: i riflessi ripetuti danno l'impressione di uno spazio infinito.",
+   "de": "Alle Wände dieses Raums sind mit Spiegeln bedeckt. Die endlos wiederholten Spiegelungen erzeugen den Eindruck eines unendlichen Raums."
+  }
+ },
+ "Yes / No Paradox": {
+  "todo": {
+   "es": "Intenta leer lo que pone en la escultura desde dos puntos distintos.",
+   "ca": "Intenta llegir el que posa a l'escultura des de dos punts diferents.",
+   "en": "Try to read the writing on the sculpture from two different points.",
+   "fr": "Essayez de lire l'inscription de la sculpture depuis deux points différents.",
+   "it": "Prova a leggere la scritta sulla scultura da due punti diversi.",
+   "de": "Versuche, die Schrift auf der Skulptur von zwei verschiedenen Punkten aus zu lesen."
+  },
+  "info": {
+   "es": "Este objeto es una escultura anamórfica: cambia tu percepción según desde dónde la mires. Esta en concreto contiene dos afirmaciones opuestas. Por un lado se lee «Sí» y por el otro «No». El cuerpo de la escultura no cambia; lo único que cambia es cómo la vemos desde perspectivas distintas.",
+   "ca": "Aquest objecte és una escultura anamòrfica: canvia la teva percepció segons des d'on la miris. Aquesta en concret conté dues afirmacions oposades. Per un costat s'hi llegeix «Sí» i per l'altre «No». El cos de l'escultura no canvia; l'únic que canvia és com la veiem des de perspectives diferents.",
+   "en": "This object is called an anamorphic sculpture, meaning it changes your perception depending on where you view it from. This particular sculpture contains opposing textual statements. On one side, it reads 'Yes' and on the other it reads 'No.' The body of the sculpture does not change, only how we see it from different perspectives does.",
+   "fr": "Cet objet est une sculpture anamorphique : votre perception change selon l'endroit d'où vous la regardez. Celle-ci porte deux affirmations opposées. D'un côté on lit « Oui », de l'autre « Non ». Le corps de la sculpture ne change pas ; seule change la façon dont nous la voyons.",
+   "it": "Questo oggetto è una scultura anamorfica: la percezione cambia a seconda del punto da cui la guardi. Questa in particolare contiene due affermazioni opposte. Da un lato si legge «Sì» e dall'altro «No». Il corpo della scultura non cambia: cambia solo il modo in cui la vediamo.",
+   "de": "Dieses Objekt ist eine anamorphe Skulptur: Deine Wahrnehmung ändert sich je nach Standort. Diese hier trägt zwei gegensätzliche Aussagen. Von einer Seite liest man „Ja“, von der anderen „Nein“. Die Skulptur selbst verändert sich nicht – nur unser Blick auf sie."
+  }
+ },
+ "Silent Cords": {
+  "todo": {
+   "es": "Toca las cuerdas como si fueran las de un instrumento y observa qué pasa.",
+   "ca": "Toca les cordes com si fossin les d'un instrument i observa què passa.",
+   "en": "Play the cords as you would on a string instrument and observe what happens.",
+   "fr": "Pincez les cordes comme sur un instrument et observez ce qui se passe.",
+   "it": "Pizzica le corde come su uno strumento e osserva che cosa succede.",
+   "de": "Zupfe die Saiten wie bei einem Saiteninstrument und beobachte, was passiert."
+  },
+  "info": {
+   "es": "Esta pieza juega con la lentitud del ojo humano. Cuando las cuerdas se mueven, su superposición con las líneas blancas en movimiento del fondo crea una paradoja visual. Aunque sabes que deberías ver las cuerdas vibrando, tu cerebro crea la apariencia de una onda.",
+   "ca": "Aquesta peça juga amb la lentitud de l'ull humà. Quan les cordes es mouen, la seva superposició amb les línies blanques en moviment del fons crea una paradoxa visual. Encara que saps que hauries de veure les cordes vibrant, el teu cervell crea l'aparença d'una ona.",
+   "en": "This exhibit plays with the slowness of the human eye. Once the strings are in motion, their superposition with white moving lines in the background creates a visual paradox. Although you know that you should see flickering strings, your brain creates the appearance of a wave.",
+   "fr": "Cette installation joue avec la lenteur de l'œil humain. Lorsque les cordes vibrent, leur superposition avec les lignes blanches en mouvement du fond crée un paradoxe visuel. Vous savez que vous devriez voir des cordes qui vibrent, mais votre cerveau fabrique l'apparence d'une onde.",
+   "it": "Questa installazione gioca con la lentezza dell'occhio umano. Quando le corde vibrano, la loro sovrapposizione alle linee bianche in movimento sullo sfondo crea un paradosso visivo. Pur sapendo che dovresti vedere corde che vibrano, il cervello costruisce l'apparenza di un'onda.",
+   "de": "Dieses Exponat spielt mit der Trägheit des menschlichen Auges. Sobald die Saiten schwingen, entsteht durch ihre Überlagerung mit den weißen, bewegten Linien im Hintergrund ein visuelles Paradox. Obwohl du weißt, dass du flirrende Saiten sehen müsstest, erzeugt dein Gehirn das Bild einer Welle."
+  }
+ }
+};
+Object.entries(PANELES_A).forEach(([t, d]) => {
+  S.filter(s => s.t === t).forEach(s => {
+    s.todo = d.todo; if (d.info && !s.d) s.d = d.info;
+  });
+});
+
+/* ── Carteles del museo (tanda B) ──────────────────────────── */
+const PANELES_B = {
+ "Tilted Room": {
+  "todo": {
+   "es": "Prueba a caminar. ¿Es fácil? ¿Cuesta más de lo que parece? ¿Te mareas? Ponte recto delante del espejo. ¿Qué ves? Hazte una foto como si fuera una habitación normal.",
+   "ca": "Prova de caminar. És fàcil? Costa més del que sembla? Et marejes? Posa't recte davant del mirall. Què hi veus? Fes-te una foto com si fos una habitació normal.",
+   "en": "Try walking. Is it easy? Is it harder than it looks? Do you feel dizzy? Stand straight in front of the mirror. What do you see? Take a picture as if it were a normal room.",
+   "fr": "Essayez de marcher. Est-ce facile ? Plus difficile qu'il n'y paraît ? Avez-vous le vertige ? Tenez-vous droit devant le miroir. Que voyez-vous ? Prenez une photo comme s'il s'agissait d'une pièce normale.",
+   "it": "Prova a camminare. È facile? È più difficile di quanto sembri? Ti gira la testa? Mettiti dritto davanti allo specchio. Che cosa vedi? Fatti una foto come se fosse una stanza normale.",
+   "de": "Versuche zu gehen. Fällt es leicht? Schwerer als gedacht? Wird dir schwindelig? Stell dich gerade vor den Spiegel. Was siehst du? Mach ein Foto, als wäre es ein ganz normaler Raum."
+  },
+  "info": {
+   "es": "La sala inclinada es exactamente lo que su nombre indica: una habitación ladeada. Lo interesante es cómo interpreta el cerebro ese espacio. Con los ojos cerrados puedes mantenerte de pie, incluso sobre el suelo inclinado. Pero en cuanto los abres, tu cerebro recibe señales visuales equivocadas: deberías percibir que sólo tu cuerpo está inclinado, no la habitación entera. Como la información visual es incorrecta, el cerebro se confunde.",
+   "ca": "La sala inclinada és exactament el que el seu nom indica: una habitació esbiaixada. L'interessant és com interpreta el cervell aquest espai. Amb els ulls tancats pots mantenir-te dret, fins i tot sobre el terra inclinat. Però així que els obres, el teu cervell rep senyals visuals equivocats: hauries de percebre que només el teu cos està inclinat, no l'habitació sencera. Com que la informació visual és incorrecta, el cervell es confon.",
+   "en": "The tilted room is exactly what its name suggests — a room that is tilted. What makes this room unique is how the brain actually interprets the space. When your eyes are closed, you can stand straight on the ground and even on the tilted floor. Yet when you do this with your eyes open, your brain receives the wrong visual signals. Normally, you should believe that only your body is leaning, and not the whole room. Because incorrect visual information is received, the brain is confused.",
+   "fr": "La salle inclinée est exactement ce que son nom indique : une pièce penchée. Ce qui la rend unique, c'est la façon dont le cerveau interprète cet espace. Les yeux fermés, vous tenez debout sans difficulté, même sur le sol incliné. Mais dès que vous les ouvrez, votre cerveau reçoit de mauvais signaux visuels : vous devriez percevoir que seul votre corps penche, pas toute la pièce. L'information visuelle étant erronée, le cerveau se trouble.",
+   "it": "La stanza inclinata è esattamente ciò che il nome suggerisce: una stanza storta. La cosa interessante è come il cervello interpreta quello spazio. A occhi chiusi riesci a stare dritto, anche sul pavimento inclinato. Ma appena li apri il cervello riceve segnali visivi sbagliati: dovresti percepire che è solo il tuo corpo a pendere, non l'intera stanza. Poiché l'informazione visiva è errata, il cervello si confonde.",
+   "de": "Der schiefe Raum ist genau das, was der Name sagt: ein gekippter Raum. Das Besondere ist, wie das Gehirn diesen Raum deutet. Mit geschlossenen Augen kannst du aufrecht stehen, selbst auf dem schrägen Boden. Öffnest du sie, bekommt dein Gehirn falsche visuelle Signale: Eigentlich müsstest du merken, dass nur dein Körper schief steht, nicht der ganze Raum. Weil die visuelle Information falsch ist, gerät das Gehirn durcheinander."
+  }
+ },
+ "PDX Turn": {
+  "todo": {
+   "es": "Gira el tablero y observa qué pasa. ¿Las imágenes se transforman?",
+   "ca": "Gira el tauler i observa què passa. Les imatges es transformen?",
+   "en": "Spin the board and observe what happens. Do the images appear to morph and transform?",
+   "fr": "Faites tourner le panneau et observez. Les images semblent-elles se métamorphoser ?",
+   "it": "Fai girare il pannello e osserva. Le immagini sembrano trasformarsi?",
+   "de": "Dreh die Scheibe und beobachte. Scheinen sich die Bilder zu verwandeln?"
+  },
+  "info": {
+   "es": "La pieza tiene un tablero con un patrón especial que produce efectos distintos según cómo lo muevas. Y aquí está lo bueno: las imágenes del tablero son ambiguas, así que al girarlas 180 o 90 grados se convierten en algo completamente diferente.",
+   "ca": "La peça té un tauler amb un patró especial que produeix efectes diferents segons com el moguis. I aquí ve el bo: les imatges del tauler són ambigües, així que en girar-les 180 o 90 graus es converteixen en una cosa completament diferent.",
+   "en": "This exhibit features a board with a special pattern that creates different effects depending on how you move it. But here's the real kicker: the images on the board are ambiguous, meaning that if rotated 180 or 90 degrees, they become something totally different!",
+   "fr": "L'installation comporte un panneau au motif particulier qui produit des effets différents selon la façon dont on le fait tourner. Et voici le plus beau : les images sont ambiguës, si bien qu'une rotation de 180 ou 90 degrés les transforme en tout autre chose.",
+   "it": "L'installazione ha un pannello con un motivo speciale che produce effetti diversi a seconda di come lo muovi. E qui sta il bello: le immagini sono ambigue, così ruotandole di 180 o 90 gradi diventano tutt'altro.",
+   "de": "Das Exponat hat eine Scheibe mit einem besonderen Muster, das je nach Bewegung andere Effekte erzeugt. Und jetzt der Clou: Die Bilder sind mehrdeutig – um 180 oder 90 Grad gedreht, werden sie zu etwas völlig anderem."
+  }
+ },
+ "PDX Ball": {
+  "todo": {
+   "es": "Balancea la bola hacia el espejo y observa su reflejo.",
+   "ca": "Gronxa la bola cap al mirall i observa el seu reflex.",
+   "en": "Swing the ball toward the mirror and observe its reflection.",
+   "fr": "Balancez la boule vers le miroir et observez son reflet.",
+   "it": "Fai oscillare la palla verso lo specchio e osserva il suo riflesso.",
+   "de": "Lass die Kugel zum Spiegel schwingen und beobachte ihr Spiegelbild."
+  },
+  "info": {
+   "es": "En el punto donde la bola cuelga quieta, los rayos de luz reflejados por el espejo nunca llegan a cruzarse, así que no puede formarse una imagen enfocada. Cuando la bola se acerca al espejo, bola y reflejo son idénticos; al alejarse, el reflejo se ve más grande. Pero cuando la bola pasa de su punto de suspensión, el reflejo se invierte de golpe: al llegar al espejo cóncavo, los rayos se cruzan en el punto focal y crean una imagen del revés.",
+   "ca": "Al punt on la bola penja quieta, els raigs de llum reflectits pel mirall mai arriben a creuar-se, així que no pot formar-se una imatge enfocada. Quan la bola s'acosta al mirall, bola i reflex són idèntics; en allunyar-se, el reflex es veu més gran. Però quan la bola passa del seu punt de suspensió, el reflex s'inverteix de cop: en arribar al mirall còncau, els raigs es creuen al punt focal i creen una imatge del revés.",
+   "en": "At the point where the ball naturally hangs still, the light rays reflected from the mirror never actually meet, making it impossible to create a focused image. As the ball moves closer to the mirror, the ball and its reflection are identical. As it moves away from the mirror, it looks larger. However, when the ball moves forward past its hanging point, it suddenly becomes inverted. This effect happens because as the light rays hit the concave mirror, they cross over each other at the focal point, creating an upside-down image.",
+   "fr": "Au point où la boule pend immobile, les rayons réfléchis par le miroir ne se croisent jamais : aucune image nette ne peut se former. Quand la boule s'approche du miroir, elle et son reflet sont identiques ; en s'éloignant, le reflet paraît plus grand. Mais dès qu'elle dépasse son point de suspension, le reflet s'inverse brusquement : sur le miroir concave, les rayons se croisent au foyer et produisent une image à l'envers.",
+   "it": "Nel punto in cui la palla pende ferma, i raggi riflessi dallo specchio non si incrociano mai e non può formarsi un'immagine a fuoco. Avvicinandosi allo specchio, palla e riflesso sono identici; allontanandosi, il riflesso appare più grande. Ma appena la palla supera il punto di sospensione, il riflesso si capovolge: sullo specchio concavo i raggi si incrociano nel fuoco e creano un'immagine rovesciata.",
+   "de": "An dem Punkt, an dem die Kugel ruhig hängt, treffen sich die vom Spiegel zurückgeworfenen Lichtstrahlen nie – ein scharfes Bild kann nicht entstehen. Nähert sich die Kugel dem Spiegel, sind Kugel und Spiegelbild gleich; entfernt sie sich, wirkt das Bild größer. Schwingt sie aber über ihren Ruhepunkt hinaus, kippt das Bild plötzlich um: Am Hohlspiegel kreuzen sich die Strahlen im Brennpunkt und erzeugen ein kopfstehendes Bild."
+  }
+ },
+ "Clone Table": {
+  "todo": {
+   "es": "Siéntate a la mesa y observa a la gente que te rodea. ¿Notas algo raro? Mira a quienes están sentados contigo: verás que estás en muy buena compañía. Consejo: para que salga perfecta, quien haga la foto debe ponerse en el punto marcado y «esconderse» detrás de ti.",
+   "ca": "Seu a la taula i observa la gent del teu voltant. Notes alguna cosa estranya? Mira qui seu amb tu: veuràs que estàs en molt bona companyia. Consell: perquè surti perfecta, qui faci la foto s'ha de posar al punt marcat i «amagar-se» darrere teu.",
+   "en": "Sit down at the table and observe the crowd around you. Do you notice anything strange? Now look at the people sitting with you — you'll see that you're in good company! Tip: for the best result, the person taking the photo should stand on the photo point and 'hide' behind you.",
+   "fr": "Asseyez-vous à la table et observez les gens autour de vous. Rien d'étrange ? Regardez ceux qui sont assis avec vous : vous êtes en excellente compagnie. Astuce : pour un résultat parfait, la personne qui photographie doit se placer sur le point marqué et se « cacher » derrière vous.",
+   "it": "Siediti al tavolo e osserva le persone intorno a te. Noti qualcosa di strano? Guarda chi è seduto con te: sei in ottima compagnia. Consiglio: per una foto perfetta, chi scatta deve mettersi sul punto segnato e «nascondersi» dietro di te.",
+   "de": "Setz dich an den Tisch und sieh dir die Runde an. Fällt dir etwas auf? Schau, wer da mit dir sitzt – du bist in bester Gesellschaft. Tipp: Für das beste Ergebnis stellt sich die fotografierende Person auf den markierten Punkt und „versteckt“ sich hinter dir."
+  },
+  "info": {
+   "es": "Lo que parece una mesa redonda con una lámpara flotando encima es en realidad un segmento de mesa con espejos colocados estratégicamente, que crean el efecto paradójico de una mesa completa.",
+   "ca": "El que sembla una taula rodona amb un llum flotant a sobre és en realitat un segment de taula amb miralls col·locats estratègicament, que creen l'efecte paradoxal d'una taula sencera.",
+   "en": "What looks like a round table with a lamp floating above is simply a segment of a table with strategically positioned mirrors creating the paradoxical effect of a round table.",
+   "fr": "Ce qui ressemble à une table ronde surmontée d'une lampe flottante n'est qu'un segment de table entouré de miroirs bien placés, qui créent l'effet paradoxal d'une table entière.",
+   "it": "Quello che sembra un tavolo rotondo con una lampada sospesa è solo un segmento di tavolo con specchi posizionati ad arte, che creano l'effetto paradossale di un tavolo intero.",
+   "de": "Was wie ein runder Tisch mit schwebender Lampe aussieht, ist nur ein Tischsegment mit geschickt platzierten Spiegeln, die den paradoxen Eindruck eines ganzen Tisches erzeugen."
+  }
+ },
+ "Symmetry Room": {
+  "todo": {
+   "es": "Ve hasta la pared del fondo y usa la escalerilla escondida para que parezca que levitas. También puedes aparentar que tienes dos cabezas si alguien te hace la foto desde el punto marcado.",
+   "ca": "Ves fins a la paret del fons i fes servir l'escaleta amagada perquè sembli que levites. També pots aparentar que tens dos caps si algú et fa la foto des del punt marcat.",
+   "en": "Go to the back wall and use the hidden ladder to create the appearance that levitation is possible. You can also look like you have two heads when someone takes a photo from the photo point.",
+   "fr": "Allez au mur du fond et servez-vous de l'échelle cachée pour donner l'impression de léviter. Vous pouvez aussi sembler avoir deux têtes si quelqu'un vous photographie depuis le point marqué.",
+   "it": "Vai alla parete di fondo e usa la scaletta nascosta per sembrare che levitino. Puoi anche sembrare di avere due teste se qualcuno ti fotografa dal punto segnato.",
+   "de": "Geh zur Rückwand und nutze die versteckte Leiter, damit es aussieht, als würdest du schweben. Du kannst auch zwei Köpfe zu haben scheinen, wenn jemand vom Fotopunkt aus auslöst."
+  },
+  "info": {
+   "es": "Esta sala juega con un reflejo sencillo. Al principio ves una habitación vacía, pero al entrar te das cuenta de que una de las paredes no está realmente ahí: es un reflejo en el espejo. Al fondo, un pequeño hueco te permite esconderte en parte. Las partes del cuerpo que no quedan ocultas se reflejan, y eso te da todo tipo de posibilidades para jugar mientras te mueves.",
+   "ca": "Aquesta sala juga amb un reflex senzill. Al principi veus una habitació buida, però en entrar t'adones que una de les parets no hi és realment: és un reflex al mirall. Al fons, un petit buit et permet amagar-te en part. Les parts del cos que no queden ocultes es reflecteixen, i això et dona tota mena de possibilitats per jugar mentre et mous.",
+   "en": "This room plays with a simple reflection. At first, you see an empty room, but stepping inside, you realize that one of the walls is actually not there. It's just a reflection in the mirror. At the end of the room, a small niche gives you the opportunity to partially hide. The parts of the body that are not hidden are reflected, giving you all kinds of possibilities to play with as you move around.",
+   "fr": "Cette salle joue avec un simple reflet. Au début, vous voyez une pièce vide, mais en entrant vous comprenez que l'un des murs n'existe pas : c'est un reflet. Au fond, une petite niche permet de se cacher en partie. Les parties du corps non cachées se reflètent, ce qui ouvre toutes sortes de possibilités de jeu.",
+   "it": "Questa sala gioca con un semplice riflesso. All'inizio vedi una stanza vuota, ma entrando capisci che una delle pareti non c'è: è un riflesso nello specchio. In fondo, una piccola nicchia ti permette di nasconderti in parte. Le parti del corpo che restano scoperte si riflettono, e questo apre ogni genere di possibilità mentre ti muovi.",
+   "de": "Dieser Raum spielt mit einer einfachen Spiegelung. Zuerst siehst du ein leeres Zimmer, doch beim Hineingehen merkst du: Eine der Wände ist gar nicht da, sie ist nur ein Spiegelbild. Am Ende des Raums kannst du dich in einer kleinen Nische teilweise verstecken. Die nicht verborgenen Körperteile werden gespiegelt – das eröffnet allerlei Spielraum, während du dich bewegst."
+  }
+ },
+ "Moving Picture": {
+  "todo": {
+   "es": "Muévete mirando directamente al cuadro y fíjate en cómo cambia la imagen. Según te desplazas, parece girar y seguirte.",
+   "ca": "Mou-te mirant directament al quadre i fixa't en com canvia la imatge. A mesura que et desplaces, sembla girar i seguir-te.",
+   "en": "Move around while looking directly at the picture and notice how the image changes. As you move, it seems to swivel and follow you!",
+   "fr": "Déplacez-vous en regardant le tableau et observez comment l'image change. Elle semble pivoter et vous suivre.",
+   "it": "Muoviti guardando il quadro e nota come cambia l'immagine. Mentre ti sposti, sembra ruotare e seguirti.",
+   "de": "Geh hin und her, während du direkt auf das Bild schaust, und beobachte, wie es sich verändert. Es scheint sich zu drehen und dir zu folgen."
+  },
+  "info": {
+   "es": "El cuadro parece plano, pero en realidad es tridimensional. Sólo de cerca se aprecian sus dimensiones. La pieza juega con tu percepción y crea un efecto paradójico.",
+   "ca": "El quadre sembla pla, però en realitat és tridimensional. Només de prop s'aprecien les seves dimensions. La peça juga amb la teva percepció i crea un efecte paradoxal.",
+   "en": "The picture looks flat, but it is in fact three-dimensional. Only at close range can you see the dimensions. This exhibit is playing with your sense of perception and creating a paradox effect.",
+   "fr": "Le tableau paraît plat, mais il est en réalité tridimensionnel. Ce n'est que de près qu'on perçoit ses volumes. L'installation joue avec votre perception et crée un effet paradoxal.",
+   "it": "Il quadro sembra piatto, ma in realtà è tridimensionale. Solo da vicino se ne colgono le dimensioni. L'installazione gioca con la percezione e crea un effetto paradossale.",
+   "de": "Das Bild wirkt flach, ist in Wahrheit aber dreidimensional. Erst aus der Nähe erkennt man die Tiefe. Das Exponat spielt mit deiner Wahrnehmung und erzeugt einen paradoxen Effekt."
+  }
+ },
+ "Impossible Triangle": {
+  "todo": {
+   "es": "Mira la pieza desde el punto marcado en el suelo. ¿Te puedes creer lo que ves?",
+   "ca": "Mira la peça des del punt marcat a terra. Et pots creure el que veus?",
+   "en": "View the exhibit from a marked point on the floor. Can you believe your eyes?",
+   "fr": "Regardez l'installation depuis le point marqué au sol. En croyez-vous vos yeux ?",
+   "it": "Guarda l'installazione dal punto segnato sul pavimento. Credi ai tuoi occhi?",
+   "de": "Betrachte das Exponat vom markierten Punkt am Boden. Traust du deinen Augen?"
+  },
+  "info": {
+   "es": "Es una figura imposible: representa un objeto que no puede existir, porque para existir tendrían que violarse las reglas de la geometría elemental. En la vida real esta pieza es un objeto espacial tridimensional que, desde un punto de vista concreto, parece un auténtico triángulo imposible.",
+   "ca": "És una figura impossible: representa un objecte que no pot existir, perquè per existir s'haurien de violar les regles de la geometria elemental. A la vida real aquesta peça és un objecte espacial tridimensional que, des d'un punt de vista concret, sembla un autèntic triangle impossible.",
+   "en": "This is an impossible figure — it depicts an object that cannot exist. It is impossible for it to exist since the rules of simple geometry would have to be violated. In real life, this exhibit is a three-dimensional spatial object that, from a certain point of view, looks like a real impossible triangle.",
+   "fr": "C'est une figure impossible : elle représente un objet qui ne peut pas exister, car il faudrait enfreindre les règles de la géométrie élémentaire. Dans la réalité, cette pièce est un objet tridimensionnel qui, vu d'un point précis, ressemble à un véritable triangle impossible.",
+   "it": "È una figura impossibile: rappresenta un oggetto che non può esistere, perché dovrebbe violare le regole della geometria elementare. Nella realtà questa installazione è un oggetto tridimensionale che, da un punto di vista preciso, sembra un vero triangolo impossibile.",
+   "de": "Das ist eine unmögliche Figur – sie zeigt einen Körper, den es nicht geben kann, weil dafür die Regeln der einfachen Geometrie verletzt werden müssten. In Wirklichkeit ist dieses Exponat ein dreidimensionales Objekt, das aus einem bestimmten Blickwinkel wie ein echtes unmögliches Dreieck aussieht."
+  }
+ },
+ "Face Blender": {
+  "todo": {
+   "es": "Coge a alguien y poneos a los dos lados del espejo. Alinead vuestras caras para ver qué aspecto tendrías con la nariz de la otra persona. ¡Y ahora la foto! Consejo: sale mejor si os la hace un tercero desde un lado.",
+   "ca": "Agafa algú i poseu-vos als dos costats del mirall. Alineeu les vostres cares per veure quin aspecte tindries amb el nas de l'altra persona. I ara la foto! Consell: surt millor si us la fa un tercer des d'un costat.",
+   "en": "Take a friend and stand on opposite sides of the mirror. Align your faces to see how you'd look with your friend's nose. Now, take a picture! Tip: it's easier to have someone else take the photo of you from an angle.",
+   "fr": "Placez-vous de part et d'autre du miroir avec quelqu'un. Alignez vos visages pour voir de quoi vous auriez l'air avec le nez de l'autre. Et maintenant, la photo ! Astuce : c'est plus facile si une troisième personne la prend de côté.",
+   "it": "Mettetevi ai due lati dello specchio con qualcuno. Allineate i volti per vedere come sareste con il naso dell'altro. E ora la foto! Consiglio: viene meglio se la scatta una terza persona di lato.",
+   "de": "Stellt euch zu zweit auf beide Seiten des Spiegels. Richtet eure Gesichter so aus, dass ihr seht, wie ihr mit der Nase des anderen ausseht. Und jetzt das Foto! Tipp: Besser, wenn jemand Drittes seitlich auslöst."
+  },
+  "info": {
+   "es": "El mezclador de caras está hecho de espejos en forma de tiras colocadas a intervalos iguales. En los espejos ves tu reflejo, pero por los huecos ves lo que hay detrás de la pieza. Te vas a quedar de piedra con lo que pasa cuando otra persona se pone al otro lado.",
+   "ca": "El barrejador de cares està fet de miralls en forma de tires col·locades a intervals iguals. Als miralls hi veus el teu reflex, però pels buits hi veus el que hi ha darrere de la peça. Et quedaràs de pedra amb el que passa quan una altra persona es posa a l'altre costat.",
+   "en": "The face blender consists of strip-shaped mirrors arranged in equal intervals. In the mirrors, you see your reflection, but through the gaps you see whatever is behind the exhibit. You'll be amazed at what happens when another person stands on the other side!",
+   "fr": "Le mélangeur de visages est fait de miroirs en bandes disposées à intervalles réguliers. Dans les miroirs, vous voyez votre reflet ; entre les bandes, vous voyez ce qui se trouve derrière. L'effet est saisissant quand quelqu'un se place de l'autre côté.",
+   "it": "Il miscelatore di volti è fatto di specchi a strisce disposte a intervalli uguali. Negli specchi vedi il tuo riflesso, ma attraverso le fessure vedi ciò che sta dietro. L'effetto è sorprendente quando qualcuno si mette dall'altra parte.",
+   "de": "Der Face Blender besteht aus streifenförmigen Spiegeln in gleichmäßigen Abständen. In den Spiegeln siehst du dein eigenes Bild, durch die Lücken dagegen, was hinter dem Exponat liegt. Was passiert, wenn jemand auf der anderen Seite steht, wird dich umhauen."
+  }
+ },
+ "Ames Room": {
+  "todo": {
+   "es": "La primera persona se coloca en la esquina izquierda de la sala y la segunda en la derecha. Mirad la pantalla de dentro y fijaos en la diferencia. La tercera persona hace las fotos desde el punto de foto que hay fuera. ¿Esta sala parece normal vista por la ventana?",
+   "ca": "La primera persona es col·loca a la cantonada esquerra de la sala i la segona a la dreta. Mireu la pantalla de dins i fixeu-vos en la diferència. La tercera persona fa les fotos des del punt de foto que hi ha fora. Aquesta sala sembla normal vista per la finestra?",
+   "en": "Person one stands in the left corner of the room, and person two stands on the right. Look at the screen inside the room and notice the difference. Person three takes photos through the window from the photo spot outside the room. Does this room look normal through the window?",
+   "fr": "La première personne se place dans le coin gauche de la salle, la deuxième à droite. Regardez l'écran à l'intérieur et notez la différence. La troisième photographie par la fenêtre depuis le point prévu à l'extérieur. Cette pièce a-t-elle l'air normale vue par la fenêtre ?",
+   "it": "La prima persona si mette nell'angolo sinistro della stanza, la seconda a destra. Guardate lo schermo all'interno e notate la differenza. La terza scatta le foto dalla finestra, dal punto segnato all'esterno. Questa stanza sembra normale vista dalla finestra?",
+   "de": "Person eins stellt sich in die linke Ecke des Raums, Person zwei nach rechts. Schaut auf den Bildschirm im Raum und achtet auf den Unterschied. Person drei fotografiert vom Fotopunkt außerhalb durch das Fenster. Wirkt dieser Raum durch das Fenster normal?"
+  },
+  "info": {
+   "es": "Al entrar se ve que una de las esquinas del fondo está mucho más lejos que la otra, y que suelo y techo están inclinados. Desde el punto marcado la sala parece cúbica, y los objetos de dentro parecen hacerse más grandes o más pequeños a medida que se mueven por el espacio.",
+   "ca": "En entrar es veu que una de les cantonades del fons és molt més lluny que l'altra, i que terra i sostre estan inclinats. Des del punt marcat la sala sembla cúbica, i els objectes de dins semblen fer-se més grans o més petits a mesura que es mouen per l'espai.",
+   "en": "When you enter, you can see that one back corner is farther away than the other and that the floor and ceiling are sloped. The room appears to be cubic when viewed from the marked spot, and objects inside seem to be bigger and smaller than they are as they move through the space.",
+   "fr": "En entrant, on voit qu'un des coins du fond est bien plus éloigné que l'autre et que sol et plafond sont inclinés. Depuis le point marqué, la pièce paraît cubique, et les objets semblent grandir ou rapetisser en se déplaçant.",
+   "it": "Entrando si vede che uno degli angoli di fondo è molto più lontano dell'altro e che pavimento e soffitto sono inclinati. Dal punto segnato la stanza sembra cubica, e gli oggetti all'interno sembrano ingrandirsi o rimpicciolirsi mentre si spostano.",
+   "de": "Beim Betreten sieht man, dass eine der hinteren Ecken viel weiter entfernt ist als die andere und dass Boden und Decke geneigt sind. Vom markierten Punkt aus wirkt der Raum würfelförmig, und Dinge darin scheinen größer oder kleiner zu werden, während sie sich bewegen."
+  }
+ },
+ "Infinity Well": {
+  "todo": {
+   "es": "Mira dentro del pozo. ¿Qué profundidad tiene? ¿Te atreves a ponerte encima?",
+   "ca": "Mira dins del pou. Quina profunditat té? T'atreveixes a posar-t'hi a sobre?",
+   "en": "Look inside the well. How deep is it? Do you dare stand on it?",
+   "fr": "Regardez dans le puits. Quelle profondeur fait-il ? Osez-vous marcher dessus ?",
+   "it": "Guarda dentro il pozzo. Quanto è profondo? Hai il coraggio di salirci sopra?",
+   "de": "Schau in den Brunnen. Wie tief ist er? Traust du dich, darauf zu stehen?"
+  },
+  "info": {
+   "es": "Ponerte sobre el pozo puede resultar muy incómodo por la sensación de profundidad. Sin embargo, el pozo sólo tiene 40 cm de hondo. La combinación de dos superficies de cristal planas distintas crea la ilusión de profundidad: el cristal exterior, parcialmente transparente y parcialmente reflectante, deja pasar sólo una parte de la luz, mientras que el interior es un espejo. Esas dos láminas producen el efecto paradójico de profundidad infinita.",
+   "ca": "Posar-te sobre el pou pot resultar molt incòmode per la sensació de profunditat. Tanmateix, el pou només té 40 cm de fondària. La combinació de dues superfícies de vidre planes diferents crea la il·lusió de profunditat: el vidre exterior, parcialment transparent i parcialment reflectant, deixa passar només una part de la llum, mentre que l'interior és un mirall. Aquestes dues làmines produeixen l'efecte paradoxal de profunditat infinita.",
+   "en": "Standing on the well can make you feel very uncomfortable because of the feeling of depth. However, the well is only 16 inches (40 cm) deep. A combination of two different planar glass surfaces creates the illusion of depth. The partly transparent and partly reflective outer glass allows only a certain amount of light to pass, while the inside glass is a mirror. These two glass sheets create the paradoxical effect of infinite depth.",
+   "fr": "Se tenir sur le puits peut être très déstabilisant à cause de la sensation de profondeur. Pourtant, il ne fait que 40 cm. La combinaison de deux surfaces de verre planes crée cette illusion : le verre extérieur, partiellement transparent et réfléchissant, ne laisse passer qu'une partie de la lumière, tandis que le verre intérieur est un miroir. Ces deux plaques produisent l'effet paradoxal d'une profondeur infinie.",
+   "it": "Stare sul pozzo può essere molto scomodo per la sensazione di profondità. Eppure il pozzo è profondo solo 40 cm. La combinazione di due superfici di vetro piane crea l'illusione: il vetro esterno, in parte trasparente e in parte riflettente, lascia passare solo una parte della luce, mentre quello interno è uno specchio. Queste due lastre producono l'effetto paradossale di profondità infinita.",
+   "de": "Auf dem Brunnen zu stehen kann wegen des Tiefengefühls sehr unangenehm sein. Dabei ist er nur 40 cm tief. Die Illusion entsteht durch zwei verschiedene ebene Glasflächen: Das äußere Glas ist teils durchlässig, teils spiegelnd und lässt nur einen Teil des Lichts hindurch, das innere ist ein Spiegel. Zusammen erzeugen sie den paradoxen Eindruck unendlicher Tiefe."
+  }
+ },
+ "Mirror": {
+  "todo": {
+   "es": "Mira el espejo que tienes delante. Prueba a girarlo y observa qué pasa.",
+   "ca": "Mira el mirall que tens davant. Prova de girar-lo i observa què passa.",
+   "en": "Look at the mirror in front of you. Try to turn the mirror around and see what happens.",
+   "fr": "Regardez le miroir devant vous. Essayez de le faire tourner et observez.",
+   "it": "Guarda lo specchio davanti a te. Prova a girarlo e osserva che cosa succede.",
+   "de": "Sieh in den Spiegel vor dir. Versuche, ihn zu drehen, und beobachte, was passiert."
+  },
+  "info": {
+   "es": "Este es, en realidad, un espejo normal y corriente. Gíralo y verás que no cambia nada.",
+   "ca": "Aquest és, en realitat, un mirall normal i corrent. Gira'l i veuràs que no canvia res.",
+   "en": "This is actually a normal mirror. Spin it, and you'll see that nothing changes.",
+   "fr": "C'est en réalité un miroir tout à fait ordinaire. Faites-le tourner : rien ne change.",
+   "it": "Questo è in realtà uno specchio del tutto normale. Giralo e vedrai che non cambia nulla.",
+   "de": "Das ist in Wahrheit ein ganz normaler Spiegel. Dreh ihn – es ändert sich nichts."
+  }
+ },
+ "True Mirror": {
+  "todo": {
+   "es": "Mira el espejo que tienes delante y levanta la mano derecha. ¿Notas algo raro? Prueba a girar el espejo y observa qué pasa.",
+   "ca": "Mira el mirall que tens davant i aixeca la mà dreta. Notes alguna cosa estranya? Prova de girar el mirall i observa què passa.",
+   "en": "Look at the mirror in front of you and raise your right hand. Notice something weird? Try spinning the mirror and see what happens.",
+   "fr": "Regardez le miroir devant vous et levez la main droite. Rien d'étrange ? Essayez de faire tourner le miroir et observez.",
+   "it": "Guarda lo specchio davanti a te e alza la mano destra. Noti qualcosa di strano? Prova a girare lo specchio e osserva.",
+   "de": "Sieh in den Spiegel und hebe die rechte Hand. Fällt dir etwas auf? Dreh den Spiegel und beobachte, was passiert."
+  },
+  "info": {
+   "es": "Un espejo verdadero (o espejo no inversor) muestra a su sujeto desde el punto de vista del propio espejo, sin ninguna inversión. A diferencia de un espejo normal, si levantas la mano derecha la verás en el lado opuesto del reflejo. Se consigue uniendo dos espejos en ángulo de 90 grados.",
+   "ca": "Un mirall veritable (o mirall no inversor) mostra el seu subjecte des del punt de vista del mateix mirall, sense cap inversió. A diferència d'un mirall normal, si aixeques la mà dreta la veuràs al costat oposat del reflex. S'aconsegueix unint dos miralls en angle de 90 graus.",
+   "en": "A true mirror (or non-reversing mirror) presents its subject from the mirror's point of view without any reversals. Unlike a regular mirror, if you hold up your right hand, you will see it on the opposite side of the reflection. This is achieved by joining two mirrors at a 90-degree angle.",
+   "fr": "Un vrai miroir (ou miroir non inverseur) montre son sujet du point de vue du miroir, sans aucune inversion. Contrairement à un miroir ordinaire, si vous levez la main droite, vous la verrez du côté opposé. On l'obtient en joignant deux miroirs à 90 degrés.",
+   "it": "Uno specchio vero (o specchio non invertente) mostra il soggetto dal punto di vista dello specchio, senza inversioni. A differenza di uno specchio normale, se alzi la mano destra la vedrai dal lato opposto del riflesso. Si ottiene unendo due specchi a 90 gradi.",
+   "de": "Ein echter Spiegel (nicht umkehrender Spiegel) zeigt sein Gegenüber aus Sicht des Spiegels, ganz ohne Seitenverkehrung. Anders als im normalen Spiegel siehst du die erhobene rechte Hand auf der gegenüberliegenden Seite. Möglich macht das die Verbindung zweier Spiegel im 90-Grad-Winkel."
+  }
+ },
+ "Upside Down Mirror": {
+  "todo": {
+   "es": "Mira el espejo que tienes delante. ¿Notas algo raro? Prueba a girarlo y observa qué pasa.",
+   "ca": "Mira el mirall que tens davant. Notes alguna cosa estranya? Prova de girar-lo i observa què passa.",
+   "en": "Look at the mirror in front of you — do you notice something weird? Try to turn the mirror around and see what happens.",
+   "fr": "Regardez le miroir devant vous : rien d'étrange ? Essayez de le faire tourner et observez.",
+   "it": "Guarda lo specchio davanti a te: noti qualcosa di strano? Prova a girarlo e osserva.",
+   "de": "Sieh in den Spiegel – fällt dir etwas auf? Dreh ihn und beobachte, was passiert."
+  },
+  "info": {
+   "es": "Hay tres espejos distintos colocados en ángulos de 90 grados, y eso hace que el reflejo se dé la vuelta aunque gires el espejo.",
+   "ca": "Hi ha tres miralls diferents col·locats en angles de 90 graus, i això fa que el reflex es giri de cap per avall encara que giris el mirall.",
+   "en": "Three different mirrors are placed at 90-degree angles, which causes the reflection to flip upside down even when you turn it.",
+   "fr": "Trois miroirs différents sont disposés à 90 degrés, ce qui retourne le reflet à l'envers même lorsque vous faites pivoter le miroir.",
+   "it": "Tre specchi diversi sono disposti ad angoli di 90 gradi, e questo capovolge il riflesso anche quando giri lo specchio.",
+   "de": "Drei Spiegel sind im 90-Grad-Winkel angeordnet – dadurch steht das Spiegelbild auf dem Kopf, selbst wenn du den Spiegel drehst."
+  }
+ },
+ "Camouflage Wall": {
+  "todo": {
+   "es": "Ponte el abrigo y fíjate en lo que pasa.",
+   "ca": "Posa't l'abric i fixa't en el que passa.",
+   "en": "Put the coat on, and then notice what happens.",
+   "fr": "Enfilez le manteau et observez ce qui se passe.",
+   "it": "Indossa il cappotto e osserva che cosa succede.",
+   "de": "Zieh den Mantel an und schau, was passiert."
+  },
+  "info": {
+   "es": "La pieza funciona con un abrigo estampado con el mismo patrón que la pared de detrás. Quien se lo pone y se coloca delante de la pared ve cómo algunas partes de su cuerpo desaparecen, creando el efecto paradójico de la invisibilidad.",
+   "ca": "La peça funciona amb un abric estampat amb el mateix patró que la paret del darrere. Qui se'l posa i es col·loca davant de la paret veu com algunes parts del seu cos desapareixen, creant l'efecte paradoxal de la invisibilitat.",
+   "en": "This exhibit works by utilizing a coat with the same pattern as the wall behind it. The observer puts on the coat and stands in front of the wall; then certain parts of their body appear to disappear, creating the paradoxical effect of invisibility.",
+   "fr": "L'installation repose sur un manteau imprimé du même motif que le mur derrière. En l'enfilant et en se plaçant devant le mur, certaines parties du corps semblent disparaître, créant l'effet paradoxal de l'invisibilité.",
+   "it": "L'installazione sfrutta un cappotto con lo stesso motivo della parete alle spalle. Chi lo indossa e si mette davanti al muro vede sparire alcune parti del proprio corpo, con il paradossale effetto dell'invisibilità.",
+   "de": "Das Exponat nutzt einen Mantel mit demselben Muster wie die Wand dahinter. Wer ihn anzieht und sich davorstellt, sieht einzelne Körperteile verschwinden – der paradoxe Effekt der Unsichtbarkeit."
+  }
+ },
+ "Colored Shadow Room": {
+  "todo": {
+   "es": "Asómate: ¿de qué color es la pared? Ahora mira al lado contrario y verás tres focos. ¿De qué colores son? Entra en la sala, ponte delante del foco mirando a la pared de proyección. ¿Y ahora qué ves?",
+   "ca": "Treu el cap: de quin color és la paret? Ara mira al costat contrari i veuràs tres focus. De quins colors són? Entra a la sala, posa't davant del focus mirant a la paret de projecció. I ara què hi veus?",
+   "en": "Take a look inside — what colour is the wall? Now look on the opposite side and you'll see three spotlights. What colours are they? Enter the room and stand in front of the spotlight, facing the projection wall, and what do you see now?",
+   "fr": "Jetez un œil : de quelle couleur est le mur ? Regardez maintenant du côté opposé, vous verrez trois projecteurs. De quelles couleurs sont-ils ? Entrez, placez-vous devant le projecteur face au mur de projection : que voyez-vous ?",
+   "it": "Dai un'occhiata: di che colore è la parete? Ora guarda dal lato opposto e vedrai tre fari. Di che colore sono? Entra, mettiti davanti al faro rivolto verso la parete di proiezione: che cosa vedi adesso?",
+   "de": "Schau hinein: Welche Farbe hat die Wand? Blick nun zur anderen Seite – dort stehen drei Scheinwerfer. Welche Farben haben sie? Geh hinein, stell dich vor den Scheinwerfer mit Blick zur Projektionswand. Was siehst du jetzt?"
+  },
+  "info": {
+   "es": "La luz se compone de tres colores: rojo, verde y azul. Si tres focos de esos colores enfocan el mismo punto con la misma intensidad, los haces se combinan en un único haz blanco. Pero si bloqueas uno de los colores, los otros dos forman una sombra de un color secundario mezclado.",
+   "ca": "La llum es compon de tres colors: vermell, verd i blau. Si tres focus d'aquests colors enfoquen el mateix punt amb la mateixa intensitat, els feixos es combinen en un únic feix blanc. Però si bloqueges un dels colors, els altres dos formen una ombra d'un color secundari barrejat.",
+   "en": "Light consists of three colours: red, green, and blue. If three spotlights of these colours focus on the same point with the same intensity, the beam will come together into one white beam. But if you block one of the colours, the other two form a shadow in a mixed secondary colour.",
+   "fr": "La lumière se compose de trois couleurs : rouge, vert et bleu. Si trois projecteurs de ces couleurs éclairent le même point avec la même intensité, les faisceaux se combinent en un faisceau blanc. Mais si vous bloquez l'une des couleurs, les deux autres forment une ombre d'une couleur secondaire mélangée.",
+   "it": "La luce è composta da tre colori: rosso, verde e blu. Se tre fari di questi colori illuminano lo stesso punto con la stessa intensità, i fasci si uniscono in un unico fascio bianco. Ma se blocchi uno dei colori, gli altri due formano un'ombra di un colore secondario misto.",
+   "de": "Licht besteht aus drei Farben: Rot, Grün und Blau. Richten drei Scheinwerfer dieser Farben mit gleicher Stärke auf denselben Punkt, ergeben die Strahlen zusammen weißes Licht. Blockierst du eine Farbe, bilden die beiden anderen einen Schatten in einer gemischten Sekundärfarbe."
+  }
+ },
+ "PDX Sofa": {
+  "todo": {
+   "es": "¿Ves los huecos del sofá? La primera persona mete las piernas por el agujero de la izquierda. La segunda mete la cabeza y el torso en el de la derecha. Y la tercera hace las fotos más locas.",
+   "ca": "Veus els buits del sofà? La primera persona fica les cames pel forat de l'esquerra. La segona fica el cap i el tors al de la dreta. I la tercera fa les fotos més boges.",
+   "en": "See the holes in the sofa? Person one should put their legs through the hole to the left. Person two should put their head and upper torso in the hole to the right. Person three then takes the craziest photos.",
+   "fr": "Vous voyez les trous du canapé ? La première personne passe ses jambes par le trou de gauche. La deuxième passe sa tête et son buste par celui de droite. La troisième prend les photos les plus folles.",
+   "it": "Vedi i fori del divano? La prima persona infila le gambe nel foro di sinistra. La seconda infila testa e busto in quello di destra. La terza scatta le foto più assurde.",
+   "de": "Siehst du die Öffnungen im Sofa? Person eins steckt die Beine durch die linke Öffnung, Person zwei Kopf und Oberkörper durch die rechte. Person drei macht die verrücktesten Fotos."
+  },
+  "info": {
+   "es": "Un gesto tan simple como esconder parte del cuerpo en los huecos diseñados de un sofá puede llevarte a un mundo paradójico en el que pareces un fallo de la matriz. La parte de abajo está sentada a la derecha, mientras el torso y la cabeza parecen estar sentados a un metro. En realidad son dos personas escondiendo partes de su cuerpo en el sofá, dando la impresión de que una se ha hecho pedazos.",
+   "ca": "Un gest tan simple com amagar part del cos als buits dissenyats d'un sofà pot portar-te a un món paradoxal en què sembles una fallada de la matriu. La part de baix està asseguda a la dreta, mentre el tors i el cap semblen estar asseguts a un metre. En realitat són dues persones amagant parts del seu cos al sofà, donant la impressió que una s'ha fet trossos.",
+   "en": "A simple action such as hiding part of your body in the specially designed holes of a sofa can lead to a paradoxical world where you look like a glitch in the matrix. The lower part of you is sitting on the right, whereas your torso and head appear to be sitting a meter away. In reality, two people are hiding parts of their bodies in the sofa, giving the impression that one person has gone to pieces!",
+   "fr": "Un geste aussi simple que cacher une partie de son corps dans les ouvertures d'un canapé suffit à créer un monde paradoxal où l'on ressemble à un bug de la matrice. Le bas du corps est assis à droite, tandis que le torse et la tête semblent assis un mètre plus loin. En réalité, deux personnes cachent des parties de leur corps dans le canapé, donnant l'impression que quelqu'un est tombé en morceaux.",
+   "it": "Un gesto semplice come nascondere parte del corpo nei fori di un divano può portarti in un mondo paradossale in cui sembri un errore della matrice. La parte inferiore è seduta a destra, mentre busto e testa sembrano seduti un metro più in là. In realtà sono due persone che nascondono parti del corpo nel divano, dando l'impressione che una sia andata in pezzi.",
+   "de": "Eine so einfache Handlung wie das Verstecken von Körperteilen in den eigens gestalteten Öffnungen eines Sofas führt in eine paradoxe Welt, in der man wie ein Fehler in der Matrix aussieht. Der Unterkörper sitzt rechts, Oberkörper und Kopf scheinen einen Meter weiter zu sitzen. In Wirklichkeit verstecken zwei Personen Teile ihres Körpers im Sofa – es wirkt, als wäre jemand in Stücke zerfallen."
+  }
+ },
+ "PDX Table": {
+  "todo": {
+   "es": "Ve a la parte de atrás de la pieza y mete la cabeza por el agujero de la mesa. ¡Hazte una foto y disfruta!",
+   "ca": "Ves a la part del darrere de la peça i fica el cap pel forat de la taula. Fes-te una foto i gaudeix!",
+   "en": "Go to the back of the exhibit and put your head through the hole in the table. Take a picture and enjoy!",
+   "fr": "Allez derrière l'installation et passez la tête par le trou de la table. Prenez une photo et amusez-vous !",
+   "it": "Vai dietro l'installazione e infila la testa nel foro del tavolo. Fatti una foto e divertiti!",
+   "de": "Geh hinter das Exponat und steck den Kopf durch das Loch im Tisch. Foto machen und genießen!"
+  },
+  "info": {
+   "es": "La mesa parece de lo más corriente, pero tiene espejos colocados de manera que el espacio entre las patas parece vacío. Gracias a esa colocación estratégica, el cuerpo de la persona que está dentro queda completamente oculto. La cabeza parece estar «servida en un plato» sobre una mesa de cocina cualquiera.",
+   "ca": "La taula sembla de lo més corrent, però té miralls col·locats de manera que l'espai entre les potes sembla buit. Gràcies a aquesta col·locació estratègica, el cos de la persona que hi ha a dins queda completament ocult. El cap sembla estar «servit en un plat» sobre una taula de cuina qualsevol.",
+   "en": "The table looks ordinary enough, but it has mirrors positioned in a way to make the space between the legs look empty. Because of the strategic placement of mirrors, the person's body, inside the exhibit, is completely hidden from view. The head of the person looks as if it is being 'served on a plate' at a regular kitchen table.",
+   "fr": "La table paraît tout à fait ordinaire, mais des miroirs sont placés de manière à faire paraître vide l'espace entre les pieds. Grâce à cette disposition, le corps de la personne à l'intérieur est totalement invisible. Sa tête semble « servie sur un plateau » sur une table de cuisine banale.",
+   "it": "Il tavolo sembra del tutto normale, ma ha specchi disposti in modo da far apparire vuoto lo spazio tra le gambe. Grazie a questa disposizione, il corpo della persona all'interno resta completamente nascosto. La testa sembra «servita su un piatto» su un comune tavolo da cucina.",
+   "de": "Der Tisch wirkt ganz gewöhnlich, doch Spiegel sind so angebracht, dass der Raum zwischen den Beinen leer erscheint. Durch diese geschickte Anordnung bleibt der Körper der Person im Inneren völlig verborgen. Der Kopf sieht aus, als würde er auf einem ganz normalen Küchentisch „auf dem Teller serviert“."
+  }
+ },
+ "PDX Box": {
+  "todo": {
+   "es": "Mira dentro de la caja mágica desde los dos lados. ¿Notas alguna diferencia en su aspecto? ¿Has oído hablar del gato de Schrödinger?",
+   "ca": "Mira dins de la caixa màgica des dels dos costats. Notes alguna diferència en el seu aspecte? Has sentit a parlar del gat de Schrödinger?",
+   "en": "Look into the magic box from both sides. Notice any differences in its appearance? Have you ever heard of Schrödinger's cat?",
+   "fr": "Regardez dans la boîte magique des deux côtés. Remarquez-vous une différence ? Avez-vous déjà entendu parler du chat de Schrödinger ?",
+   "it": "Guarda dentro la scatola magica da entrambi i lati. Noti differenze? Hai mai sentito parlare del gatto di Schrödinger?",
+   "de": "Schau von beiden Seiten in die Zauberkiste. Fällt dir ein Unterschied auf? Hast du schon vom Schrödingers Kater gehört?"
+  },
+  "info": {
+   "es": "La paradoja se vive a través del gato de Schrödinger, que parece estar vivo y muerto a la vez según el lado desde el que mires la caja. Esto es posible gracias al uso inteligente de espejos colocados en diagonal, que crean el efecto paradójico de múltiples perspectivas: dos objetos distintos ocupando exactamente el mismo espacio.",
+   "ca": "La paradoxa es viu a través del gat de Schrödinger, que sembla estar viu i mort alhora segons el costat des del qual miris la caixa. Això és possible gràcies a l'ús intel·ligent de miralls col·locats en diagonal, que creen l'efecte paradoxal de múltiples perspectives: dos objectes diferents ocupant exactament el mateix espai.",
+   "en": "The paradox is experienced through the observation of Schrödinger's cat, which appears to be both alive and dead depending on which side of the box you observe it from. This paradox is made possible by the clever use of diagonally positioned mirrors that creates a paradoxical effect of multiple perspectives, showing two different objects occupying the exact same space.",
+   "fr": "Le paradoxe s'éprouve à travers le chat de Schrödinger, qui semble à la fois vivant et mort selon le côté d'où on l'observe. Cela tient à des miroirs placés en diagonale, qui créent l'effet paradoxal de perspectives multiples : deux objets différents occupant exactement le même espace.",
+   "it": "Il paradosso si vive attraverso il gatto di Schrödinger, che sembra vivo e morto insieme a seconda del lato da cui guardi la scatola. È possibile grazie all'uso sapiente di specchi disposti in diagonale, che creano l'effetto paradossale di prospettive multiple: due oggetti diversi che occupano esattamente lo stesso spazio.",
+   "de": "Das Paradox erlebt man an Schrödingers Kater, der je nach Betrachtungsseite zugleich lebendig und tot wirkt. Möglich wird das durch geschickt diagonal angeordnete Spiegel, die den paradoxen Effekt mehrerer Perspektiven erzeugen: zwei verschiedene Objekte am exakt selben Ort."
+  }
+ },
+ "Beuchet Chair": {
+  "todo": {
+   "es": "Para que la paradoja funcione hacen falta tres personas y una cámara. La primera se pone en el punto de foto con la silla dentro del encuadre. La segunda se sienta o se pone de pie sobre la silla. La tercera se coloca en la posición marcada entre ambas. Cuando todo el mundo esté en su sitio: pose y foto.",
+   "ca": "Perquè la paradoxa funcioni calen tres persones i una càmera. La primera es posa al punt de foto amb la cadira dins l'enquadrament. La segona s'asseu o es posa dreta sobre la cadira. La tercera es col·loca a la posició marcada entre totes dues. Quan tothom sigui al seu lloc: pose i foto.",
+   "en": "For this paradox to work, you will need three people and a camera. Person number one should stand on the photo spot with the chair inside the frame, person number two should sit or stand on the chair, and person number three must stand in the marked position between both people. Once everyone is in place, strike a pose and snap a picture!",
+   "fr": "Pour que le paradoxe fonctionne, il faut trois personnes et un appareil photo. La première se place sur le point photo avec la chaise dans le cadre, la deuxième s'assoit ou se tient sur la chaise, et la troisième se place à l'endroit marqué entre les deux. Une fois tout le monde en place : pose et photo !",
+   "it": "Perché il paradosso funzioni servono tre persone e una fotocamera. La prima si mette sul punto foto con la sedia nell'inquadratura, la seconda si siede o sale sulla sedia, la terza si posiziona nel punto segnato tra le due. Quando tutti sono a posto: posa e scatto!",
+   "de": "Damit das Paradox funktioniert, braucht ihr drei Personen und eine Kamera. Person eins stellt sich auf den Fotopunkt, sodass der Stuhl im Bild ist, Person zwei setzt oder stellt sich auf den Stuhl, Person drei nimmt die markierte Position zwischen beiden ein. Wenn alle stehen: posieren und auslösen!"
+  },
+  "info": {
+   "es": "La persona número dos parece mucho más pequeña que la número tres. Los objetos sueltos del espacio parecen desperdigados, pero desde ciertos ángulos crean la ilusión de una silla. La persona número dos parece mucho más pequeña por el contexto de los objetos y por cómo están colocados. Ahora que sabes lo que pasa, prueba a sentarte en la silla y a jugar con las leyes de la percepción y las proporciones.",
+   "ca": "La persona número dos sembla molt més petita que la número tres. Els objectes solts de l'espai semblen escampats, però des de certs angles creen la il·lusió d'una cadira. La persona número dos sembla molt més petita pel context dels objectes i per com estan col·locats. Ara que saps què passa, prova de seure a la cadira i de jugar amb les lleis de la percepció i les proporcions.",
+   "en": "Person number two looks much smaller than person number three. The free-standing objects in the space look like they're scattered, but from specific angles, they create the illusion of a chair. Visitor number two looks so much smaller because of the context of the objects and how they are positioned. Now that you know what's going on, try to sit on the chair and play around with the laws of perception and size ratio!",
+   "fr": "La personne numéro deux paraît beaucoup plus petite que la numéro trois. Les objets posés dans l'espace semblent éparpillés, mais sous certains angles ils forment l'illusion d'une chaise. La personne numéro deux paraît si petite à cause du contexte des objets et de leur disposition. Maintenant que vous savez, asseyez-vous sur la chaise et jouez avec les lois de la perception et des proportions !",
+   "it": "La persona numero due sembra molto più piccola della numero tre. Gli oggetti liberi nello spazio sembrano sparsi, ma da certe angolazioni creano l'illusione di una sedia. La persona numero due sembra così piccola per via del contesto degli oggetti e di come sono disposti. Ora che sai come funziona, prova a sederti sulla sedia e a giocare con le leggi della percezione e delle proporzioni!",
+   "de": "Person zwei wirkt viel kleiner als Person drei. Die frei stehenden Objekte im Raum sehen verstreut aus, erzeugen aus bestimmten Winkeln aber die Illusion eines Stuhls. Person zwei wirkt nur deshalb so klein, weil der Zusammenhang der Objekte und ihre Anordnung es so erscheinen lassen. Jetzt, wo du es weißt: Setz dich auf den Stuhl und spiel mit den Gesetzen der Wahrnehmung und den Größenverhältnissen!"
+  }
+ },
+ "Zoetrope": {
+  "todo": {
+   "es": "Observa el objeto en movimiento. ¿Qué ves?",
+   "ca": "Observa l'objecte en moviment. Què hi veus?",
+   "en": "Observe the moving object — what do you see?",
+   "fr": "Observez l'objet en mouvement. Que voyez-vous ?",
+   "it": "Osserva l'oggetto in movimento. Che cosa vedi?",
+   "de": "Beobachte das bewegte Objekt – was siehst du?"
+  },
+  "info": {
+   "es": "Ves la forma geométrica del centro de la pieza cambiando, y parece viva: da la sensación de que sus partes se mueven. La pieza cobra vida porque la forma gira sobre sus ejes mientras unas luces LED parpadean a intervalos concretos. La combinación de luz y giro engaña al cerebro para que vea algo que en realidad no está ocurriendo.",
+   "ca": "Veus la forma geomètrica del centre de la peça canviant, i sembla viva: dona la sensació que les seves parts es mouen. La peça cobra vida perquè la forma gira sobre els seus eixos mentre uns llums LED parpellegen a intervals concrets. La combinació de llum i gir enganya el cervell perquè vegi una cosa que en realitat no està passant.",
+   "en": "You see the geometric shape in the middle of the exhibit that is shifting and it seems alive — it looks like its parts are moving! The exhibit becomes animated due to the geometric shape spinning around its axes and LED lights flashing at certain intervals. The combination of light and spinning motion tricks the brain into seeing something that is not really happening.",
+   "fr": "Vous voyez la forme géométrique au centre qui se transforme et semble vivante : on dirait que ses parties bougent. L'animation vient de la forme qui tourne sur ses axes pendant que des LED clignotent à intervalles précis. La combinaison de la lumière et de la rotation trompe le cerveau, qui voit quelque chose qui n'a pas lieu.",
+   "it": "Vedi la forma geometrica al centro che cambia e sembra viva: pare che le sue parti si muovano. L'animazione nasce dalla forma che ruota sui propri assi mentre luci LED lampeggiano a intervalli precisi. La combinazione di luce e rotazione inganna il cervello, che vede qualcosa che in realtà non accade.",
+   "de": "Du siehst die geometrische Form in der Mitte, die sich verändert und lebendig wirkt – als bewegten sich ihre Teile. Die Animation entsteht, weil sich die Form um ihre Achsen dreht, während LEDs in bestimmten Abständen blitzen. Licht und Drehung zusammen täuschen dem Gehirn etwas vor, das gar nicht stattfindet."
+  }
+ },
+ "Infinity Park": {
+  "todo": {
+   "es": "Mira dentro. ¿Puedes ver el final?",
+   "ca": "Mira a dins. Pots veure el final?",
+   "en": "Look inside — can you see the end?",
+   "fr": "Regardez à l'intérieur : voyez-vous le bout ?",
+   "it": "Guarda dentro: riesci a vedere la fine?",
+   "de": "Schau hinein – siehst du das Ende?"
+  },
+  "info": {
+   "es": "El truco es posible gracias a un cristal concreto que deja pasar un porcentaje de luz siendo a la vez parcialmente transparente y parcialmente reflectante. Al poner ese cristal en todas las caras del parque se consigue la sensación de profundidad infinita, y con ella la impresión de un espacio sin límites dentro de una geometría limitada.",
+   "ca": "El truc és possible gràcies a un vidre concret que deixa passar un percentatge de llum essent alhora parcialment transparent i parcialment reflectant. En posar aquest vidre a totes les cares del parc s'aconsegueix la sensació de profunditat infinita, i amb ella la impressió d'un espai sense límits dins d'una geometria limitada.",
+   "en": "This visual trick is possible because of a specific glass that allows a certain percentage of light transmission while being partially transparent and partially reflective. By putting this glass on all sides of the park, the feeling of infinite depth is achieved. This gives the impression of infinite space inside limited geometry.",
+   "fr": "L'astuce repose sur un verre particulier qui laisse passer une partie de la lumière tout en étant partiellement réfléchissant. En plaçant ce verre sur toutes les faces du parc, on obtient une profondeur infinie, et donc l'impression d'un espace sans limite dans une géométrie pourtant finie.",
+   "it": "Il trucco è possibile grazie a un vetro particolare che lascia passare una parte della luce pur essendo in parte riflettente. Mettendo questo vetro su tutti i lati del parco si ottiene la sensazione di profondità infinita e l'impressione di uno spazio sconfinato dentro una geometria limitata.",
+   "de": "Möglich macht das ein besonderes Glas, das einen Teil des Lichts durchlässt und zugleich teilweise spiegelt. Weil dieses Glas an allen Seiten des Parks sitzt, entsteht unendliche Tiefe – und damit der Eindruck eines grenzenlosen Raums in einer begrenzten Geometrie."
+  }
+ },
+ "Kaleidoscope": {
+  "todo": {
+   "es": "Usando las marcas del suelo, dos personas se colocan una enfrente de la otra, a lados opuestos del caleidoscopio. Id turnándoos para hacer fotos increíbles. Para que salgan mejor, activad el flash. También se puede observar entre una sola persona si coloca la cámara de modo que se forme un patrón interesante, o si hay un fondo en movimiento o un objeto fijo en uno de los extremos.",
+   "ca": "Fent servir les marques del terra, dues persones es col·loquen l'una davant de l'altra, a costats oposats del calidoscopi. Aneu fent torns per fer fotos increïbles. Perquè surtin millor, activeu el flaix. També es pot observar amb una sola persona si col·loca la càmera de manera que es formi un patró interessant, o si hi ha un fons en moviment o un objecte fix en un dels extrems.",
+   "en": "Using the marked areas on the floor, two people stand opposite each other, on opposite sides of the kaleidoscope. Now take turns taking some amazing photos! For best results, activate your flash. The exhibit can also be observed by one person if their camera is positioned in a way so that an interesting pattern occurs. Alternatively, if there is a moving background or a fixed object on one end of the exhibit, it can be observed in the same way as another person would be.",
+   "fr": "En utilisant les repères au sol, deux personnes se placent face à face, de part et d'autre du kaléidoscope. Prenez tour à tour des photos étonnantes ! Pour un meilleur résultat, activez le flash. Une seule personne peut aussi l'observer en plaçant sa caméra de façon à obtenir un motif intéressant, ou grâce à un fond en mouvement ou un objet fixe à l'une des extrémités.",
+   "it": "Usando i segni sul pavimento, due persone si mettono una di fronte all'altra, ai lati opposti del caleidoscopio. Fate a turno delle foto incredibili! Per un risultato migliore, attivate il flash. Si può osservare anche da soli posizionando la fotocamera in modo che si formi un motivo interessante, oppure con uno sfondo in movimento o un oggetto fisso a un'estremità.",
+   "de": "Nutzt die Markierungen am Boden: Zwei Personen stellen sich einander gegenüber an die beiden Enden des Kaleidoskops. Macht abwechselnd großartige Fotos! Für das beste Ergebnis den Blitz einschalten. Auch allein lässt sich das Exponat beobachten, wenn die Kamera so steht, dass ein interessantes Muster entsteht – oder mit einem bewegten Hintergrund oder festen Objekt an einem Ende."
+  },
+  "info": {
+   "es": "Un caleidoscopio es un instrumento óptico formado por tres o más espejos iguales dispuestos en forma de prisma, que ofrece una experiencia visual de reflejos múltiples. Cuando miras por un extremo, la luz que entra por el otro crea un patrón lleno de color gracias a los reflejos repetidos en los espejos. La experiencia se aprecia mejor cuando una persona mira por un extremo y otra por el contrario: así pueden observar reflejos mutuos y repetidos dentro de la pieza.",
+   "ca": "Un calidoscopi és un instrument òptic format per tres o més miralls iguals disposats en forma de prisma, que ofereix una experiència visual de reflexos múltiples. Quan mires per un extrem, la llum que entra per l'altre crea un patró ple de color gràcies als reflexos repetits als miralls. L'experiència s'aprecia millor quan una persona mira per un extrem i una altra pel contrari: així poden observar reflexos mutus i repetits dins de la peça.",
+   "en": "A kaleidoscope is an optical instrument that consists of three or more equal mirrors set in the shape of a prism, which offers a visual experience of multiple reflections. As the viewer looks through one end, light entering the other end creates a colourful pattern due to the repeated reflections in the mirrors. The experience is best perceived when one person is looking through one end of the exhibit and the other person is looking through the other end. This way, they can observe mutual and repeated reflections inside the exhibit.",
+   "fr": "Un kaléidoscope est un instrument optique composé d'au moins trois miroirs identiques disposés en prisme, qui offre une expérience de reflets multiples. Quand on regarde par une extrémité, la lumière entrant par l'autre crée un motif coloré grâce aux reflets répétés. L'expérience est la meilleure lorsqu'une personne regarde par chaque extrémité : elles observent alors des reflets mutuels et répétés.",
+   "it": "Un caleidoscopio è uno strumento ottico formato da tre o più specchi uguali disposti a prisma, che offre un'esperienza visiva di riflessi multipli. Guardando da un'estremità, la luce che entra dall'altra crea un motivo colorato grazie ai riflessi ripetuti negli specchi. L'esperienza è migliore quando una persona guarda da un'estremità e un'altra dall'estremità opposta: così osservano riflessi reciproci e ripetuti.",
+   "de": "Ein Kaleidoskop ist ein optisches Instrument aus drei oder mehr gleichen Spiegeln in Prismenform, das vielfache Spiegelungen erlebbar macht. Blickt man durch das eine Ende, erzeugt das am anderen Ende einfallende Licht durch die wiederholten Spiegelungen ein farbiges Muster. Am schönsten ist es, wenn je eine Person an beiden Enden schaut: So sehen sie einander in vielfacher Spiegelung."
+  }
+ },
+ "Anamorphic Paradox": {
+  "todo": {
+   "es": "Observa la escultura desde dos puntos distintos del espacio.",
+   "ca": "Observa l'escultura des de dos punts diferents de l'espai.",
+   "en": "Observe the sculpture from two different points in space.",
+   "fr": "Observez la sculpture depuis deux points différents de l'espace.",
+   "it": "Osserva la scultura da due punti diversi dello spazio.",
+   "de": "Betrachte die Skulptur von zwei verschiedenen Punkten im Raum."
+  },
+  "info": {
+   "es": "A este tipo de objeto se le llama escultura anamórfica, porque su percepción cambia según la posición de quien mira. Esta en concreto muestra el logo de Paradox en dos variaciones distintas. El cuerpo de la escultura no cambia; sólo cambia cómo la vemos desde perspectivas diferentes.",
+   "ca": "A aquest tipus d'objecte se l'anomena escultura anamòrfica, perquè la seva percepció canvia segons la posició de qui mira. Aquesta en concret mostra el logo de Paradox en dues variacions diferents. El cos de l'escultura no canvia; només canvia com la veiem des de perspectives diferents.",
+   "en": "This type of object is called an anamorphic sculpture because its perception changes depending on the position of the viewer. This particular one shows the Paradox logo in two different variations. The body of the sculpture does not change, only how we see it from different perspectives changes.",
+   "fr": "Ce type d'objet s'appelle une sculpture anamorphique, car sa perception change selon la position de l'observateur. Celle-ci montre le logo Paradox en deux variantes différentes. Le corps de la sculpture ne change pas ; seul change notre point de vue.",
+   "it": "Questo tipo di oggetto si chiama scultura anamorfica, perché la sua percezione cambia a seconda della posizione di chi guarda. Questa in particolare mostra il logo Paradox in due varianti diverse. Il corpo della scultura non cambia: cambia solo il modo in cui la vediamo.",
+   "de": "Solche Objekte nennt man anamorphe Skulpturen, weil sich ihre Wahrnehmung mit dem Standort des Betrachters ändert. Diese zeigt das Paradox-Logo in zwei verschiedenen Varianten. Die Skulptur selbst verändert sich nicht – nur unser Blickwinkel."
+  }
+ }
+};
+Object.entries(PANELES_B).forEach(([t, d]) => {
+  S.filter(s => s.t === t).forEach(s => {
+    s.todo = d.todo; if (d.info && !s.d) s.d = d.info;
+  });
+});
 
 /* ── Textos oficiales del museo (EN / ES / CA) ──────────────
    Se fusionan sobre las paradas por su título. Para añadir más
@@ -966,7 +1817,11 @@ function art(kind,c,style){
 /* ── state ──────────────────────────────────────────────────── */
 let lang="es", tab="route", idx=-1, seen=new Set();
 const el=id=>document.getElementById(id);
-const L=()=>UI[lang];
+const L=()=>Object.assign({}, UI.en, UI[lang]||{});
+const tr=o=>!o?"":(o[lang]||o.en||o.es||"");
+const FLAGS={"es": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#AA151B\"/><rect y=\"5\" width=\"30\" height=\"10\" fill=\"#F1BF00\"/></svg>", "ca": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#FCDD09\"/><g fill=\"#DA121A\"><rect y=\"2.22\" width=\"30\" height=\"2.22\"/><rect y=\"6.67\" width=\"30\" height=\"2.22\"/><rect y=\"11.11\" width=\"30\" height=\"2.22\"/><rect y=\"15.56\" width=\"30\" height=\"2.22\"/></g></svg>", "en": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#012169\"/><path d=\"M0 0 30 20M30 0 0 20\" stroke=\"#fff\" stroke-width=\"4\"/><path d=\"M0 0 30 20M30 0 0 20\" stroke=\"#C8102E\" stroke-width=\"2.4\"/><path d=\"M15 0v20M0 10h30\" stroke=\"#fff\" stroke-width=\"6.6\"/><path d=\"M15 0v20M0 10h30\" stroke=\"#C8102E\" stroke-width=\"4\"/></svg>", "fr": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#fff\"/><rect width=\"10\" height=\"20\" fill=\"#002395\"/><rect x=\"20\" width=\"10\" height=\"20\" fill=\"#ED2939\"/></svg>", "it": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#fff\"/><rect width=\"10\" height=\"20\" fill=\"#008C45\"/><rect x=\"20\" width=\"10\" height=\"20\" fill=\"#CD212A\"/></svg>", "de": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#FFCE00\"/><rect width=\"30\" height=\"13.34\" fill=\"#DD0000\"/><rect width=\"30\" height=\"6.67\" fill=\"#000\"/></svg>"};
+const NOMBRES={"es": "Español", "ca": "Català", "en": "English", "fr": "Français", "it": "Italiano", "de": "Deutsch"};
+const LANGS=["es", "ca", "en", "fr", "it", "de"];
 const rm=s=>ROOMS[s.r];
 const esc=t=>String(t).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
 const store={
@@ -986,14 +1841,14 @@ function renderRoute(){
     if(s.r!==cur){
       cur=s.r;
       const k=S.filter(x=>x.r===cur).length;
-      h+=`<div class="sechead"><b style="background:${ROOMS[cur].c};color:${ROOMS[cur].ink}">${ROOMS[cur].n[lang]}</b>
+      h+=`<div class="sechead"><b style="background:${ROOMS[cur].c};color:${ROOMS[cur].ink}">${tr(ROOMS[cur].n)}</b>
           <i></i><em class="lbl">${k} ${L().stops}</em></div>`;
     }
     h+=`<button class="stop${seen.has(i)?" done":""}" data-i="${i}">
           <span class="thumb">${s.img?`<img src="${s.img}" alt="" loading="lazy" decoding="async">`:art(s.art,rm(s).tc)}</span>
           <span class="num"${s.n?"":` style="background:${rm(s).tc}"`}>${s.n||"·"}</span>
           <span class="meta"><b>${esc(s.t)}</b>
-            <span>${ROOMS[s.r].n[lang]}${s.sub?" · "+esc(s.sub):""}</span></span>
+            <span>${tr(ROOMS[s.r].n)}${s.sub?" · "+esc(s.sub):""}</span></span>
           <span class="tick">✓</span>
         </button>`;
   });
@@ -1006,7 +1861,7 @@ function renderRooms(){
   order.forEach(rid=>{
     const list=S.filter(s=>s.r===rid), named=list.filter(s=>s.n).map(s=>s.n);
     h+=`<button class="roomcard" data-room="${rid}">
-          <b style="background:${ROOMS[rid].c};color:${ROOMS[rid].ink}">${ROOMS[rid].n[lang]}</b>
+          <b style="background:${ROOMS[rid].c};color:${ROOMS[rid].ink}">${tr(ROOMS[rid].n)}</b>
           <span>${list.length} ${L().stops}${named.length?" · "+named.join(" · "):""}</span>
           <span class="pips">${list.map(()=>`<i style="background:${ROOMS[rid].c}"></i>`).join("")}</span>
         </button>`;
@@ -1040,7 +1895,7 @@ function renderStyle(){
   STYLES.forEach(st=>{
     h+=`<button data-style="${st.id}" aria-pressed="${drawStyle===st.id}">
         <span class="sv">${art("balloon",C.yellow,st.id)}</span>
-        <b>${st.n[lang]}</b><span>${st.s[lang]}</span></button>`;
+        <b>${tr(st.n)}</b><span>${tr(st.s)}</span></button>`;
   });
   h+=`</div><div class="note">${L().styleNote}</div>
     <div style="height:26px"></div>
@@ -1072,9 +1927,9 @@ function openStop(i){
           <div class="ph"><span class="howstep">${k+1}</span>
             ${x.img?`<img src="${x.img}" alt="" loading="lazy" decoding="async">`:photoSlot()}
             <em>${L().photoPend}</em></div>
-          <b>${esc(x.t[lang])}</b><span>${esc(x.s[lang])}</span>
+          <b>${esc(tr(x.t))}</b><span>${esc(tr(x.s))}</span>
         </div>`).join("")}</div>`
-    : `<div class="pending">${L().pendHow}</div>`;
+    : (s.todo ? "" : `<div class="pending">${L().pendHow}</div>`);
 
   el("dbody").innerHTML=`
     <div class="hero">
@@ -1082,17 +1937,17 @@ function openStop(i){
       <span class="tag lbl">${s.img?"":L().photo}</span></div>
 
     <div class="dtext">
-      <span class="droom lbl" style="background:${R.c};color:${R.ink}">${R.n[lang]}</span>
+      <span class="droom lbl" style="background:${R.c};color:${R.ink}">${tr(R.n)}</span>
       <h1>${s.n?`<span class="hn">${s.n}</span>`:""}${esc(s.t)}</h1>
       ${s.sub?`<p class="sub">${esc(s.sub)}</p>`:""}
     </div>
 
     <div class="block"><div class="lbl">${L().lblHook}</div>
-      ${s.hook?`<p class="hook">${esc(s.hook[lang])}</p>`
+      ${s.hook?`<p class="hook">${esc(tr(s.hook))}</p>`
               :`<div class="pending">${L().pendHook}</div>`}</div>
 
     ${s.d?`<div class="block"><div class="lbl">${L().lblInfo}</div>
-      ${s.d[lang].split("\n\n").map(p=>`<p class="lead">${esc(p)}</p>`).join("")}</div>`:""}
+      ${tr(s.d).split("\n\n").map(p=>`<p class="lead">${esc(p)}</p>`).join("")}</div>`:""}
 
     ${s.list?`<div class="block"><div class="lbl">${L().lblIncl}</div>
       <div class="chips">${s.list.map(x=>`<span>${esc(x)}</span>`).join("")}</div></div>`:""}
@@ -1101,13 +1956,16 @@ function openStop(i){
       <div class="gal">${s.fotos.map(f=>`<img src="${f}" alt="" loading="lazy" decoding="async">`).join("")}</div>
       </div>`:""}
 
-    <div class="block"><div class="lbl">${L().lblHow}</div>${how}</div>
+    <div class="block"><div class="lbl">${L().lblHow}</div>
+      ${s.todo?`<p class="lead">${esc(tr(s.todo))}</p>`:""}
+      ${(s.todo&&s.how)?`<div style="height:14px"></div>`:""}
+      ${s.how?how:(s.todo?"":how)}</div>
 
     ${s.quiz?`<div class="block"><div class="quiz">
         <div class="lbl">${L().lblQuiz}</div>
-        <p>${esc(s.quiz.q[lang])}</p>
+        <p>${esc(tr(s.quiz.q))}</p>
         <button class="reveal" id="reveal">${L().reveal}</button>
-        <p class="ans" id="ans" hidden>${s.quiz.a[lang]}</p>
+        <p class="ans" id="ans" hidden>${tr(s.quiz.a)}</p>
       </div></div>`:""}
 
     <div style="height:30px"></div>`;
@@ -1161,14 +2019,34 @@ document.querySelector(".tabs").addEventListener("click",e=>{
 });
 
 function setLang(l){
-  lang=l; store.set("lang",l);
-  document.querySelectorAll("[data-l]").forEach(b=>
-    b.setAttribute("aria-pressed",String(b.dataset.l===l)));
+  lang=LANGS.includes(l)?l:"en"; store.set("lang",lang);
+  document.documentElement.lang=lang;
+  pintaIdiomas();
   render();
   if(el("detail").classList.contains("open")) openStop(idx);
 }
-el("langs").addEventListener("click",e=>{
-  const b=e.target.closest("button"); if(b) setLang(b.dataset.l);
+function pintaIdiomas(){
+  el("langflag").innerHTML=FLAGS[lang];
+  el("langcode").textContent=lang.toUpperCase();
+  el("langmenu").innerHTML=LANGS.map(l=>
+    `<button data-l="${l}" role="menuitem" aria-current="${l===lang}">
+       <span class="fl">${FLAGS[l]}</span>${NOMBRES[l]}</button>`).join("");
+  el("gateopts").innerHTML=LANGS.map(l=>
+    `<button data-l="${l}"><span class="fl">${FLAGS[l]}</span>${NOMBRES[l]}
+       <u>${l.toUpperCase()}</u></button>`).join("");
+}
+el("langbtn").onclick=()=>{
+  const m=el("langmenu"); m.hidden=!m.hidden;
+  el("langbtn").setAttribute("aria-expanded", String(!m.hidden));
+};
+el("langmenu").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  setLang(b.dataset.l); el("langmenu").hidden=true;
+  el("langbtn").setAttribute("aria-expanded","false");
+});
+addEventListener("click",e=>{
+  if(!el("langmenu").hidden && !e.target.closest("#langmenu,#langbtn")){
+    el("langmenu").hidden=true; el("langbtn").setAttribute("aria-expanded","false"); }
 });
 el("gate").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
@@ -1229,11 +2107,15 @@ addEventListener("keydown",e=>{
 seen=new Set(store.get("seen",[]));
 drawStyle=store.get("style","bloque");
 const sl=store.get("lang",null);
-if(sl && store.get("gate",0)){
+if(sl && LANGS.includes(sl) && store.get("gate",0)){
   lang=sl; el("gate").classList.add("hide");
-  document.querySelectorAll("[data-l]").forEach(b=>
-    b.setAttribute("aria-pressed",String(b.dataset.l===lang)));
+}else if(!sl){
+  const nav=(navigator.languages||[navigator.language||"es"]).map(x=>String(x).slice(0,2));
+  const hit=nav.find(x=>LANGS.includes(x));
+  if(hit) lang=hit;            // preselecciona el idioma del móvil
 }
+document.documentElement.lang=lang;
+pintaIdiomas();
 render();
 </script>
 
