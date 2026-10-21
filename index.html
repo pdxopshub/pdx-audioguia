@@ -16,6 +16,45 @@
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
 [hidden]{display:none!important}
+/* ── cámara integrada ───────────────────────────────────────── */
+#cam{position:fixed;inset:0;z-index:70;background:#05051a;display:flex;flex-direction:column}
+#cam[hidden]{display:none}
+#cam .camtop{flex:0 0 auto;display:flex;align-items:center;gap:10px;
+  padding:calc(11px + env(safe-area-inset-top,0px)) 14px 11px}
+#cam .camtop b{font-size:13.5px;font-weight:800;letter-spacing:-.01em;flex:1;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cam .camtop button{width:34px;height:34px;border-radius:999px;background:#ffffff1f;
+  display:grid;place-items:center;font-size:15px;color:#fff;flex:0 0 auto}
+#cam .camstage{flex:1;position:relative;overflow:hidden;background:#000;
+  display:grid;place-items:center}
+#cam video,#cam .shotimg{width:100%;height:100%;object-fit:cover;display:block}
+#cam video.flip{transform:scaleX(-1)}
+#cam .guide{position:absolute;left:14px;right:14px;bottom:14px;background:#05051ac2;
+  border-radius:16px;padding:11px 13px;backdrop-filter:blur(7px)}
+#cam .guide p{font-size:13.5px;line-height:1.4;font-weight:600;margin:0}
+#cam .guide .rot{display:inline-flex;align-items:center;gap:5px;margin-bottom:7px;
+  background:var(--acc);color:var(--accink);border-radius:999px;padding:3px 9px;
+  font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.07em}
+#cam .cambar{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:24px;
+  padding:16px 16px calc(20px + env(safe-area-inset-bottom,0px))}
+#cam .shutter{width:68px;height:68px;border-radius:999px;background:var(--acc);
+  border:4px solid #05051a;box-shadow:0 0 0 3px var(--acc);flex:0 0 auto}
+#cam .shutter:active{transform:scale(.93)}
+#cam .after{display:flex;gap:9px;width:100%}
+#cam .after button{flex:1;border-radius:999px;padding:14px 10px;font-size:14px;font-weight:800}
+#cam .after .keep{background:var(--acc);color:var(--accink)}
+#cam .after .redo{background:#ffffff1f;color:#fff}
+#cam .camerr{position:absolute;inset:14px;display:grid;place-items:center;text-align:center}
+#cam .camerr p{font-size:14.5px;line-height:1.55;color:#ffffffd6;max-width:30ch}
+
+/* botón de cámara dentro de la ficha */
+.camcta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+  background:var(--acc);color:var(--accink);border-radius:999px;padding:15px 16px;
+  font-size:15px;font-weight:800;letter-spacing:-.01em}
+.camcta:active{transform:scale(.985)}
+.camwrap{padding:4px max(16px,env(safe-area-inset-left,0px)) 0}
+.camwrap .hint{display:block;margin-top:8px;text-align:center;font-family:var(--f-mono);
+  font-size:9.5px;color:var(--muted);letter-spacing:.05em}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,27 +121,37 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
 .progress button{color:var(--muted)}
 .progress button:hover{color:var(--orange)}
 
-.sechead{display:flex;align-items:center;gap:9px;padding:24px 0 6px;position:sticky;top:0;
-  background:linear-gradient(var(--bg) 76%,transparent);z-index:2}
-.sechead b{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
-  padding:4px 8px}
-.sechead i{flex:1;height:1px;background:var(--line)}
-.sechead em{color:var(--muted);font-style:normal}
+.sechead{display:flex;align-items:center;gap:8px;padding:19px 0 9px;position:sticky;top:0;
+  background:linear-gradient(var(--bg) 74%,transparent);z-index:2}
+.sechead b{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:5px 11px;border-radius:999px}
+.sechead em{font-family:var(--f-mono);font-size:9.5px;color:var(--muted);font-style:normal}
 
-.stop{display:flex;gap:12px;align-items:center;width:100%;padding:9px 0;
-  border-bottom:1px solid var(--line)}
-.thumb{flex:0 0 auto;width:56px;height:56px;overflow:hidden;background:var(--panel2)}
-.thumb svg,.thumb img{width:100%;height:100%;display:block;object-fit:cover}
-.stop .meta{flex:1;min-width:0}
-.stop .meta b{display:block;font-size:14.5px;font-weight:700;line-height:1.25;
-  letter-spacing:-.01em}
-.stop .meta span{display:block;font-size:11px;color:var(--muted);margin-top:4px;
+/* Tarjeta póster: una cápsula por exhibición, sin líneas separadoras. */
+.stop{display:block;width:100%;text-align:left;background:#ffffff14;border-radius:19px;
+  overflow:hidden;margin-bottom:9px;transition:transform .12s}
+.stop:active{transform:scale(.985)}
+.thumb{position:relative;display:block;aspect-ratio:2/1;background:#ffffff14}
+.thumb svg,.thumb img{width:100%;height:100%;display:block;object-fit:cover;transition:opacity .15s}
+.thumb.art{aspect-ratio:16/5;background:#2A2ADB;display:flex;align-items:center;
+  justify-content:center}
+.thumb.art svg{width:auto;height:100%;padding:11px 0;opacity:.6}
+.num{position:absolute;left:9px;bottom:9px;min-width:22px;height:20px;padding:0 7px;
+  display:grid;place-items:center;border-radius:7px;font-family:var(--f-mono);font-size:10.5px;
+  font-weight:600;color:var(--accink);background:var(--acc)}
+.tick{position:absolute;right:9px;top:9px;width:24px;height:24px;border-radius:999px;
+  background:#0b0b2bb5;display:grid;place-items:center;font-size:11px;color:#ffffff5c;
+  transition:.12s}
+.stop .cambadge{position:absolute;right:9px;bottom:9px;display:flex;align-items:center;gap:5px;
+  background:#0b0b2bb5;border-radius:999px;padding:4px 9px;font-family:var(--f-mono);
+  font-size:8.5px;font-weight:600;letter-spacing:.07em;color:var(--acc)}
+.stop .meta{display:block;padding:9px 13px 11px}
+.stop .meta b{display:block;font-size:15px;font-weight:800;line-height:1.18;
+  letter-spacing:-.02em}
+.stop .meta span{display:block;font-size:9.5px;color:var(--muted);margin-top:5px;
   font-family:var(--f-mono);letter-spacing:.06em}
-.num{flex:0 0 auto;min-width:26px;height:21px;padding:0 6px;display:grid;place-items:center;
-  font-family:var(--f-mono);font-size:11px;font-weight:600;color:#06261f;background:var(--mint)}
-.tick{flex:0 0 auto;width:19px;height:19px;border:1.5px solid var(--line);
-  display:grid;place-items:center;font-size:11px;color:transparent;transition:.12s}
-.stop.done .tick{border-color:var(--acc);color:var(--accink);background:var(--acc)}
+.stop.done .thumb svg,.stop.done .thumb img{opacity:.55}
+.stop.done .tick{background:var(--acc);color:var(--accink)}
 .stop.done .meta b{color:var(--muted)}
 
 .roomcard{display:block;width:100%;border:1px solid var(--line);padding:15px 16px;margin-top:9px}
@@ -300,6 +349,21 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
     </div>
   </section>
 
+  <div id="cam" hidden aria-modal="true" role="dialog">
+    <div class="camtop">
+      <b id="camTitle"></b>
+      <button id="camFlip" type="button" aria-label="Cambiar de cámara">⇄</button>
+      <button id="camClose" type="button" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="camstage">
+      <video id="camVid" playsinline autoplay muted></video>
+      <img id="camImg" class="shotimg" alt="" hidden>
+      <div class="guide" id="camGuide"></div>
+      <div class="camerr" id="camErr" hidden><p></p></div>
+    </div>
+    <div class="cambar" id="camBar"></div>
+  </div>
+
   <div id="lightbox" hidden aria-modal="true" role="dialog">
     <button id="lbClose" aria-label="Cerrar">✕</button>
     <button id="lbPrev" aria-label="Anterior">←</button>
@@ -316,6 +380,18 @@ document.getElementById("gateLogo").src=LOGO;
 
 const UI={
  "es": {
+  "camBadge": "Cámara",
+  "camOpen": "Abrir la cámara",
+  "camShot": "Disparar",
+  "camAgain": "Repetir",
+  "camSave": "Guardar la foto",
+  "camFlip": "Cambiar de cámara",
+  "camClose": "Cerrar",
+  "camRot": "La giramos nosotros",
+  "camDeny": "Tu móvil no nos deja abrir la cámara aquí. Hazla con tu cámara de siempre: las indicaciones de arriba valen igual.",
+  "camAsk": "Dale a «Permitir» cuando tu móvil te pregunte por la cámara.",
+  "camSaved": "Foto guardada.",
+  "stop1": "parada",
   "route": "Recorrido",
   "rooms": "Salas",
   "style": "Estilo",
@@ -345,6 +421,18 @@ const UI={
   "lang": "Idioma"
  },
  "ca": {
+  "camBadge": "Càmera",
+  "camOpen": "Obrir la càmera",
+  "camShot": "Disparar",
+  "camAgain": "Repetir",
+  "camSave": "Desar la foto",
+  "camFlip": "Canviar de càmera",
+  "camClose": "Tancar",
+  "camRot": "Ja la girem nosaltres",
+  "camDeny": "El teu mòbil no ens deixa obrir la càmera aquí. Fes-la amb la teva càmera de sempre: les indicacions de dalt valen igual.",
+  "camAsk": "Prem «Permetre» quan el mòbil et pregunti per la càmera.",
+  "camSaved": "Foto desada.",
+  "stop1": "parada",
   "route": "Recorregut",
   "rooms": "Sales",
   "style": "Estil",
@@ -374,6 +462,18 @@ const UI={
   "lang": "Idioma"
  },
  "en": {
+  "camBadge": "Camera",
+  "camOpen": "Open the camera",
+  "camShot": "Take the photo",
+  "camAgain": "Retake",
+  "camSave": "Save the photo",
+  "camFlip": "Switch camera",
+  "camClose": "Close",
+  "camRot": "We'll flip it for you",
+  "camDeny": "Your phone won't let us open the camera here. Use your usual camera app — the tips above still apply.",
+  "camAsk": "Tap \u201cAllow\u201d when your phone asks about the camera.",
+  "camSaved": "Photo saved.",
+  "stop1": "stop",
   "route": "Tour",
   "rooms": "Rooms",
   "style": "Style",
@@ -403,6 +503,18 @@ const UI={
   "lang": "Language"
  },
  "fr": {
+  "camBadge": "Appareil",
+  "camOpen": "Ouvrir l'appareil photo",
+  "camShot": "Déclencher",
+  "camAgain": "Refaire",
+  "camSave": "Enregistrer la photo",
+  "camFlip": "Changer d'appareil",
+  "camClose": "Fermer",
+  "camRot": "On la retourne pour vous",
+  "camDeny": "Votre téléphone ne nous laisse pas ouvrir l'appareil photo ici. Utilisez votre appareil habituel : les conseils ci-dessus restent valables.",
+  "camAsk": "Appuyez sur « Autoriser » quand votre téléphone vous le demande.",
+  "camSaved": "Photo enregistrée.",
+  "stop1": "arrêt",
   "route": "Parcours",
   "rooms": "Salles",
   "style": "Style",
@@ -432,6 +544,18 @@ const UI={
   "lang": "Langue"
  },
  "it": {
+  "camBadge": "Fotocamera",
+  "camOpen": "Apri la fotocamera",
+  "camShot": "Scatta",
+  "camAgain": "Rifai",
+  "camSave": "Salva la foto",
+  "camFlip": "Cambia fotocamera",
+  "camClose": "Chiudi",
+  "camRot": "La giriamo noi",
+  "camDeny": "Il tuo telefono non ci lascia aprire la fotocamera qui. Usa la tua fotocamera di sempre: i consigli qui sopra valgono lo stesso.",
+  "camAsk": "Tocca «Consenti» quando il telefono te lo chiede.",
+  "camSaved": "Foto salvata.",
+  "stop1": "tappa",
   "route": "Percorso",
   "rooms": "Sale",
   "style": "Stile",
@@ -461,6 +585,18 @@ const UI={
   "lang": "Lingua"
  },
  "de": {
+  "camBadge": "Kamera",
+  "camOpen": "Kamera öffnen",
+  "camShot": "Auslösen",
+  "camAgain": "Nochmal",
+  "camSave": "Foto speichern",
+  "camFlip": "Kamera wechseln",
+  "camClose": "Schließen",
+  "camRot": "Wir drehen es für dich",
+  "camDeny": "Dein Handy lässt uns die Kamera hier nicht öffnen. Nimm deine gewohnte Kamera-App – die Tipps oben gelten genauso.",
+  "camAsk": "Tippe auf \u201eErlauben\u201c, wenn dein Handy nach der Kamera fragt.",
+  "camSaved": "Foto gespeichert.",
+  "stop1": "Station",
   "route": "Rundgang",
   "rooms": "Räume",
   "style": "Stil",
@@ -2235,6 +2371,12 @@ S.filter(s => s.t === "Shadow Freeze").forEach(s => Object.assign(s.d, {
  de: "Ein starker Blitz auf eine phosphoreszierende Wand friert deinen Schatten für einige Sekunden ein. Die Wand leuchtet weiter, wo das Licht sie getroffen hat, und bleibt genau dort dunkel, wo du gestanden hast."
 }));
 
+/* ── exhibiciones que abren la cámara de la guía ────────────── */
+const CAM_ON = {"Paradox Challenge": 180, "Zero Gravity": 180, "Ames Room": 0, "Beuchet Chair": 0, "Clone Table": 0, "Infinity Room": 0, "PDX Sofa": 0, "Shadow Freeze": 0, "Kaleidoscope": 0, "Camouflage Wall": 0, "Infinity Well": 0, "Paradox Tunnel": 0, "Infinity Dodecahedron": 0, "Infinity Window": 0, "Face Blender": 0};
+Object.entries(CAM_ON).forEach(([t, rot]) => {
+  S.filter(s => s.t === t).forEach(s => { s.cam = {rot: rot}; });
+});
+
 /* ── placeholder art, three selectable drawing styles ───────── */
 const BG="#2A2ADB";
 function shapes(kind,c){
@@ -2385,14 +2527,17 @@ function renderRoute(){
       cur=s.r;
       const k=S.filter(x=>x.r===cur).length;
       h+=`<div class="sechead"><b style="background:${ROOMS[cur].c};color:${ROOMS[cur].ink}">${tr(ROOMS[cur].n)}</b>
-          <i></i><em class="lbl">${k} ${L().stops}</em></div>`;
+          <em>${k} ${k===1?L().stop1:L().stops}</em></div>`;
     }
     h+=`<button class="stop${seen.has(i)?" done":""}" data-i="${i}">
-          <span class="thumb">${s.img?`<img src="${s.img}" alt="" loading="lazy" decoding="async">`:art(s.art,rm(s).tc)}</span>
-          <span class="num"${s.n?"":` style="background:${rm(s).tc}"`}>${s.n||"·"}</span>
+          <span class="thumb${s.img?"":" art"}">
+            ${s.img?`<img src="${s.img}" alt="" loading="lazy" decoding="async">`:art(s.art,rm(s).tc)}
+            <span class="num"${s.n?"":` style="background:${rm(s).tc};color:#14141c"`}>${s.n||"·"}</span>
+            <span class="tick">✓</span>
+            ${s.cam?`<span class="cambadge">◉ ${L().camBadge}</span>`:""}
+          </span>
           <span class="meta"><b>${esc(s.t)}</b>
             <span>${tr(ROOMS[s.r].n)}${s.sub?" · "+esc(tr(s.sub)):""}</span></span>
-          <span class="tick">✓</span>
         </button>`;
   });
   el("main").innerHTML=h;
@@ -2485,6 +2630,10 @@ function openStop(i){
       ${s.sub?`<p class="sub">${esc(tr(s.sub))}</p>`:""}
     </div>
 
+    ${s.cam?`<div class="camwrap">
+      <button class="camcta" id="camGo" type="button">◉ ${L().camOpen}</button>
+      <span class="hint">${L().camAsk}</span></div>`:""}
+
     <div class="block"><div class="lbl">${L().lblHook}</div>
       ${s.hook?`<p class="hook">${esc(tr(s.hook))}</p>`
               :`<div class="pending">${L().pendHook}</div>`}</div>
@@ -2522,6 +2671,8 @@ function openStop(i){
   el("detail").setAttribute("aria-hidden","false");
   const rv=el("reveal");
   if(rv) rv.onclick=()=>{el("ans").hidden=false; rv.hidden=true;};
+  const cg=el("camGo");
+  if(cg) cg.onclick=()=>abreCamara(s);
 }
 function syncDone(){
   const on=seen.has(idx), b=el("done");
@@ -2645,6 +2796,101 @@ addEventListener("keydown",e=>{
     if(e.key==="ArrowRight"&&n<fotos.length-1){n++;pinta();}
     if(e.key==="ArrowLeft"&&n>0){n--;pinta();}
   }, true);
+})();
+
+/* ── cámara integrada ───────────────────────────────────────────
+   Abre la cámara del móvil dentro de la guía, con el consejo de la
+   exhibición siempre a la vista, y gira la foto sola donde toca. */
+let abreCamara = () => {};
+(function(){
+  const box=el("cam"), vid=el("camVid"), img=el("camImg"),
+        guide=el("camGuide"), bar=el("camBar"), err=el("camErr");
+  let stream=null, facing="environment", act=null, blob=null;
+
+  const barraDisparo = () => {
+    bar.innerHTML =
+      `<button class="shutter" id="camShot" type="button" aria-label="${L().camShot}"></button>`;
+    el("camShot").onclick = dispara;
+  };
+  const barraRevision = () => {
+    bar.innerHTML = `<div class="after">
+      <button class="redo" id="camRedo" type="button">${L().camAgain}</button>
+      <button class="keep" id="camKeep" type="button">${L().camSave}</button></div>`;
+    el("camRedo").onclick = () => { img.hidden=true; vid.hidden=false; guide.hidden=false;
+                                    blob=null; barraDisparo(); };
+    el("camKeep").onclick = guarda;
+  };
+
+  async function arranca(){
+    para();
+    try{
+      stream = await navigator.mediaDevices.getUserMedia({
+        video:{facingMode:{ideal:facing}, width:{ideal:1920}, height:{ideal:1920}},
+        audio:false});
+      vid.srcObject = stream;
+      vid.classList.toggle("flip", facing==="user");
+      err.hidden = true; vid.hidden = false;
+      el("camFlip").hidden = false;
+    }catch(e){
+      err.querySelector("p").textContent = L().camDeny;
+      err.hidden = false; vid.hidden = true; bar.innerHTML = "";
+      el("camFlip").hidden = true;
+    }
+  }
+  function para(){ if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } }
+
+  function dispara(){
+    if(!stream) return;
+    const w = vid.videoWidth, h = vid.videoHeight;
+    if(!w || !h) return;
+    const cv = document.createElement("canvas");
+    cv.width = w; cv.height = h;
+    const g = cv.getContext("2d");
+    const girar = act && act.cam && act.cam.rot === 180;
+    g.save();
+    if(girar){ g.translate(w, h); g.rotate(Math.PI); }
+    if(facing === "user"){ g.translate(girar?-w:w, 0); g.scale(-1, 1); }
+    g.drawImage(vid, 0, 0, w, h);
+    g.restore();
+    cv.toBlob(b => {
+      blob = b;
+      img.src = URL.createObjectURL(b);
+      img.hidden = false; vid.hidden = true; guide.hidden = true;
+      barraRevision();
+    }, "image/jpeg", 0.92);
+  }
+
+  async function guarda(){
+    if(!blob) return;
+    const nombre = "paradox-" + (act && act.n ? act.n + "-" : "") + Date.now() + ".jpg";
+    const f = new File([blob], nombre, {type:"image/jpeg"});
+    if(navigator.canShare && navigator.canShare({files:[f]})){
+      try{ await navigator.share({files:[f]}); return; }catch(e){ if(e && e.name==="AbortError") return; }
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(f); a.download = nombre;
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  function cierra(){
+    para(); box.hidden = true; blob = null;
+    img.hidden = true; img.removeAttribute("src"); vid.hidden = false;
+  }
+
+  el("camClose").onclick = cierra;
+  el("camFlip").onclick = () => { facing = facing==="environment" ? "user" : "environment"; arranca(); };
+  addEventListener("keydown", e => { if(!box.hidden && e.key==="Escape") cierra(); }, true);
+
+  abreCamara = function(s){
+    act = s;
+    el("camTitle").textContent = s.t;
+    guide.hidden = false;
+    guide.innerHTML = (s.cam && s.cam.rot===180 ? `<span class="rot">↻ ${L().camRot}</span>` : "")
+      + `<p>${esc(tr(s.cam && s.cam.g ? s.cam.g : s.hook))}</p>`;
+    box.hidden = false;
+    barraDisparo();
+    arranca();
+  };
 })();
 
 seen=new Set(store.get("seen",[]));
