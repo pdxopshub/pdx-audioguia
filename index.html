@@ -520,9 +520,9 @@ const S=[
     ca:"Segueix el recorregut parada a parada: cada número del terra i de la paret es correspon amb una fitxa d'aquesta guia. Pots anar en ordre o saltar per sales.",
     en:"Follow the tour stop by stop: every number on the floor and the walls matches a card here. Go in order or jump around by room."},
  how:[{t:{es:"Carga la batería",ca:"Carrega la bateria",en:"Charge up"},
-       s:{es:"Vas a hacer más fotos de las que crees.",ca:"Faràs més fotos de les que creus.",en:"You will take more photos than you expect."}},
+       s:{fr:"Formes pleines, aucune ombre. C'est le style de la marque.",it:"Forme piene, zero ombre. È lo stile del marchio.",de:"Massive Formen, keine Schatten. Der Stil der Marke.",es:"Vas a hacer más fotos de las que crees.",ca:"Faràs més fotos de les que creus.",en:"You will take more photos than you expect."}},
       {t:{es:"Ve acompañado",ca:"Vés acompanyat",en:"Bring someone"},
-       s:{es:"La mitad de las piezas necesitan a alguien al otro lado.",ca:"La meitat de les peces necessiten algú a l'altre costat.",en:"Half the pieces need someone on the other side."}}],
+       s:{fr:"Contour seul. Plus technique et plus sobre.",it:"Solo contorno. Più tecnico e più sobrio.",de:"Nur Umriss. Technischer und zurückhaltender.",es:"La mitad de las piezas necesitan a alguien al otro lado.",ca:"La meitat de les peces necessiten algú a l'altre costat.",en:"Half the pieces need someone on the other side."}}],
  quiz:{q:{es:"¿Cuánto se tarda en hacer el recorrido entero?",
           ca:"Quant es triga a fer el recorregut sencer?",
           en:"How long does the whole tour take?"},
@@ -538,7 +538,7 @@ const S=[
     ca:"Sense referències de mida al voltant, el cervell no té amb què comparar. Fa servir la distància per estimar la mida i la mida per estimar la distància, i aquí les dues pistes es contradiuen.",
     en:"With no size cues around it, your brain has nothing to compare against. It uses distance to judge size and size to judge distance, and here the two cues contradict each other."},
  how:[{t:{es:"Ponte en la marca",ca:"Posa't a la marca",en:"Stand on the mark"},
-       s:{es:"El punto del suelo es el único sitio donde cuadra.",ca:"El punt del terra és l'únic lloc on quadra.",en:"The floor marker is the only spot where it lines up."}},
+       s:{fr:"Trame de points façon sérigraphie. Plus graphique.",it:"Trama di punti tipo serigrafia. Più grafico.",de:"Punktraster wie im Siebdruck. Grafischer.",es:"El punto del suelo es el único sitio donde cuadra.",ca:"El punt del terra és l'únic lloc on quadra.",en:"The floor marker is the only spot where it lines up."}},
       {t:{es:"Mano extendida",ca:"Mà estesa",en:"Hand out front"},
        s:{es:"Estira el brazo del todo hacia la cámara.",ca:"Estira el braç del tot cap a la càmera.",en:"Reach your arm fully toward the camera."}},
       {t:{es:"Cámara baja",ca:"Càmera baixa",en:"Camera low"},
@@ -705,7 +705,7 @@ const S=[
     en:"Three differently coloured lamps and one person: three shadows, none of them black. Each takes the colour of the light that shadow does not block."}},
 {n:"42",r:"s7",t:"PDX Sofa",art:"sofa"},
 {n:"43",r:"s7",t:"PDX Table",art:"table"},
-{n:"44",r:"s7",t:"PDX Box",sub:"El gato de Schrödinger",art:"cat"},
+{n:"44",r:"s7",t:"PDX Box",sub:{es:"El gato de Schrödinger",ca:"El gat de Schrödinger",en:"Schrödinger's cat",fr:"Le chat de Schrödinger",it:"Il gatto di Schrödinger",de:"Schrödingers Katze"},art:"cat"},
 {n:"45",r:"s7",t:"Reversed Room",art:"rev"},
 {n:"46",r:"s7",t:"PDX Spinner",art:"spin"},
 {n:"47",r:"s7",t:"Beuchet Chair",art:"chair",
@@ -728,11 +728,11 @@ const S=[
           ca:"La cadira <b>es desmunta</b>. El truc depèn d'un únic punt de vista: fora d'ell, el seient i les potes tornen a ser dos objectes sense relació separats per mitja sala.",
           en:"The chair <b>falls apart</b>. The trick depends on one single viewpoint: step off it and the seat and the legs go back to being two unrelated objects half a room apart."}}},
 
-{n:"48",r:"s1",t:"Zoetrope",sub:"1 de 2",art:"zoe",
+{n:"48",r:"s1",t:"Zoetrope",sub:{es:"1 de 2",ca:"1 de 2",en:"1 of 2",fr:"1 sur 2",it:"1 di 2",de:"1 von 2"},art:"zoe",
  d:{es:"El antepasado del cine: un tambor con rendijas y una tira de dibujos dentro. Al girar, las rendijas cortan la visión en destellos y el ojo rellena el movimiento.",
     ca:"L'avantpassat del cinema: un tambor amb escletxes i una tira de dibuixos a dins. En girar, les escletxes tallen la visió en llampades i l'ull omple el moviment.",
     en:"Cinema's ancestor: a slitted drum with a strip of drawings inside. As it spins the slits chop your view into flashes and your eye fills in the motion."}},
-{n:"48",r:"s1",t:"Zoetrope",sub:"2 de 2",art:"zoe"},
+{n:"48",r:"s1",t:"Zoetrope",sub:{es:"2 de 2",ca:"2 de 2",en:"2 of 2",fr:"2 sur 2",it:"2 di 2",de:"2 von 2"},art:"zoe"},
 {n:"49",r:"s1",t:"Infinity Park",art:"park"},
 {n:"50",r:"s1",t:"Kaleidoscope",art:"kaleido",
  d:{es:"Tres espejos en triángulo multiplican cualquier cosa que entre hasta formar una flor simétrica. Mete la cabeza y la flor serás tú.",
@@ -908,24 +908,6 @@ const PANELES_A = {
    "de": "Möglich macht das ein spezielles Glas, das einen Teil des Lichts durchlässt und zugleich teilweise spiegelt. So entstehen Tiefe und unendliche Spiegelungen – das Gefühl von grenzenlosem Raum in einer begrenzten Geometrie."
   }
  },
- "Infinity Tunnel (espejos, sin parada)": {
-  "todo": {
-   "es": "Mira dentro. ¿Ves el final del túnel?",
-   "ca": "Mira a dins. Veus el final del túnel?",
-   "en": "Look inside. Can you see the end of the tunnel?",
-   "fr": "Regardez à l'intérieur. Voyez-vous le bout du tunnel ?",
-   "it": "Guarda dentro. Riesci a vedere la fine del tunnel?",
-   "de": "Schau hinein. Siehst du das Ende des Tunnels?"
-  },
-  "info": {
-   "es": "Tu ojo se deja engañar hasta concluir que los dos objetos visibles son los dos extremos de un único túnel curvado que en realidad no existe. Si miras por detrás verás que son dos cajas pegadas a la pared. El cristal frontal es parcialmente transparente y parcialmente reflectante, y el del fondo es un espejo normal: al combinarlos se consigue la sensación de profundidad infinita y una serie de reflejos.",
-   "ca": "El teu ull es deixa enganyar fins a concloure que els dos objectes visibles són els dos extrems d'un únic túnel corbat que en realitat no existeix. Si mires per darrere veuràs que són dues caixes enganxades a la paret. El vidre frontal és parcialment transparent i parcialment reflectant, i el del fons és un mirall normal: en combinar-los s'aconsegueix la sensació de profunditat infinita i una sèrie de reflexos.",
-   "en": "Your eye is tricked in such a way that it concludes that these two visible objects are the two ends of one bent tunnel, that actually doesn't even exist. If you look behind the exhibit, you will see that the objects are boxes attached to the wall. This paradox is possible because the specific front glass allows a certain percentage of light transmission, since it is partially transparent and partially reflective, while the inside glass is a basic mirror. By combining these two types of glass, the feeling of infinite depth is achieved, as well as a series of reflections.",
-   "fr": "Votre œil se laisse tromper au point de conclure que les deux objets visibles sont les deux extrémités d'un tunnel courbe qui n'existe pas. Regardez derrière l'installation : ce sont deux caissons fixés au mur. La vitre avant est partiellement transparente et réfléchissante, celle du fond est un simple miroir ; leur combinaison crée une profondeur infinie et une série de reflets.",
-   "it": "Il tuo occhio viene ingannato al punto da concludere che i due oggetti visibili siano le due estremità di un unico tunnel curvo che in realtà non esiste. Guardando dietro l'installazione vedrai che sono due scatole fissate al muro. Il vetro frontale è in parte trasparente e in parte riflettente, quello di fondo è un semplice specchio: unendoli si ottengono profondità infinita e una serie di riflessi.",
-   "de": "Dein Auge wird so getäuscht, dass es die beiden sichtbaren Objekte für die zwei Enden eines gebogenen Tunnels hält, den es gar nicht gibt. Schaust du hinter das Exponat, siehst du zwei Kästen an der Wand. Die vordere Scheibe ist teils durchlässig, teils spiegelnd, die hintere ein einfacher Spiegel: zusammen erzeugen sie unendliche Tiefe und eine Reihe von Spiegelungen."
-  }
- },
  "Digital Form": {
   "todo": {
    "es": "Asómate y verás una forma que parece más grande que la propia pieza.",
@@ -1037,7 +1019,7 @@ const PANELES_A = {
 };
 Object.entries(PANELES_A).forEach(([t, d]) => {
   S.filter(s => s.t === t).forEach(s => {
-    s.todo = d.todo; if (d.info && !s.d) s.d = d.info;
+    s.todo = d.todo; if (d.info) s.d = d.info;
   });
 });
 
@@ -1460,7 +1442,7 @@ const PANELES_B = {
 };
 Object.entries(PANELES_B).forEach(([t, d]) => {
   S.filter(s => s.t === t).forEach(s => {
-    s.todo = d.todo; if (d.info && !s.d) s.d = d.info;
+    s.todo = d.todo; if (d.info) s.d = d.info;
   });
 });
 
@@ -1752,6 +1734,507 @@ Object.entries(CORRECCIONES2).forEach(([t, d]) => {
   S.filter(s => s.t === t).forEach(s => Object.assign(s, d));
 });
 
+/* ── Traducciones FR / IT / DE de los textos largos ────────── */
+const TRAD_D = {
+ "Ames Room": {
+  "d": {
+   "fr": "Grandir et rétrécir dans une pièce à la perspective déformée peut rappeler une scène d'Alice au pays des merveilles de Lewis Carroll, ou de la trilogie du Seigneur des Anneaux, où ce procédé sert à faire paraître les hobbits plus petits que les humains. Le principe de la chambre d'Ames a beaucoup servi à la télévision et au cinéma pour montrer des acteurs géants à côté d'acteurs minuscules.\n\nÀ la fin du XIXe siècle, un certain Hermann von Helmholtz eut une grande idée : et si une pièce pouvait être déformée tout en paraissant parfaitement rectangulaire ? En 1935, l'ophtalmologue Adelbert Ames eut une intuition semblable et créa la toute première chambre d'Ames. Il alla plus loin que Helmholtz et fut le premier à découvrir l'influence de l'expérience sur la perception.\n\nLa chambre d'Ames est donc construite avec le sol et le plafond inclinés, ce qui crée une perspective forcée et trompe l'œil en lui faisant croire que les deux côtés de la pièce sont identiques. Sa forme réelle est un trapèze. Cette forme particulière supprime toute notion de distance et empêche d'évaluer correctement la taille des objets. La pièce crée l'illusion d'un écart de taille spectaculaire et fait croire que les deux personnes sont à la même distance alors que l'une est bien plus proche.\n\nDans la chambre d'Ames de Paradox, il se produit un décalage entre les stimuli physiques et la perception de l'individu, dû à une interprétation erronée des informations reçues par les organes sensoriels. Dès que la lumière atteint la rétine, la vision commence : l'information, sous forme de signaux électriques, part par le nerf optique vers les régions du cerveau qui traitent l'image et nous permettent de voir.\n\nLe plus troublant, c'est que l'effet est moins évident pour qui connaît bien la personne présente dans la pièce : un couple marié, par exemple, perçoit moins la déformation. C'est le phénomène Honi, nommé d'après une femme qui observait à la fois un inconnu et son mari et ne voyait la distorsion de taille que sur l'inconnu, jamais sur son mari.",
+   "it": "Crescere e rimpicciolirsi in una stanza dalla prospettiva distorta può ricordare una scena di Alice nel Paese delle Meraviglie di Lewis Carroll, o della trilogia del Signore degli Anelli, dove questo trucco serve a far sembrare gli hobbit più piccoli degli umani. Il principio della stanza di Ames è stato usatissimo in televisione e al cinema per mostrare attori giganteschi accanto ad attori minuscoli.\n\nAlla fine dell'Ottocento un signore di nome Hermann von Helmholtz ebbe una grande idea: e se una stanza potesse essere distorta e allo stesso tempo sembrare perfettamente rettangolare? Nel 1935 l'oftalmologo Adelbert Ames ebbe un'intuizione simile e creò la prima stanza di Ames della storia. Andò oltre il concetto di Helmholtz e fu il primo a scoprire l'impatto dell'esperienza sulla percezione.\n\nLa stanza di Ames è costruita con pavimento e soffitto inclinati, il che crea una prospettiva forzata e inganna l'occhio facendogli credere che i due lati della stanza siano uguali. La forma reale è un trapezio. Questa forma particolare elimina ogni senso della distanza e impedisce di valutare correttamente la dimensione degli oggetti. La stanza crea l'illusione di una disparità di taglia clamorosa e porta a credere che le due persone siano alla stessa distanza, mentre una è molto più vicina.\n\nNella stanza di Ames di Paradox si produce un disallineamento tra gli stimoli fisici e la percezione dell'individuo, causato da un'interpretazione scorretta delle informazioni ricevute dagli organi di senso. Nel momento in cui la luce raggiunge la retina inizia il processo della visione: l'informazione, sotto forma di segnali elettrici, viaggia lungo il nervo ottico verso le aree del cervello che elaborano l'immagine e ci permettono di vedere.\n\nLa cosa più curiosa è che l'effetto non è sempre così evidente per chi conosce bene la persona nella stanza: una coppia sposata, per esempio, percepisce meno la distorsione. È il cosiddetto fenomeno Honi, chiamato così da una donna che osservava sia uno sconosciuto sia il marito e notava la distorsione di taglia solo sullo sconosciuto, mai sul marito.",
+   "de": "In einem Raum mit verzerrter Perspektive zu wachsen und zu schrumpfen erinnert vielleicht an eine Szene aus Lewis Carrolls Alice im Wunderland oder aus der Herr-der-Ringe-Trilogie, wo dieser Trick die Hobbits kleiner wirken lässt als die Menschen. Das Prinzip des Ames-Raums wurde in Film und Fernsehen viel genutzt, um riesige Schauspieler neben winzigen zu zeigen.\n\nEnde des 19. Jahrhunderts hatte ein Herr namens Hermann von Helmholtz eine großartige Idee: Was wäre, wenn ein Raum verzerrt wäre und zugleich völlig rechtwinklig aussähe? 1935 kam der Augenarzt Adelbert Ames auf einen ähnlichen Gedanken und baute den allerersten Ames-Raum. Er ging über Helmholtz hinaus und entdeckte als Erster, wie stark Erfahrung die Wahrnehmung prägt.\n\nDer Ames-Raum ist also mit geneigtem Boden und geneigter Decke gebaut, was eine erzwungene Perspektive erzeugt und dem Auge vorgaukelt, beide Raumseiten seien gleich. Tatsächlich ist der Grundriss ein Trapez. Diese besondere Form nimmt jedes Gefühl für Entfernung und verhindert, Größen richtig einzuschätzen. Der Raum erzeugt die Illusion eines dramatischen Größenunterschieds und lässt glauben, beide Personen stünden gleich weit entfernt, obwohl eine viel näher ist.\n\nIm Ames-Raum von Paradox entsteht eine Diskrepanz zwischen den physikalischen Reizen und der Wahrnehmung – verursacht durch eine falsche Deutung der Information, die die Sinnesorgane liefern. Sobald Licht auf die Netzhaut trifft, beginnt das Sehen: Die Information wandert als elektrisches Signal über den Sehnerv zu jenen Hirnregionen, die das Bild verarbeiten.\n\nUnheimlich ist, dass der Effekt bei Menschen schwächer ausfällt, die die Person im Raum gut kennen: Ein Ehepaar etwa nimmt die Größenverzerrung weniger stark wahr. Das nennt man den Honi-Effekt, benannt nach einer Frau, die sowohl einen Fremden als auch ihren Mann beobachtete – und die Verzerrung nur beim Fremden sah, nie bei ihrem Mann."
+  }
+ },
+ "Clone Table": {
+  "d": {
+   "fr": "Imaginez parler à quelqu'un qui vous connaît mieux que personne, vous comprend parfaitement, ne vous contredit jamais, vous apprécie et tient à votre existence. Imaginez maintenant être assis à une table avec la personne la plus belle, intelligente, fascinante et intrigante que vous connaissiez. Nous savons que personne ne correspond mieux à cette description que… vous !\n\nLa table des clones vous offre le plaisir serein d'être en votre propre compagnie. Ni disputes, ni débats, ni malentendus. Mais attendez : est-ce amusant ou franchement ennuyeux ? Cinq copies de vous-même, c'est peut-être beaucoup, mais rassurez-vous, ce n'est pas vraiment vous. Ce qui ressemble à une grande table ronde n'est qu'un quartier de table qui se reflète en cercle complet grâce à deux miroirs placés à 60 degrés.\n\nPrenez un instant pour penser au nombre d'angles qui nous entourent chaque jour. Nos lèvres en forment quand nous parlons, et les aiguilles d'une horloge en dessinent sans cesse. À 2 heures, l'angle entre les aiguilles est de 60 degrés.\n\nSelon certaines estimations, cloner une personne coûterait environ 1,7 million de dollars, et des scientifiques affirment que les clones risqueraient de graves problèmes de santé. Cette installation vous permet de rencontrer vos clones tout en vous épargnant beaucoup d'argent et d'ennuis !",
+   "it": "Immagina di parlare con qualcuno che ti conosce meglio di chiunque altro, ti capisce perfettamente, non ti contraddice mai, ti apprezza e tiene alla tua esistenza. Ora immagina di sederti a tavola con la persona più bella, intelligente, affascinante e intrigante che conosci. Sappiamo che nessuno corrisponde a questa descrizione meglio di… te!\n\nIl tavolo dei cloni ti regala il piacere sereno di stare in compagnia di te stesso. Niente discussioni, dibattiti o malintesi. Ma aspetta: è divertente o decisamente noioso? Cinque copie di te forse sono troppe, ma non preoccuparti: non sei davvero tu. Quello che sembra un grande tavolo rotondo è solo uno spicchio di tavolo che si riflette in un cerchio completo grazie a due specchi posti a 60 gradi.\n\nFermati un attimo a pensare a quanti angoli ci circondano ogni giorno. Le nostre labbra ne formano quando parliamo, e le lancette di un orologio ne disegnano di continuo. Alle 2, l'angolo tra le lancette è di 60 gradi.\n\nSecondo alcune stime, clonare una persona costerebbe circa 1,7 milioni di dollari, e alcuni scienziati sostengono che i cloni rischierebbero gravi problemi di salute. Questa installazione ti permette di incontrare i tuoi cloni risparmiandoti un sacco di soldi e di fastidi!",
+   "de": "Stell dir vor, du sprichst mit jemandem, der dich besser kennt als alle anderen, dich vollkommen versteht, dir nie widerspricht, dich schätzt und deine Existenz zu würdigen weiß. Und nun stell dir vor, du sitzt mit der schönsten, klügsten, faszinierendsten Person an einem Tisch, die du kennst. Niemand passt besser auf diese Beschreibung als – du!\n\nDer Klontisch schenkt dir das stille Vergnügen, in deiner eigenen Gesellschaft zu sein. Kein Streit, keine Debatten, keine Missverständnisse. Aber Moment: Ist das lustig oder einfach langweilig? Fünf Ausgaben von dir sind vielleicht etwas viel – keine Sorge, du bist es gar nicht. Was wie ein großer runder Tisch aussieht, ist nur ein Tischsegment, das sich mithilfe zweier im 60-Grad-Winkel gestellter Spiegel zu einem vollen Kreis spiegelt.\n\nDenk einen Moment darüber nach, wie viele Winkel uns täglich umgeben. Unsere Lippen bilden welche beim Sprechen, und die Zeiger einer Uhr zeichnen ständig neue. Um 2 Uhr beträgt der Winkel zwischen den Zeigern 60 Grad.\n\nSchätzungen zufolge würde das Klonen eines Menschen rund 1,7 Millionen Dollar kosten, und manche Fachleute halten ernsthafte gesundheitliche Probleme für wahrscheinlich. Hier triffst du deine Klone – und sparst dir eine Menge Geld und Unannehmlichkeiten!"
+  }
+ },
+ "Face Blender": {
+  "d": {
+   "fr": "Vous êtes-vous déjà demandé de quoi vous auriez l'air avec le nez de votre ami ? Cette installation vous offre l'occasion de le découvrir pour de vrai. Et si vous visitez le musée en groupe, vous pouvez essayer toute une série de nez !\n\nIl existe bien sûr des logiciels en ligne qui permettent de transformer les photos que l'on téléverse ; ils servent souvent à imaginer le visage du futur bébé d'un couple, ou le résultat d'un mélange entre votre photo et celle d'une célébrité.\n\nLe mélangeur de visages de Paradox, lui, fonctionne en temps réel. Amusez-vous à découvrir toutes les façons dont vous pouvez changer d'allure. Cela vous plaira peut-être — ou vous découvrirez que votre nez va finalement très bien à votre visage.",
+   "it": "Ti sei mai chiesto che aspetto avresti con il naso del tuo amico? Questa installazione ti dà l'occasione di scoprirlo davvero. E se visiti il museo in gruppo, puoi provare tutta una serie di nasi!\n\nEsistono naturalmente programmi online che permettono di modificare le foto che carichi: spesso servono a immaginare il viso del futuro bambino di una coppia, o il risultato della fusione tra la tua foto e quella di una celebrità.\n\nIl miscelatore di volti di Paradox, invece, funziona in tempo reale. Divertiti a scoprire in quanti modi buffi puoi cambiare aspetto. Forse ti piacerà — o forse scoprirai che il tuo naso sta benissimo dov'è.",
+   "de": "Hast du dich je gefragt, wie du mit der Nase deines Freundes aussähest? Hier kannst du es in echt herausfinden. Und wenn du mit einer Gruppe im Museum bist, kannst du gleich eine ganze Auswahl an Nasen durchprobieren!\n\nNatürlich gibt es Programme im Netz, die hochgeladene Fotos verändern; damit lässt sich etwa erahnen, wie das künftige Kind eines Paares aussehen könnte, oder was passiert, wenn man das eigene Bild mit dem einer berühmten Person verschmilzt.\n\nDer Face Blender von Paradox arbeitet dagegen in Echtzeit. Probier aus, auf wie viele komische Arten du dich verwandeln kannst. Vielleicht gefällt es dir – vielleicht merkst du aber auch, dass deine eigene Nase perfekt zu deinem Gesicht passt."
+  }
+ },
+ "Kaleidoscope": {
+  "d": {
+   "fr": "Le mot kaléidoscope réunit trois mots grecs : « kalos », beau, « eidos », forme, et « skopos », celui qui observe. Kaléidoscope signifie donc littéralement « belles formes à regarder ».\n\nLe premier kaléidoscope fut inventé par Sir David Brewster vers 1816. Vendu surtout comme jouet, il est aussi devenu un outil créatif pour de nombreux artistes et designers. Son motif change à l'infini quand on fait tourner la section contenant les fragments libres ; il produit une gamme de couleurs et de motifs qui a inspiré au fil des ans tapis, vêtements, vitraux, bijoux, motifs architecturaux, papiers peints, tapisseries et bien plus encore.\n\nLe kaléidoscope de Paradox, c'est le jouet préféré de tous devenu installation. À la place des papiers colorés et des perles, ce sont les visiteurs eux-mêmes qui créent les motifs. Cette pièce autoportante repose sur le principe des réflexions multiples. Elle est faite de trois miroirs identiques montés en prisme triangulaire : un volume à deux faces triangulaires identiques reliées par trois faces rectangulaires.\n\nÀ l'intérieur, les reflets des objets se déplacent et se combinent dans une danse symétrique qui forme un motif en perpétuel changement. Nous aimons y voir la métaphore d'une belle vie, toujours en mouvement, qui nous met sans cesse au défi de regarder les choses autrement.",
+   "it": "La parola caleidoscopio unisce tre parole greche: «kalos», bello, «eidos», forma, e «skopos», chi osserva. Caleidoscopio significa dunque letteralmente «belle forme da guardare».\n\nIl primo caleidoscopio fu inventato da Sir David Brewster intorno al 1816. Venduto soprattutto come giocattolo, è diventato anche uno strumento creativo per molti artisti e designer. Il suo disegno cambia all'infinito ruotando la sezione che contiene i frammenti liberi; produce una gamma di colori e motivi che negli anni ha ispirato tappeti, vestiti, vetrate, gioielli, motivi architettonici, carte da parati, arazzi e molto altro.\n\nIl caleidoscopio di Paradox è il giocattolo preferito di tutti trasformato in installazione. Al posto di carte colorate e perline, sono i visitatori stessi a creare i motivi. Questa struttura autoportante si basa sul principio delle riflessioni multiple. È fatta di tre specchi uguali montati a prisma triangolare: un solido con due facce triangolari identiche unite da tre facce rettangolari.\n\nAll'interno, i riflessi degli oggetti si muovono e si combinano in una danza simmetrica che forma un motivo in continuo cambiamento. Ci piace vederci la metafora di una bella vita, sempre in movimento, che continuamente ci sfida a guardare le cose da un'altra prospettiva.",
+   "de": "Das Wort Kaleidoskop vereint drei griechische Begriffe: „kalos“ – schön, „eidos“ – Form und „skopos“ – der Betrachter. Kaleidoskop heißt also wörtlich „schöne Formen zum Anschauen“.\n\nDas erste Kaleidoskop erfand Sir David Brewster um 1816. Verkauft wurde es vor allem als Spielzeug, doch es wurde auch zum kreativen Werkzeug vieler Gestalterinnen und Künstler. Sein Muster verändert sich endlos, wenn man den Abschnitt mit den losen Teilchen dreht; die entstehenden Farben und Muster haben über die Jahre Teppiche, Kleider, Glasfenster, Schmuck, Bauornamente, Tapeten, Wandteppiche und vieles mehr inspiriert.\n\nDas Kaleidoskop von Paradox ist das Lieblingsspielzeug aller, geworden zum Exponat. Statt bunter Papiere und Perlen erzeugen hier die Besucherinnen und Besucher selbst die Muster. Das frei stehende Objekt beruht auf dem Prinzip mehrfacher Spiegelung und besteht aus drei gleichen Spiegeln in Form eines dreiseitigen Prismas: ein Körper mit zwei identischen dreieckigen Flächen, verbunden durch drei rechteckige.\n\nIm Inneren bewegen sich die Spiegelbilder und verbinden sich in einem symmetrischen Tanz zu einem Muster, das sich unablässig wandelt. Wir sehen darin gern ein Bild für ein schönes Leben: ständig in Bewegung und immer wieder aufgefordert, die Dinge aus einer anderen Perspektive zu sehen."
+  }
+ },
+ "Beuchet Chair": {
+  "d": {
+   "fr": "Qui aurait cru que la taille perçue d'une personne dépend du contexte suggéré par les objets qui l'entourent ? De nombreuses théories et de nombreux outils cherchent à infléchir nos perceptions, et la chaise de Beuchet en fait partie.\n\nLe concept fut présenté pour la première fois par le psychologue Jean Beuchet en 1963 et offrit un éclairage remarquable sur les méthodes de persuasion. Cette chaise mondialement connue utilise deux éléments pour faire paraître les gens plus petits : une assise surdimensionnée et quatre pieds de taille normale. L'assise est placée bien plus loin que les pieds, mais depuis un point précis, les deux parties semblent n'en former qu'une. Quand quelqu'un s'y assoit, l'observateur suppose automatiquement qu'il est proche, alors qu'il est bien plus loin.\n\nLa chaise de Beuchet de Paradox est une façon ludique d'explorer les lois de la perception et de jouer avec les rapports de taille. Croyez-le ou non, elle peut servir à décrypter des campagnes de marketing, à améliorer la perception d'une marque, voire à soutenir des campagnes sociales !",
+   "it": "Chi avrebbe immaginato che la grandezza percepita di una persona dipenda dal contesto suggerito dagli oggetti che la circondano? Esistono molte teorie e molti strumenti che cercano di modificare le nostre percezioni, e la sedia di Beuchet è uno di questi.\n\nIl concetto fu introdotto per la prima volta dallo psicologo Jean Beuchet nel 1963, offrendo uno sguardo straordinario sui metodi di persuasione. Questa sedia famosa in tutto il mondo usa due elementi per far sembrare le persone più piccole: una seduta sovradimensionata e quattro gambe di misura normale. La seduta è collocata molto più lontano delle gambe, ma da un punto preciso le due parti sembrano un unico oggetto. Quando qualcuno vi si siede, l'osservatore dà automaticamente per scontato che sia vicino, mentre è molto più distante.\n\nLa sedia di Beuchet di Paradox è un modo divertente di esplorare le leggi della percezione e giocare con i rapporti di grandezza. Che tu ci creda o no, può aiutare a smontare campagne di marketing, a migliorare la percezione di un marchio e perfino a sostenere campagne sociali!",
+   "de": "Wer hätte gedacht, dass die wahrgenommene Größe eines Menschen davon abhängt, welchen Zusammenhang die Dinge ringsum nahelegen? Es gibt zahlreiche Theorien und Werkzeuge, die unsere Wahrnehmung verschieben wollen – der Beuchet-Stuhl ist eines davon.\n\nVorgestellt wurde das Konzept erstmals 1963 vom Psychologen Jean Beuchet, mit bemerkenswerten Einsichten über Methoden der Überzeugung. Dieser weltbekannte Stuhl nutzt zwei Bauteile, um Menschen kleiner erscheinen zu lassen: eine übergroße Sitzfläche und vier Beine in normaler Größe. Die Sitzfläche steht viel weiter entfernt als die Beine, doch von einem bestimmten Punkt aus fügen sich beide Teile zu einem Ganzen. Setzt sich jemand darauf, nimmt der Betrachter automatisch an, die Person sei nah – obwohl sie viel weiter weg ist.\n\nDer Beuchet-Stuhl von Paradox ist eine vergnügliche Art, die Gesetze der Wahrnehmung zu erkunden und mit Größenverhältnissen zu spielen. Ob du es glaubst oder nicht: Er kann helfen, Werbekampagnen zu entzaubern, die Markenwahrnehmung zu verbessern und sogar soziale Anliegen zu unterstützen!"
+  }
+ },
+ "PDX Sofa": {
+  "d": {
+   "fr": "Le « bug dans la matrice » vient du film Matrix, où un bug attire l'attention d'un personnage sur le fait qu'il se trouve dans une simulation. Les bugs sont des événements qui n'ont de sens que si l'on accepte l'idée que notre réalité est une sorte de simulation.\n\nCes bugs du réel semblent de plus en plus fréquents et nous donnent l'impression d'être dans un film. Ces incidents étranges font naître le sentiment que le monde n'est pas tel que nous l'imaginons. Des objets disparaissent puis réapparaissent ; parfois on ne les revoit jamais ; parfois ils réapparaissent au même endroit, ou en plein jour, là où on les aurait forcément vus. Des personnes sont aperçues par différents témoins à des endroits différents au même moment, ou manquent là où elles devraient être. Certaines ont même disparu avant de réapparaître en affirmant n'avoir jamais quitté les lieux. Certains récits s'expliquent par des erreurs de mémoire ou par l'effet de substances ou d'une intoxication au monoxyde de carbone, mais plusieurs témoins ont confirmé la réalité de telles expériences.\n\nDans le canapé Paradox, le visiteur cache une partie de son corps dans les ouvertures prévues : le bas du corps est assis à droite, tandis que le torse et la tête semblent assis un mètre plus loin. Cela plonge les visiteurs dans un monde paradoxal où ils ressemblent à un bug du réel ; en vérité, malgré ce que dira la photo, ce ne sont que deux personnes dont une partie du corps est cachée.\n\nAucune théorie du complot là-dedans : juste le plaisir de paresser tranquillement, confortablement installé, en s'amusant avec ses complices.",
+   "it": "Il «bug nella matrice» viene dal film Matrix, dove un errore fa notare a un personaggio di trovarsi dentro una simulazione. I bug sono eventi che hanno senso solo se accettiamo l'idea che la nostra realtà sia una specie di simulazione.\n\nQuesti errori della vita reale sembrano sempre più frequenti e ci fanno sentire dentro un film. Questi episodi bizzarri fanno nascere la sensazione che il mondo non sia come lo immaginiamo. Oggetti spariscono e poi riappaiono; a volte non si rivedono più; a volte riappaiono nello stesso posto, o in pieno giorno, dove sarebbero stati visibilissimi. Alcune persone vengono viste da testimoni diversi in luoghi diversi nello stesso momento, oppure mancano dove dovrebbero essere. Qualcuno è perfino scomparso per poi riapparire sostenendo di non essersi mai allontanato. Alcuni racconti si spiegano con errori di memoria o con l'effetto di sostanze o di un'intossicazione da monossido di carbonio, ma più testimoni hanno confermato la realtà di simili esperienze.\n\nNel divano Paradox il visitatore nasconde parte del corpo nei fori appositi: la parte inferiore è seduta a destra, mentre busto e testa sembrano seduti un metro più in là. Il risultato è un mondo paradossale in cui si somiglia a un errore del reale; in verità, qualunque cosa dica la foto, sono solo due persone con parti del corpo nascoste.\n\nNessuna teoria del complotto: solo il piacere di poltrire tranquillamente, comodi e sedentari, divertendosi con i propri complici.",
+   "de": "Der „Fehler in der Matrix“ stammt aus dem Film Matrix, wo ein Glitch jemanden darauf aufmerksam macht, dass er sich in einer Simulation befindet. Glitches sind Ereignisse, die nur Sinn ergeben, wenn man annimmt, dass unsere Wirklichkeit eine Art Simulation ist.\n\nSolche Glitches im echten Leben häufen sich scheinbar und lassen uns fühlen, als steckten wir in einem Film. Diese seltsamen Vorfälle wecken das Gefühl, die Welt sei nicht so, wie wir sie uns vorstellen. Gegenstände verschwinden und tauchen wieder auf; manche nie mehr; manche am selben Ort, manche am helllichten Tag dort, wo man sie längst hätte sehen müssen. Menschen werden von verschiedenen Zeuginnen gleichzeitig an verschiedenen Orten gesehen oder fehlen dort, wo sie sein müssten. Manche verschwanden sogar und behaupteten danach, den Ort nie verlassen zu haben. Manches lässt sich mit Erinnerungsfehlern, Drogenwirkung oder einer Kohlenmonoxidvergiftung erklären, doch mehrere Zeugen haben solche Erlebnisse bestätigt.\n\nAuf dem Paradox-Sofa versteckt die Besucherin einen Teil ihres Körpers in den eigens gestalteten Öffnungen: Der Unterkörper sitzt rechts, Oberkörper und Kopf scheinen einen Meter weiter zu sitzen. So entsteht eine paradoxe Welt, in der man wie ein Fehler der Wirklichkeit aussieht – in Wahrheit sind es, was das Foto auch behauptet, nur zwei Personen mit verborgenen Körperteilen.\n\nKeine Verschwörungstheorie weit und breit: einfach nur gemütliches Nichtstun in sicherer, bequemer Trägheit – mit den richtigen Komplizen."
+  }
+ },
+ "Yes / No Paradox": {
+  "d": {
+   "fr": "Oui ! Non ! Peut-être ! Je ne sais pas ! Pouvez-vous répéter la question ? Tout cela pose la question de savoir si les gens sont vraiment décidés, ou si leurs décisions dépendent du point de vue adopté.\n\nLa perspective, c'est la façon dont les objets apparaissent selon leurs distances et leurs positions relatives ; c'est la manière de regarder quelque chose. En termes psychologiques, votre perspective est la façon dont vous avez choisi de voir le monde. Elle inclut la façon dont vous vous voyez et dont vous voyez les autres. Ainsi, même si vous croyez que vos pensées sur votre vie et sur vos proches sont des « faits », elles n'en sont pas.\n\nLe paradoxe Oui/Non est une sculpture anamorphique, une projection déformée portant deux affirmations opposées, oui et non. L'illusion visuelle change quand le visiteur change de point de vue. Le corps de la sculpture ne change pas, seule change la façon dont nous la voyons. Selon l'angle, l'attitude ou le point de vue — physique ou émotionnel — il est très facile de tromper notre cerveau et de lui faire voir la même sculpture autrement.",
+   "it": "Sì! No! Forse! Non lo so! Puoi ripetere la domanda? Tutto questo solleva la questione se le persone siano davvero decise, oppure se le loro decisioni dipendano dal punto di vista adottato.\n\nLa prospettiva è il modo in cui gli oggetti appaiono in base alle loro distanze e posizioni relative; è il modo in cui si guarda qualcosa. In termini psicologici, la tua prospettiva è il modo in cui hai scelto di vedere il mondo. Comprende come vedi te stesso e chi ti sta intorno. E così, anche se credi che i tuoi pensieri sulla tua vita e sulle persone che conosci siano «fatti», in realtà non lo sono.\n\nIl paradosso Sì/No è una scultura anamorfica, una proiezione distorta con due affermazioni opposte, sì e no. L'illusione visiva cambia quando il visitatore cambia prospettiva. Il corpo della scultura non cambia: cambia solo il modo in cui la vediamo. A seconda dell'angolo, dell'atteggiamento o del punto di vista — fisico o emotivo — è facilissimo ingannare il cervello e fargli vedere la stessa scultura in modo diverso.",
+   "de": "Ja! Nein! Vielleicht! Ich weiß nicht! Kannst du die Frage wiederholen? All das wirft die Frage auf, ob Menschen wirklich entschlossen sind – oder ob ihre Entscheidungen vom eingenommenen Blickwinkel abhängen.\n\nPerspektive ist die Art, wie Dinge je nach Entfernung und Lage zueinander erscheinen; sie ist die Art, wie man etwas betrachtet. Psychologisch gesprochen ist deine Perspektive die Weise, wie du die Welt zu sehen gewählt hast. Dazu gehört, wie du dich selbst siehst und wie du andere siehst. Und so sind deine Gedanken über dein Leben und die Menschen um dich herum eben keine „Tatsachen“, auch wenn sie sich so anfühlen.\n\nDas Ja/Nein-Paradox ist eine anamorphe Skulptur, eine verzerrte Projektion mit zwei gegensätzlichen Aussagen: ja und nein. Die optische Täuschung verändert sich, sobald die Betrachterin die Perspektive wechselt. Der Körper der Skulptur bleibt gleich – nur unsere Sicht darauf ändert sich. Je nach Winkel, Haltung oder Standpunkt, körperlich wie gefühlsmäßig, lässt sich das Gehirn mühelos dazu bringen, dieselbe Skulptur ganz anders zu sehen."
+  }
+ },
+ "Bienvenido · Benvingut · Welcome": {
+  "d": {
+   "fr": "Suivez le parcours étape par étape : chaque numéro au sol et sur les murs correspond à une fiche de ce guide. Vous pouvez suivre l'ordre ou naviguer salle par salle.",
+   "it": "Segui il percorso tappa dopo tappa: ogni numero sul pavimento e sulle pareti corrisponde a una scheda di questa guida. Puoi seguire l'ordine oppure muoverti sala per sala.",
+   "de": "Folge dem Rundgang Station für Station: Jede Zahl am Boden und an den Wänden entspricht einer Karte in diesem Guide. Du kannst der Reihe nach gehen oder von Raum zu Raum springen."
+  }
+ },
+ "Gracias · Gràcies · Thank you": {
+  "d": {
+   "fr": "Si cela vous a plu, dites-le. Et si quelque chose vous échappe encore, demandez-nous : l'équipe adore révéler comment tout cela fonctionne.",
+   "it": "Se ti è piaciuto, raccontalo. E se qualcosa non ti torna, chiedi pure: al team piace moltissimo svelare come funziona ogni pezzo.",
+   "de": "Wenn es dir gefallen hat, sag es weiter. Und wenn dir etwas nicht aufgeht, frag uns: Das Team verrät nur zu gern, wie das alles funktioniert."
+  }
+ },
+ "Zero Gravity": {
+  "d": {
+   "fr": "Zero Gravity est une roue carrée qui tourne avec vous à l'intérieur. Le téléphone est fixé sur un support extérieur qui tourne solidairement avec la salle : dans la vidéo, le sol ne bouge donc jamais. Celui qui semble bouger, c'est vous, en train de grimper aux murs et de vous retrouver la tête en bas au plafond.\n\nNi câbles, ni fond vert, ni effets ajoutés après coup. Tout le truc tient à ce que la caméra et la pièce tournent exactement en même temps : l'enregistrement ne dispose alors d'aucun repère fixe qui trahirait le mouvement.\n\nAvant d'entrer, on vous remettra des surchaussures en tissu à enfiler par-dessus vos chaussures.",
+   "it": "Zero Gravity è una ruota quadrata che gira con te dentro. Il telefono è montato su un supporto esterno che ruota solidale con la stanza, perciò nel video il pavimento non si sposta mai: quello che sembra muoversi sei tu, mentre sali lungo le pareti e finisci a testa in giù sul soffitto.\n\nNiente cavi, niente green screen, niente effetti aggiunti dopo. Tutto il trucco sta nel fatto che la telecamera e la stanza ruotano esattamente insieme: la ripresa non ha così alcun riferimento fisso che tradisca il movimento.\n\nPrima di entrare ti daranno dei copriscarpe di tessuto da indossare sopra le scarpe.",
+   "de": "Zero Gravity ist ein quadratisches Rad, das sich mit dir darin dreht. Das Handy sitzt auf einer Halterung außen, die sich mit dem Raum mitdreht – im Video bleibt der Boden daher immer an derselben Stelle. Wer sich zu bewegen scheint, bist du: Du läufst die Wände hoch und hängst kopfüber an der Decke.\n\nKeine Seile, kein Greenscreen, nichts nachträglich eingefügt. Der ganze Trick besteht darin, dass Kamera und Raum sich exakt gleichzeitig drehen – so fehlt der Aufnahme jeder feste Bezugspunkt, der die Bewegung verraten könnte.\n\nVor dem Betreten bekommst du Stoffüberzieher, die du über die Schuhe streifst."
+  }
+ },
+ "Paradox Challenge": {
+  "d": {
+   "fr": "Des murs rayés qui filent dans toutes les directions, un ballon jaune et pas un seul repère fiable pour savoir où se trouve le sol. C'est là tout le piège : sans horizontale ni verticale pour vous orienter, le cerveau accepte l'orientation que lui donne la photo.\n\nPlacez-vous là où l'équipe vous l'indique, prenez la photo et faites-la pivoter. À l'écran, vous aurez l'air de faire le poirier sur le ballon, de flotter à mi-hauteur ou d'être tiré vers le plafond. Dans la salle, pendant ce temps, vous étiez tranquillement appuyé.",
+   "it": "Pareti a righe che partono in tutte le direzioni, un palloncino giallo e nemmeno un riferimento affidabile su dove sia il pavimento. È tutto qui il trucco: senza orizzontale né verticale che ti orientino, il cervello accetta l'orientamento che gli dà la foto.\n\nMettiti dove ti indica il personale, scatta la foto e ruotala. Sullo schermo sembrerà che tu stia facendo la verticale sul palloncino, che galleggi a mezz'aria o che il palloncino ti tiri verso il soffitto. Nella sala, intanto, eri comodamente appoggiato.",
+   "de": "Gestreifte Wände, die in alle Richtungen davonschießen, ein gelber Luftballon und kein einziger verlässlicher Hinweis darauf, wo der Boden ist. Genau darin liegt der Trick: Ohne Waagerechte und Senkrechte zur Orientierung übernimmt das Gehirn einfach die Ausrichtung, die das Foto vorgibt.\n\nStell dich dorthin, wo das Team es dir sagt, mach das Foto und dreh es. Auf dem Bildschirm sieht es aus, als machtest du einen Handstand auf dem Ballon, als schwebtest du in der Luft oder als zöge dich der Ballon zur Decke. Im Raum dagegen hast du ganz bequem aufgelegen."
+  }
+ },
+ "Muro de ilusiones ópticas": {
+  "d": {
+   "fr": "Douze illusions classiques sur un seul mur. Aucune ne bouge, aucune n'est de travers, aucune ne change de taille : tout ce que vous voyez en plus, c'est votre propre système visuel qui l'ajoute.",
+   "it": "Dodici illusioni classiche su una sola parete. Nessuna si muove, nessuna è storta, nessuna cambia dimensione: tutto quello che vedi in più ce lo mette il tuo sistema visivo.",
+   "de": "Zwölf klassische Täuschungen an einer einzigen Wand. Keine bewegt sich, keine ist schief, keine verändert ihre Größe: Alles Zusätzliche fügt dein eigenes Sehsystem hinzu."
+  }
+ }
+};
+Object.entries(TRAD_D).forEach(([t, extra]) => {
+  S.filter(s => s.t === t).forEach(s => {
+    if (extra.d && s.d) Object.assign(s.d, extra.d);
+  });
+});
+
+/* ── Traducciones FR / IT / DE de ganchos, retos y pasos ───── */
+const TRAD_X = {
+ "Bienvenido · Benvingut · Welcome": {
+  "hook": {
+   "fr": "Vos yeux vont vous mentir plus de cinquante fois de suite. Et ils vont le faire à merveille.",
+   "it": "I tuoi occhi stanno per mentirti più di cinquanta volte di fila. E lo faranno benissimo.",
+   "de": "Deine Augen werden dich gleich über fünfzig Mal hintereinander belügen. Und zwar meisterhaft."
+  },
+  "quiz": {
+   "q": {
+    "fr": "Combien de temps dure le parcours complet ?",
+    "it": "Quanto ci vuole per fare tutto il percorso?",
+    "de": "Wie lange dauert der ganze Rundgang?"
+   },
+   "a": {
+    "fr": "Sans se presser, environ <b>90 minutes</b>. Plus de cinquante installations réparties sur <b>deux niveaux et sept salles</b>, et presque toutes demandent qu'on s'arrête pour les essayer.",
+    "it": "Con calma, circa <b>90 minuti</b>. Sono più di cinquanta installazioni distribuite su <b>due piani e sette sale</b>, e quasi tutte chiedono di fermarsi a provarle.",
+    "de": "Ohne Hetze etwa <b>90 Minuten</b>. Über fünfzig Exponate verteilen sich auf <b>zwei Etagen und sieben Räume</b>, und fast alle wollen ausprobiert werden."
+   }
+  },
+  "how": [
+   {
+    "t": {
+     "fr": "Chargez la batterie",
+     "it": "Carica la batteria",
+     "de": "Akku laden"
+    },
+    "s": {
+     "fr": "Vous prendrez plus de photos que prévu.",
+     "it": "Farai più foto di quante pensi.",
+     "de": "Du machst mehr Fotos, als du denkst."
+    }
+   },
+   {
+    "t": {
+     "fr": "Venez accompagné",
+     "it": "Vieni in compagnia",
+     "de": "Bring jemanden mit"
+    },
+    "s": {
+     "fr": "La moitié des installations demandent quelqu'un en face.",
+     "it": "Metà delle installazioni ha bisogno di qualcuno dall'altra parte.",
+     "de": "Die Hälfte der Exponate braucht jemanden auf der anderen Seite."
+    }
+   }
+  ]
+ },
+ "Paradox Challenge": {
+  "hook": {
+   "fr": "Ici, il n'y a pas de bonne posture, il y a une bonne photo. Placez-vous, déclenchez, puis faites pivoter l'écran.",
+   "it": "Qui non esiste la posa giusta, esiste la foto giusta. Mettiti in posizione, scatta e gira lo schermo.",
+   "de": "Hier gibt es keine richtige Haltung, nur das richtige Foto. Stell dich hin, lös aus und dreh den Bildschirm."
+  },
+  "quiz": {
+   "q": {
+    "fr": "Pourquoi la photo pivotée marche-t-elle mieux que la salle vue en vrai ?",
+    "it": "Perché la foto ruotata funziona meglio della sala vista dal vivo?",
+    "de": "Warum wirkt das gedrehte Foto besser als der Raum in echt?"
+   },
+   "a": {
+    "fr": "Parce qu'en direct votre <b>oreille interne</b> sait très bien où est le sol et démonte l'illusion aussitôt. Une photo n'a pas d'oreille interne : elle n'a que les rayures, et les rayures disent ce que l'on veut.",
+    "it": "Perché dal vivo il tuo <b>orecchio interno</b> sa benissimo dov'è il pavimento e smonta subito l'illusione. La foto non ha orecchio interno: ha solo le righe, e le righe dicono quello che vogliamo noi.",
+    "de": "Weil dein <b>Gleichgewichtsorgan</b> live genau weiß, wo der Boden ist, und die Illusion sofort auffliegen lässt. Ein Foto hat kein Gleichgewichtsorgan: Es hat nur die Streifen – und die sagen, was wir wollen."
+   }
+  }
+ },
+ "Shadow Freeze": {
+  "hook": {
+   "fr": "Vous avez trois secondes pour choisir la pose qui restera collée au mur. Choisissez bien.",
+   "it": "Hai tre secondi per scegliere la posa che resterà attaccata al muro. Scegli bene.",
+   "de": "Du hast drei Sekunden, um die Pose zu wählen, die an der Wand kleben bleibt. Wähl mit Bedacht."
+  },
+  "quiz": {
+   "q": {
+    "fr": "Le mur brille. Pourquoi votre silhouette ressort-elle sombre et non l'inverse ?",
+    "it": "Il muro brilla. Perché la tua sagoma viene scura e non il contrario?",
+    "de": "Die Wand leuchtet. Warum erscheint deine Silhouette dunkel und nicht umgekehrt?"
+   },
+   "a": {
+    "fr": "Parce que la peinture <b>emmagasine la lumière reçue</b> et la restitue lentement. Vous avez servi de parapluie : derrière vous, aucun flash n'est arrivé, donc cette zone n'a rien à restituer.",
+    "it": "Perché la vernice <b>immagazzina la luce che riceve</b> e la rilascia lentamente. Tu hai fatto da ombrello: dietro di te non è arrivato nessun flash, quindi quella zona non ha nulla da rilasciare.",
+    "de": "Weil die Farbe <b>das empfangene Licht speichert</b> und langsam wieder abgibt. Du hast als Schirm gewirkt: Hinter dir kam kein Blitz an, also hat diese Stelle nichts abzugeben."
+   }
+  },
+  "how": [
+   {
+    "t": {
+     "fr": "Collez-vous au mur",
+     "it": "Avvicinati al muro",
+     "de": "Geh ganz nah ran"
+    },
+    "s": {
+     "fr": "Plus vous êtes près, plus le contour est net.",
+     "it": "Più sei vicino, più il contorno è netto.",
+     "de": "Je näher, desto schärfer die Kontur."
+    }
+   },
+   {
+    "t": {
+     "fr": "Pose exagérée",
+     "it": "Posa esagerata",
+     "de": "Große Geste"
+    },
+    "s": {
+     "fr": "Bras et jambes écartés se lisent bien mieux.",
+     "it": "Braccia e gambe aperte si leggono molto meglio.",
+     "de": "Arme und Beine weit weg vom Körper wirken viel besser."
+    }
+   },
+   {
+    "t": {
+     "fr": "Ne bougez pas",
+     "it": "Non muoverti",
+     "de": "Nicht bewegen"
+    },
+    "s": {
+     "fr": "Si vous bougez au flash, l'ombre sera floue.",
+     "it": "Se ti muovi durante il flash, l'ombra viene sfocata.",
+     "de": "Bewegst du dich beim Blitz, verwischt der Schatten."
+    }
+   }
+  ]
+ },
+ "Stroop Effect": {
+  "hook": {
+   "fr": "Dites la couleur de l'encre, pas le mot. Ça paraît simple. Vous trébucherez dès le troisième.",
+   "it": "Di' il colore dell'inchiostro, non la parola. Sembra facile. Inciamperai al terzo.",
+   "de": "Sag die Farbe der Tinte, nicht das Wort. Klingt einfach. Beim dritten stolperst du."
+  },
+  "quiz": {
+   "q": {
+    "fr": "Quelqu'un qui ne sait pas lire aurait-il le même problème ?",
+    "it": "Chi non sa leggere avrebbe lo stesso problema?",
+    "de": "Hätte jemand, der nicht lesen kann, dasselbe Problem?"
+   },
+   "a": {
+    "fr": "<b>Non.</b> Sans lecture automatique, il n'y a rien à freiner : la couleur est nommée aussi vite dans les deux cas. L'effet apparaît précisément quand on devient bon lecteur — c'est le prix de la lecture sans effort.",
+    "it": "<b>No.</b> Senza lettura automatica non c'è nulla da frenare: il colore viene detto altrettanto in fretta in entrambi i casi. L'effetto compare proprio quando si impara a leggere con scioltezza: è il prezzo del farlo senza sforzo.",
+    "de": "<b>Nein.</b> Ohne automatisches Lesen gibt es nichts zu bremsen: Die Farbe wird in beiden Fällen gleich schnell genannt. Der Effekt tritt genau dann auf, wenn man flüssig lesen kann – er ist der Preis der Mühelosigkeit."
+   }
+  },
+  "how": [
+   {
+    "t": {
+     "fr": "Chronométrez-vous",
+     "it": "Cronometrati",
+     "de": "Stoppe die Zeit"
+    },
+    "s": {
+     "fr": "D'abord en lisant les mots, puis en nommant les couleurs.",
+     "it": "Prima leggendo le parole, poi dicendo i colori.",
+     "de": "Erst die Wörter lesen, dann die Farben nennen."
+    }
+   },
+   {
+    "t": {
+     "fr": "Défiez quelqu'un",
+     "it": "Sfida qualcuno",
+     "de": "Tritt gegen jemanden an"
+    },
+    "s": {
+     "fr": "L'effet est bien plus net quand on se presse.",
+     "it": "L'effetto si sente molto di più quando c'è fretta.",
+     "de": "Unter Zeitdruck ist der Effekt viel deutlicher."
+    }
+   }
+  ]
+ },
+ "Infinity Room": {
+  "hook": {
+   "fr": "Entrez seul. Dès que la porte se referme, vous serez une foule.",
+   "it": "Entra da solo. Appena la porta si chiude sarai tantissima gente.",
+   "de": "Geh allein hinein. Sobald die Tür zugeht, bist du sehr viele Leute."
+  },
+  "quiz": {
+   "q": {
+    "fr": "Jusqu'où vont réellement les reflets ?",
+    "it": "Fin dove arrivano davvero i riflessi?",
+    "de": "Wie weit reichen die Spiegelungen wirklich?"
+   },
+   "a": {
+    "fr": "Pas à l'infini : chaque miroir renvoie un peu moins de <b>95 % de la lumière</b>, donc chaque rebond est plus sombre que le précédent. Ce que vous voyez finit par se perdre dans le noir après quelques dizaines de copies.",
+    "it": "Non all'infinito: ogni specchio restituisce poco meno del <b>95 % della luce</b>, quindi ogni rimbalzo è più scuro del precedente. Quello che vedi finisce per perdersi nel nero dopo qualche decina di copie.",
+    "de": "Nicht bis ins Unendliche: Jeder Spiegel wirft knapp <b>95 % des Lichts</b> zurück, jede Spiegelung ist also dunkler als die vorige. Nach einigen Dutzend Kopien verliert sich das Bild im Schwarz."
+   }
+  },
+  "how": [
+   {
+    "t": {
+     "fr": "Un par un",
+     "it": "Uno alla volta",
+     "de": "Einer nach dem anderen"
+    },
+    "s": {
+     "fr": "À deux, la symétrie se casse.",
+     "it": "In due la simmetria si rompe.",
+     "de": "Zu zweit bricht die Symmetrie."
+    }
+   },
+   {
+    "t": {
+     "fr": "Visez un coin",
+     "it": "Punta a un angolo",
+     "de": "Ziel auf eine Ecke"
+    },
+    "s": {
+     "fr": "C'est là que le reflet va le plus loin.",
+     "it": "È lì che il riflesso arriva più lontano.",
+     "de": "Dort reicht die Spiegelung am tiefsten."
+    }
+   },
+   {
+    "t": {
+     "fr": "Sans flash",
+     "it": "Senza flash",
+     "de": "Ohne Blitz"
+    },
+    "s": {
+     "fr": "Le flash rebondit et gâche la photo.",
+     "it": "Il flash rimbalza e rovina la foto.",
+     "de": "Der Blitz wird zurückgeworfen und ruiniert das Bild."
+    }
+   }
+  ]
+ },
+ "Ames Room": {
+  "hook": {
+   "fr": "L'un de vous deux sortira deux fois plus grand que l'autre. Et aucun ne quittera le sol.",
+   "it": "Uno dei due verrà alto il doppio dell'altro. E nessuno si muoverà dal pavimento.",
+   "de": "Einer von euch wird doppelt so groß wie der andere. Und keiner verlässt den Boden."
+  },
+  "quiz": {
+   "q": {
+    "fr": "Pourquoi le cerveau déforme-t-il la personne et non la pièce ?",
+    "it": "Perché il cervello deforma la persona e non la stanza?",
+    "de": "Warum verzerrt das Gehirn die Person und nicht den Raum?"
+   },
+   "a": {
+    "fr": "Parce que vous avez passé toute votre vie dans des pièces rectangulaires et <b>aucune dans des pièces trapézoïdales</b>. Entre deux explications possibles, le cerveau choisit toujours celle qu'il a vue un million de fois, quitte à transformer votre ami en géant.",
+    "it": "Perché hai passato tutta la vita in stanze rettangolari e <b>nessuna in stanze trapezoidali</b>. Tra due spiegazioni possibili, il cervello sceglie sempre quella vista un milione di volte, anche se questo significa trasformare il tuo amico in un gigante.",
+    "de": "Weil du dein ganzes Leben in rechtwinkligen Räumen verbracht hast und <b>in keinem einzigen trapezförmigen</b>. Zwischen zwei möglichen Erklärungen wählt das Gehirn immer die, die es millionenfach kennt – und macht dafür notfalls einen Riesen aus deinem Freund."
+   }
+  },
+  "how": [
+   {
+    "t": {
+     "fr": "Un dans chaque coin",
+     "it": "Uno per angolo",
+     "de": "Je einer pro Ecke"
+    },
+    "s": {
+     "fr": "C'est le contraste qui fait la photo.",
+     "it": "È il contrasto a fare la foto.",
+     "de": "Der Kontrast macht das Bild."
+    }
+   },
+   {
+    "t": {
+     "fr": "Uniquement par le judas",
+     "it": "Solo dallo spioncino",
+     "de": "Nur durch den Spion"
+    },
+    "s": {
+     "fr": "Depuis tout autre angle, le truc se voit.",
+     "it": "Da qualsiasi altra angolazione si vede il trucco.",
+     "de": "Aus jedem anderen Winkel sieht man den Trick."
+    }
+   },
+   {
+    "t": {
+     "fr": "Échangez vos places",
+     "it": "Scambiatevi di posto",
+     "de": "Tauscht die Plätze"
+    },
+    "s": {
+     "fr": "C'est la deuxième photo qui convainc.",
+     "it": "È la seconda foto a convincere.",
+     "de": "Das zweite Foto ist das überzeugende."
+    }
+   }
+  ]
+ },
+ "Beuchet Chair": {
+  "hook": {
+   "fr": "L'assise et les pieds sont à plusieurs mètres l'un de l'autre. Vous allez vous asseoir quand même.",
+   "it": "Il sedile e le gambe sono a metri di distanza. Ti siederai lo stesso.",
+   "de": "Sitzfläche und Beine stehen meterweit auseinander. Du setzt dich trotzdem drauf."
+  },
+  "quiz": {
+   "q": {
+    "fr": "Que se passe-t-il si vous faites un pas sur le côté ?",
+    "it": "Che cosa succede se fai un passo di lato?",
+    "de": "Was passiert, wenn du einen Schritt zur Seite gehst?"
+   },
+   "a": {
+    "fr": "La chaise <b>se démonte</b>. Le truc dépend d'un seul point de vue : en dehors, l'assise et les pieds redeviennent deux objets sans rapport, séparés par la moitié de la salle.",
+    "it": "La sedia <b>si smonta</b>. Il trucco dipende da un unico punto di vista: fuori da lì, sedile e gambe tornano a essere due oggetti senza relazione, lontani mezza sala.",
+    "de": "Der Stuhl <b>fällt auseinander</b>. Der Trick hängt an einem einzigen Blickpunkt: Daneben sind Sitzfläche und Beine wieder zwei zusammenhanglose Objekte, einen halben Raum voneinander entfernt."
+   }
+  },
+  "how": [
+   {
+    "t": {
+     "fr": "Un assis, un debout",
+     "it": "Uno seduto, uno in piedi",
+     "de": "Einer sitzt, einer steht"
+    },
+    "s": {
+     "fr": "Celui qui est debout donne l'échelle réelle.",
+     "it": "Chi sta in piedi dà la scala reale.",
+     "de": "Der Stehende liefert den echten Maßstab."
+    }
+   },
+   {
+    "t": {
+     "fr": "L'appareil sur la marque",
+     "it": "Fotocamera sul segno",
+     "de": "Kamera auf der Markierung"
+    },
+    "s": {
+     "fr": "Un empan plus loin et la chaise se coupe en deux.",
+     "it": "Un palmo più in là e la sedia si spezza in due.",
+     "de": "Eine Handbreit daneben, und der Stuhl zerfällt."
+    }
+   },
+   {
+    "t": {
+     "fr": "Pieds dans le vide",
+     "it": "Piedi a penzoloni",
+     "de": "Füße baumeln lassen"
+    },
+    "s": {
+     "fr": "Ça vend très bien la taille miniature.",
+     "it": "Vende benissimo l'effetto giocattolo.",
+     "de": "Verkauft den Spielzeug-Look perfekt."
+    }
+   }
+  ]
+ },
+ "Clone Table": {
+  "hook": {
+   "fr": "Vous allez vous attabler avec cinq personnes qui vous donnent entièrement raison. Les cinq, c'est vous.",
+   "it": "Ti siederai a tavola con cinque persone che ti danno sempre ragione. Tutte e cinque sei tu.",
+   "de": "Du setzt dich gleich mit fünf Leuten an einen Tisch, die dir in allem zustimmen. Alle fünf bist du."
+  }
+ },
+ "Face Blender": {
+  "hook": {
+   "fr": "Gardez le nez de votre ami dix secondes. Ensuite, décidez si vous le rendez.",
+   "it": "Tieniti il naso del tuo amico per dieci secondi. Poi decidi se restituirlo.",
+   "de": "Behalte die Nase deines Freundes zehn Sekunden lang. Dann entscheide, ob du sie zurückgibst."
+  }
+ },
+ "Kaleidoscope": {
+  "hook": {
+   "fr": "Passez la tête à l'intérieur. La fleur symétrique qui s'y forme, c'est vous.",
+   "it": "Infila la testa dentro. Il fiore simmetrico che si forma lì dentro sei tu.",
+   "de": "Steck den Kopf hinein. Die symmetrische Blüte, die dort entsteht, bist du."
+  }
+ },
+ "PDX Sofa": {
+  "hook": {
+   "fr": "Sur la photo, vous aurez l'air d'un bug de l'univers. Vous êtes deux personnes qui cachent une demi-jambe.",
+   "it": "In foto sembrerete un errore dell'universo. Siete due persone che nascondono mezza gamba.",
+   "de": "Auf dem Foto seht ihr aus wie ein Fehler im Universum. Ihr seid zwei Leute, die ein halbes Bein verstecken."
+  }
+ },
+ "Yes / No Paradox": {
+  "hook": {
+   "fr": "Faites deux pas de côté et la réponse change. La sculpture, elle, n'a pas bougé.",
+   "it": "Fai due passi di lato e la risposta cambia. La scultura non si è mossa.",
+   "de": "Geh zwei Schritte zur Seite, und die Antwort ändert sich. Die Skulptur hat sich nicht bewegt."
+  }
+ },
+ "Zero Gravity": {
+  "hook": {
+   "fr": "Ce n'est pas vous qui bougez. C'est la salle. Et la caméra tourne avec elle.",
+   "it": "Non sei tu a muoverti. È la sala. E la telecamera gira con lei.",
+   "de": "Nicht du bewegst dich. Der Raum tut es. Und die Kamera dreht sich mit."
+  }
+ },
+ "Gracias · Gràcies · Thank you": {
+  "hook": {
+   "fr": "Vous avez tout vu. Revenez-y maintenant : presque tout marche mieux quand on sait où est le truc.",
+   "it": "Hai visto tutto. Ora torna indietro e riguarda: quasi tutto funziona meglio quando sai dov'è il trucco.",
+   "de": "Du hast alles gesehen. Geh noch einmal zurück: Fast alles wirkt besser, wenn man den Trick kennt."
+  }
+ }
+};
+Object.entries(TRAD_X).forEach(([t, x]) => {
+  S.filter(s => s.t === t).forEach(s => {
+    if (x.hook && s.hook) Object.assign(s.hook, x.hook);
+    if (x.quiz && s.quiz) { Object.assign(s.quiz.q, x.quiz.q);
+                            Object.assign(s.quiz.a, x.quiz.a); }
+    if (x.how && s.how) x.how.forEach((p, i) => {
+      if (!s.how[i]) return;
+      Object.assign(s.how[i].t, p.t); Object.assign(s.how[i].s, p.s);
+    });
+  });
+});
+
+/* ── Shadow Freeze: texto largo en FR / IT / DE ─────────────── */
+S.filter(s => s.t === "Shadow Freeze").forEach(s => Object.assign(s.d, {
+ fr: "Un flash puissant sur un mur phosphorescent fige votre ombre pendant quelques secondes. Le mur continue de briller là où la lumière l'a atteint et reste sombre exactement là où vous étiez.",
+ it: "Un flash potente su una parete fosforescente congela la tua ombra per qualche secondo. La parete continua a brillare dove la luce l'ha colpita e resta scura esattamente dove stavi tu.",
+ de: "Ein starker Blitz auf eine phosphoreszierende Wand friert deinen Schatten für einige Sekunden ein. Die Wand leuchtet weiter, wo das Licht sie getroffen hat, und bleibt genau dort dunkel, wo du gestanden hast."
+}));
+
 /* ── placeholder art, three selectable drawing styles ───────── */
 const BG="#2A2ADB";
 function shapes(kind,c){
@@ -1878,7 +2361,7 @@ function art(kind,c,style){
 let lang="es", tab="route", idx=-1, seen=new Set();
 const el=id=>document.getElementById(id);
 const L=()=>Object.assign({}, UI.en, UI[lang]||{});
-const tr=o=>!o?"":(o[lang]||o.en||o.es||"");
+const tr=o=>!o?"":(typeof o==="string"?o:(o[lang]||o.en||o.es||""));
 const FLAGS={"es": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#AA151B\"/><rect y=\"5\" width=\"30\" height=\"10\" fill=\"#F1BF00\"/></svg>", "ca": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#FCDD09\"/><g fill=\"#DA121A\"><rect y=\"2.22\" width=\"30\" height=\"2.22\"/><rect y=\"6.67\" width=\"30\" height=\"2.22\"/><rect y=\"11.11\" width=\"30\" height=\"2.22\"/><rect y=\"15.56\" width=\"30\" height=\"2.22\"/></g></svg>", "en": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#012169\"/><path d=\"M0 0 30 20M30 0 0 20\" stroke=\"#fff\" stroke-width=\"4\"/><path d=\"M0 0 30 20M30 0 0 20\" stroke=\"#C8102E\" stroke-width=\"2.4\"/><path d=\"M15 0v20M0 10h30\" stroke=\"#fff\" stroke-width=\"6.6\"/><path d=\"M15 0v20M0 10h30\" stroke=\"#C8102E\" stroke-width=\"4\"/></svg>", "fr": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#fff\"/><rect width=\"10\" height=\"20\" fill=\"#002395\"/><rect x=\"20\" width=\"10\" height=\"20\" fill=\"#ED2939\"/></svg>", "it": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#fff\"/><rect width=\"10\" height=\"20\" fill=\"#008C45\"/><rect x=\"20\" width=\"10\" height=\"20\" fill=\"#CD212A\"/></svg>", "de": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#FFCE00\"/><rect width=\"30\" height=\"13.34\" fill=\"#DD0000\"/><rect width=\"30\" height=\"6.67\" fill=\"#000\"/></svg>"};
 const NOMBRES={"es": "Español", "ca": "Català", "en": "English", "fr": "Français", "it": "Italiano", "de": "Deutsch"};
 const LANGS=["es", "ca", "en", "fr", "it", "de"];
@@ -1908,7 +2391,7 @@ function renderRoute(){
           <span class="thumb">${s.img?`<img src="${s.img}" alt="" loading="lazy" decoding="async">`:art(s.art,rm(s).tc)}</span>
           <span class="num"${s.n?"":` style="background:${rm(s).tc}"`}>${s.n||"·"}</span>
           <span class="meta"><b>${esc(s.t)}</b>
-            <span>${tr(ROOMS[s.r].n)}${s.sub?" · "+esc(s.sub):""}</span></span>
+            <span>${tr(ROOMS[s.r].n)}${s.sub?" · "+esc(tr(s.sub)):""}</span></span>
           <span class="tick">✓</span>
         </button>`;
   });
@@ -1930,16 +2413,16 @@ function renderRooms(){
 }
 
 const STYLES=[
-  {id:"bloque", n:{es:"Bloques planos",ca:"Blocs plans",en:"Flat blocks"},
-   s:{es:"Formas macizas, cero sombras. Es el estilo de la marca.",
+  {id:"bloque", n:{fr:"Blocs pleins",it:"Blocchi pieni",de:"Flächige Blöcke",es:"Bloques planos",ca:"Blocs plans",en:"Flat blocks"},
+   s:{fr:"Formes pleines, aucune ombre. C'est le style de la marque.",it:"Forme piene, zero ombre. È lo stile del marchio.",de:"Massive Formen, keine Schatten. Der Stil der Marke.",es:"Formas macizas, cero sombras. Es el estilo de la marca.",
       ca:"Formes massisses, zero ombres. És l'estil de la marca.",
       en:"Solid shapes, no shading. The brand's own style."}},
-  {id:"linea", n:{es:"Línea",ca:"Línia",en:"Line"},
-   s:{es:"Sólo contorno. Más técnico y más sobrio.",
+  {id:"linea", n:{fr:"Trait",it:"Linea",de:"Linie",es:"Línea",ca:"Línia",en:"Line"},
+   s:{fr:"Contour seul. Plus technique et plus sobre.",it:"Solo contorno. Più tecnico e più sobrio.",de:"Nur Umriss. Technischer und zurückhaltender.",es:"Sólo contorno. Más técnico y más sobrio.",
       ca:"Només contorn. Més tècnic i més sobri.",
       en:"Outline only. More technical, more restrained."}},
-  {id:"duo", n:{es:"Semitono",ca:"Semitò",en:"Halftone"},
-   s:{es:"Trama de puntos tipo serigrafía. Más gráfico.",
+  {id:"duo", n:{fr:"Trame",it:"Mezzatinta",de:"Raster",es:"Semitono",ca:"Semitò",en:"Halftone"},
+   s:{fr:"Trame de points façon sérigraphie. Plus graphique.",it:"Trama di punti tipo serigrafia. Più grafico.",de:"Punktraster wie im Siebdruck. Grafischer.",es:"Trama de puntos tipo serigrafía. Más gráfico.",
       ca:"Trama de punts tipus serigrafia. Més gràfic.",
       en:"Screen-print dot texture. More graphic."}}
 ];
@@ -1999,7 +2482,7 @@ function openStop(i){
     <div class="dtext">
       <span class="droom lbl" style="background:${R.c};color:${R.ink}">${tr(R.n)}</span>
       <h1>${s.n?`<span class="hn">${s.n}</span>`:""}${esc(s.t)}</h1>
-      ${s.sub?`<p class="sub">${esc(s.sub)}</p>`:""}
+      ${s.sub?`<p class="sub">${esc(tr(s.sub))}</p>`:""}
     </div>
 
     <div class="block"><div class="lbl">${L().lblHook}</div>
