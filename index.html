@@ -130,6 +130,11 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
   max-width:46ch}
 .sub{margin:10px 0 0;font-size:13.5px;line-height:1.6;color:var(--grey);max-width:62ch}
 
+.gal{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px;
+  margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));
+  padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.gal img{flex:0 0 auto;height:190px;width:auto;max-width:none;display:block;
+  border:1px solid var(--line)}
 .howrow{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;
   margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));
   padding-inline:max(16px,env(safe-area-inset-left,0px))}
@@ -274,9 +279,9 @@ const UI={
      stops:"paradas",visited:"vistas",photo:"Ilustración de ejemplo",
      next:"Siguiente exhibición",end:"Fin del recorrido",
      lblHook:"El truco",lblHow:"Cómo hacerla bien",lblQuiz:"Reto",
-     lblIncl:"Incluye",lblInfo:"Qué está pasando",reveal:"Ver la respuesta",
+     lblIncl:"Incluye",lblFotos:"Cómo queda",lblInfo:"Qué está pasando",reveal:"Ver la respuesta",
      pendHook:"Texto divertido pendiente. Nos lo pasáis y lo montamos aquí.",
-     pendHow:"Pendientes las fotos reales de cómo se hace.",
+     pendHow:"Pendientes las indicaciones de cómo se hace.",
      photoPend:"Foto pendiente",
      styleTitle:"Estilo de ilustración",
      styleIntro:"Las fotos reales se convertirán en dibujo. Elige el estilo y toda la guía cambia al instante.",
@@ -287,9 +292,9 @@ const UI={
      stops:"parades",visited:"vistes",photo:"Il·lustració d'exemple",
      next:"Següent exhibició",end:"Fi del recorregut",
      lblHook:"El truc",lblHow:"Com fer-la bé",lblQuiz:"Repte",
-     lblIncl:"Inclou",lblInfo:"Què està passant",reveal:"Veure la resposta",
+     lblIncl:"Inclou",lblFotos:"Com queda",lblInfo:"Què està passant",reveal:"Veure la resposta",
      pendHook:"Text divertit pendent. Ens el passeu i el muntem aquí.",
-     pendHow:"Pendents les fotos reals de com es fa.",
+     pendHow:"Pendents les indicacions de com es fa.",
      photoPend:"Foto pendent",
      styleTitle:"Estil d'il·lustració",
      styleIntro:"Les fotos reals es convertiran en dibuix. Tria l'estil i tota la guia canvia a l'instant.",
@@ -300,9 +305,9 @@ const UI={
      stops:"stops",visited:"seen",photo:"Sample illustration",
      next:"Next exhibit",end:"End of the tour",
      lblHook:"The trick",lblHow:"How to nail it",lblQuiz:"Challenge",
-     lblIncl:"Includes",lblInfo:"What is going on",reveal:"Show the answer",
+     lblIncl:"Includes",lblFotos:"How it looks",lblInfo:"What is going on",reveal:"Show the answer",
      pendHook:"Fun copy pending. Send it over and it goes here.",
-     pendHow:"Real how-to photos still to come.",
+     pendHow:"How-to steps still to come.",
      photoPend:"Photo pending",
      styleTitle:"Illustration style",
      styleIntro:"Real photos will be turned into drawings. Pick a style and the whole guide switches instantly.",
@@ -656,6 +661,149 @@ Object.entries(OFICIAL).forEach(([titulo, datos]) => {
   S.filter(s => s.t === titulo).forEach(s => Object.assign(s, datos));
 });
 
+/* ── Fotos reales del museo ────────────────────────────────
+   img = principal de la ficha; fotos = galería. */
+const FOTOS = {
+ "Ambiguous Shapes": {
+  "img": "img/fotos/15_ambiguous-shapes_hero.webp",
+  "fotos": [
+   "img/fotos/15_ambiguous-shapes_1.webp"
+  ]
+ },
+ "Ames Room": {
+  "img": "img/fotos/32_ames-room_hero.webp",
+  "fotos": [
+   "img/fotos/32_ames-room_1.webp"
+  ]
+ },
+ "Camouflage Wall": {
+  "img": "img/fotos/39_camouflage_hero.webp",
+  "fotos": [
+   "img/fotos/39_camouflage_1.webp",
+   "img/fotos/39_camouflage_2.webp",
+   "img/fotos/39_camouflage_3.webp",
+   "img/fotos/39_camouflage_4.webp"
+  ]
+ },
+ "Infinity Dodecahedron": {
+  "img": "img/fotos/11_dodecahedron_hero.webp",
+  "fotos": [
+   "img/fotos/11_dodecahedron_1.webp"
+  ]
+ },
+ "Face Blender": {
+  "img": "img/fotos/31_face-blender_hero.webp",
+  "fotos": [
+   "img/fotos/31_face-blender_1.webp"
+  ]
+ },
+ "Infinity Window": {
+  "img": "img/fotos/12_infinity-window_hero.webp"
+ },
+ "Infinity Well": {
+  "img": "img/fotos/34_infinity-well_hero.webp"
+ },
+ "Kaleidoscope": {
+  "img": "img/fotos/50_kaleidoscope_hero.webp",
+  "fotos": [
+   "img/fotos/50_kaleidoscope_1.webp"
+  ]
+ },
+ "Mirror": {
+  "img": "img/fotos/36_mirrors_hero.webp",
+  "fotos": [
+   "img/fotos/36_mirrors_1.webp"
+  ]
+ },
+ "Paradox Challenge": {
+  "img": "img/fotos/52_paradox-challenge_hero.webp",
+  "fotos": [
+   "img/fotos/52_paradox-challenge_1.webp",
+   "img/fotos/52_paradox-challenge_2.webp"
+  ]
+ },
+ "PDX Sofa": {
+  "img": "img/fotos/42_sofa_hero.webp",
+  "fotos": [
+   "img/fotos/42_sofa_1.webp",
+   "img/fotos/42_sofa_2.webp"
+  ]
+ },
+ "Infinity Tunnel": {
+  "img": "img/fotos/16_tunnel_hero.webp",
+  "fotos": [
+   "img/fotos/16_tunnel_1.webp",
+   "img/fotos/16_tunnel_2.webp",
+   "img/fotos/16_tunnel_3.webp"
+  ]
+ },
+ "Zero Gravity": {
+  "img": "img/fotos/17_zero-gravity_hero.webp",
+  "fotos": [
+   "img/fotos/17_zero-gravity_1.webp",
+   "img/fotos/17_zero-gravity_2.webp",
+   "img/fotos/17_zero-gravity_3.webp",
+   "img/fotos/17_zero-gravity_4.webp"
+  ]
+ }
+};
+Object.entries(FOTOS).forEach(([titulo, datos]) => {
+  S.filter(s => s.t === titulo).forEach(s => Object.assign(s, datos));
+});
+
+/* ── Correcciones ─────────────────────────────────────────── */
+const CORRECCIONES = {
+ "Paradox Challenge": {
+  "hook": {
+   "es": "Aquí no hay postura correcta, hay foto correcta. Colócate, dispara y gira la pantalla.",
+   "ca": "Aquí no hi ha postura correcta, hi ha foto correcta. Col·loca't, dispara i gira la pantalla.",
+   "en": "There is no right pose here, only a right photo. Get in place, shoot, then turn your screen."
+  },
+  "d": {
+   "es": "Paredes de rayas que salen disparadas en todas direcciones, un globo amarillo y ni una sola referencia fiable de dónde está el suelo. Esa es toda la trampa: sin horizontal ni vertical que te orienten, el cerebro acepta la orientación que le dé la foto.\n\nColócate donde te indique el equipo, haz la foto y gírala. En la pantalla vas a parecer que haces el pino sobre el globo, que flotas a media altura o que el globo tira de ti hacia el techo. En la sala, mientras tanto, estabas perfectamente apoyado.",
+   "ca": "Parets de ratlles que surten disparades en totes direccions, un globus groc i ni una sola referència fiable d'on és el terra. Aquesta és tota la trampa: sense horitzontal ni vertical que t'orientin, el cervell accepta l'orientació que li doni la foto.\n\nCol·loca't on t'indiqui l'equip, fes la foto i gira-la. A la pantalla semblarà que fas el pi sobre el globus, que flotes a mitja alçada o que el globus estira de tu cap al sostre. A la sala, mentrestant, estaves perfectament recolzat.",
+   "en": "Striped walls shooting off in every direction, a yellow balloon and not one reliable clue about where the floor is. That is the whole trick: with no horizontal or vertical to orient you, your brain accepts whatever orientation the photo gives it.\n\nStand where the team tells you, take the photo and rotate it. On screen you will look like you are handstanding on the balloon, floating in mid-air or being pulled up to the ceiling. In the room, meanwhile, you were comfortably propped up."
+  },
+  "how": null,
+  "quiz": {
+   "q": {
+    "es": "¿Por qué funciona mejor esta foto girada que mirando la sala en directo?",
+    "ca": "Per què funciona millor aquesta foto girada que mirant la sala en directe?",
+    "en": "Why does the rotated photo work better than looking at the room live?"
+   },
+   "a": {
+    "es": "Porque en directo tu <b>oído interno</b> sabe perfectamente dónde está el suelo y desmonta la ilusión al instante. La foto no tiene oído interno: sólo tiene las rayas, y las rayas dicen lo que nosotros queramos.",
+    "ca": "Perquè en directe la teva <b>oïda interna</b> sap perfectament on és el terra i desmunta la il·lusió a l'instant. La foto no té oïda interna: només té les ratlles, i les ratlles diuen el que nosaltres vulguem.",
+    "en": "Because live, your <b>inner ear</b> knows exactly where the floor is and dismantles the illusion instantly. A photo has no inner ear: it only has the stripes, and the stripes say whatever we want them to."
+   }
+  }
+ }
+};
+Object.entries(CORRECCIONES).forEach(([titulo, datos]) => {
+  S.filter(s => s.t === titulo).forEach(s => {
+    Object.entries(datos).forEach(([k, v]) => { if (v === null) delete s[k]; else s[k] = v; });
+  });
+});
+
+/* ── Correcciones (2) ─────────────────────────────────────── */
+const CORRECCIONES2 = {
+ "Zero Gravity": {
+  "hook": {
+   "es": "Tú no te mueves. La sala sí. Y la cámara gira con ella.",
+   "ca": "Tu no et mous. La sala sí. I la càmera gira amb ella.",
+   "en": "You are not the one moving. The room is. And the camera turns with it."
+  },
+  "d": {
+   "es": "Zero Gravity es una rueda cuadrada que gira contigo dentro. El móvil va montado en un soporte exterior que gira solidario con la sala, así que en el vídeo el suelo nunca se mueve de sitio: el que parece moverse eres tú, subiendo por las paredes y quedándote del revés en el techo.\n\nNo hay cables, ni croma, ni efectos añadidos después. Todo el truco está en que la cámara y la habitación giren exactamente a la vez, de modo que la grabación no tiene ninguna referencia fija con la que delatar el movimiento.\n\nAntes de entrar te darán unos patucos de tela para ponerte encima del calzado.",
+   "ca": "Zero Gravity és una roda quadrada que gira amb tu a dins. El mòbil va muntat en un suport exterior que gira solidari amb la sala, així que al vídeo el terra no es mou mai de lloc: el que sembla moure's ets tu, pujant per les parets i quedant-te del revés al sostre.\n\nNo hi ha cables, ni croma, ni efectes afegits després. Tot el truc està en què la càmera i l'habitació girin exactament alhora, de manera que l'enregistrament no té cap referència fixa amb la qual delatar el moviment.\n\nAbans d'entrar et donaran uns peücs de tela per posar-te damunt del calçat.",
+   "en": "Zero Gravity is a square wheel that rotates with you inside it. The phone sits on an external mount that turns together with the room, so in the video the floor never moves: the one who appears to move is you, walking up the walls and ending up upside down on the ceiling.\n\nNo wires, no green screen, nothing added afterwards. The whole trick is that the camera and the room turn at exactly the same time, leaving the recording without a single fixed reference to give the movement away.\n\nBefore you go in you will be given fabric shoe covers to put on over your shoes."
+  }
+ }
+};
+Object.entries(CORRECCIONES2).forEach(([t, d]) => {
+  S.filter(s => s.t === t).forEach(s => Object.assign(s, d));
+});
+
 /* ── placeholder art, three selectable drawing styles ───────── */
 const BG="#101016";
 function shapes(kind,c){
@@ -911,6 +1059,10 @@ function openStop(i){
 
     ${s.list?`<div class="block"><div class="lbl">${L().lblIncl}</div>
       <div class="chips">${s.list.map(x=>`<span>${esc(x)}</span>`).join("")}</div></div>`:""}
+
+    ${s.fotos&&s.fotos.length?`<div class="block"><div class="lbl">${L().lblFotos}</div>
+      <div class="gal">${s.fotos.map(f=>`<img src="${f}" alt="" loading="lazy" decoding="async">`).join("")}</div>
+      </div>`:""}
 
     <div class="block"><div class="lbl">${L().lblHow}</div>${how}</div>
 
