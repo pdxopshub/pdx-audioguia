@@ -560,6 +560,7 @@ const S=[
     ca:"Dos cèrcols que semblen travessar-se sense tocar-se. El cervell insisteix a llegir-los com a objectes sòlids encara que la geometria sigui impossible.",
     en:"Two rings that seem to pass through each other without touching. Your brain insists on reading them as solid objects even though the geometry is impossible."}},
 {n:"",r:"s3",t:"Switch 10",art:"grid"},
+{n:"",r:"s3",t:"Moiré Patterns",art:"moire"},
 {n:"04",r:"s3",t:"Moire Animation",art:"moire",
  d:{es:"Una lámina de rayas se desliza sobre un dibujo y lo pone en movimiento. No hay motor ni pantalla: es el efecto moiré, la interferencia entre dos patrones de líneas casi iguales.",
     ca:"Una làmina de ratlles llisca sobre un dibuix i el posa en moviment. No hi ha motor ni pantalla: és l'efecte moiré, la interferència entre dos patrons de línies gairebé iguals.",
@@ -618,10 +619,7 @@ const S=[
     en:"A surface of sliding pins that copies the relief of whatever you press into it. Your hand vanishes and returns as a volume made of pixels."}},
 
 {n:"15",r:"s5",t:"Ambiguous Shapes",sub:"×5",art:"ambig"},
-{n:"16",r:"s5",t:"Infinity Tunnel",art:"tunnel",
- d:{es:"Un puente sobre un vacío que no existe. Los espejos del suelo y del techo multiplican las luces hacia arriba y hacia abajo.",
-    ca:"Un pont sobre un buit que no existeix. Els miralls del terra i del sostre multipliquen els llums cap amunt i cap avall.",
-    en:"A bridge over a void that is not there. Mirrors above and below multiply the lights up and down."}},
+{n:"16",r:"s5",t:"Paradox Tunnel",art:"tunnel"},
 
 {n:"17",r:"zg",t:"Zero Gravity",art:"gravity",
  d:{es:"La sala inclinada. El suelo está en pendiente pero las referencias visuales dicen que está recto, así que tu equilibrio se pelea con tus ojos.",
@@ -693,6 +691,7 @@ const S=[
           en:"Because you have spent your whole life in rectangular rooms and <b>none at all in trapezoidal ones</b>. Given two possible explanations, your brain always picks the one it has seen a million times, even if that means turning your friend into a giant."}}},
 
 {n:"34",r:"s7",t:"Infinity Well",art:"well"},
+{n:"",r:"s7",t:"Following Eyes",art:"face"},
 {n:"36",r:"s7",t:"Mirror",art:"mirror"},
 {n:"37",r:"s7",t:"True Mirror",art:"mirror",
  d:{es:"Dos espejos en ángulo recto anulan la inversión. Por primera vez te ves como te ve el resto, y casi nadie se reconoce a la primera.",
@@ -909,7 +908,7 @@ const PANELES_A = {
    "de": "Möglich macht das ein spezielles Glas, das einen Teil des Lichts durchlässt und zugleich teilweise spiegelt. So entstehen Tiefe und unendliche Spiegelungen – das Gefühl von grenzenlosem Raum in einer begrenzten Geometrie."
   }
  },
- "Infinity Tunnel": {
+ "Infinity Tunnel (espejos, sin parada)": {
   "todo": {
    "es": "Mira dentro. ¿Ves el final del túnel?",
    "ca": "Mira a dins. Veus el final del túnel?",
@@ -1465,6 +1464,67 @@ Object.entries(PANELES_B).forEach(([t, d]) => {
   });
 });
 
+/* ── Carteles del museo (tanda C) ──────────────────────────── */
+const PANELES_C = {
+ "Moiré Patterns": {
+  "todo": {
+   "es": "Gira el círculo con el patrón. Fíjate en lo que ocurre: ¿por qué cambian los dibujos?",
+   "ca": "Gira el cercle amb el patró. Fixa't en el que passa: per què canvien els dibuixos?",
+   "en": "Rotate the circle with pattern. Look at what's happening — why are the patterns changing?",
+   "fr": "Faites tourner le disque à motif. Observez : pourquoi les motifs changent-ils ?",
+   "it": "Ruota il disco con il motivo. Guarda che cosa succede: perché i motivi cambiano?",
+   "de": "Dreh die Scheibe mit dem Muster. Schau genau hin: Warum verändern sich die Muster?"
+  },
+  "info": {
+   "es": "La imagen que vemos al observar esta pieza está formada por dos discos con el mismo patrón impreso. Cuando el disco de arriba gira aparecen patrones inesperados, que cambian de forma, de tamaño o de cantidad según la velocidad a la que se mueva.",
+   "ca": "La imatge que veiem en observar aquesta peça està formada per dos discos amb el mateix patró imprès. Quan el disc de dalt gira apareixen patrons inesperats, que canvien de forma, de mida o de quantitat segons la velocitat a què es mogui.",
+   "en": "The picture we see while observing this exhibit is made up of two round plates with the same printed pattern on them. When the upper plate rotates, unexpected patterns occur, changing the plates' shape, size, or quantity depending on the upper plate's moving speed.",
+   "fr": "L'image que nous voyons est formée de deux disques portant le même motif imprimé. Lorsque le disque supérieur tourne, des motifs inattendus apparaissent et changent de forme, de taille ou de nombre selon la vitesse de rotation.",
+   "it": "L'immagine che vediamo è formata da due dischi con lo stesso motivo stampato. Quando il disco superiore ruota compaiono motivi inaspettati, che cambiano forma, dimensione o quantità a seconda della velocità di rotazione.",
+   "de": "Das Bild, das wir hier sehen, entsteht aus zwei runden Scheiben mit demselben aufgedruckten Muster. Dreht sich die obere Scheibe, entstehen unerwartete Muster, die je nach Drehgeschwindigkeit ihre Form, Größe oder Anzahl ändern."
+  }
+ },
+ "Paradox Tunnel": {
+  "todo": {
+   "es": "Entra en el túnel. ¿Te parece imposible caminar recto?",
+   "ca": "Entra al túnel. Et sembla impossible caminar recte?",
+   "en": "Enter the tunnel. Does walking straight seem impossible?",
+   "fr": "Entrez dans le tunnel. Marcher droit vous semble-t-il impossible ?",
+   "it": "Entra nel tunnel. Camminare dritto ti sembra impossibile?",
+   "de": "Betritt den Tunnel. Scheint es unmöglich, geradeaus zu gehen?"
+  },
+  "info": {
+   "es": "Esta pieza del tamaño de una sala altera profundamente tu percepción de hacia dónde cae la gravedad. Dentro, algo tan simple como caminar recto puede parecer imposible: tienes la sensación de que tu mundo se retuerce.\n\nEl túnel es en esencia un tubo y, mientras lo cruzas, gira lentamente a tu alrededor. Tu visión periférica capta ese movimiento, pero tu cerebro no consigue procesarlo bien, y por eso parece que el mundo entero se está dando la vuelta.",
+   "ca": "Aquesta peça de la mida d'una sala altera profundament la teva percepció de cap a on cau la gravetat. A dins, una cosa tan simple com caminar recte pot semblar impossible: tens la sensació que el teu món es recargola.\n\nEl túnel és en essència un tub i, mentre el travesses, gira lentament al teu voltant. La teva visió perifèrica capta aquest moviment, però el teu cervell no aconsegueix processar-lo bé, i per això sembla que el món sencer s'està girant.",
+   "en": "This room-sized walkthrough exhibit has a profoundly disruptive effect on your perception of gravity's direction. Inside, a simple task such as walking straight might seem impossible. You get the feeling that your world is twisting.\n\nThe tunnel is essentially a tube, and as you walk in it, this tube is slowly spinning around you. This motion is realized by your peripheral vision, which your brain cannot properly process, making it seem as though your entire world is turning upside down.",
+   "fr": "Cette installation de la taille d'une pièce bouleverse votre perception de la direction de la gravité. À l'intérieur, une tâche aussi simple que marcher droit peut sembler impossible : vous avez l'impression que votre monde se tord.\n\nLe tunnel est en réalité un tube qui tourne lentement autour de vous pendant que vous le traversez. Votre vision périphérique capte ce mouvement, mais votre cerveau n'arrive pas à le traiter correctement : vous avez alors le sentiment que le monde entier bascule.",
+   "it": "Questa installazione grande come una stanza stravolge la tua percezione della direzione della gravità. All'interno, un gesto semplice come camminare dritto può sembrare impossibile: hai la sensazione che il tuo mondo si stia torcendo.\n\nIl tunnel è in sostanza un tubo che, mentre lo attraversi, ruota lentamente intorno a te. La tua visione periferica coglie quel movimento, ma il cervello non riesce a elaborarlo bene: così sembra che il mondo intero si stia capovolgendo.",
+   "de": "Dieses raumgroße Begehungsexponat bringt deine Wahrnehmung der Schwerkraftrichtung gründlich durcheinander. Drinnen kann schon etwas so Einfaches wie geradeaus gehen unmöglich scheinen: Es fühlt sich an, als verdrehe sich deine Welt.\n\nDer Tunnel ist im Grunde eine Röhre, die sich langsam um dich dreht, während du hindurchgehst. Dein peripheres Sehen nimmt diese Bewegung wahr, doch dein Gehirn kann sie nicht richtig verarbeiten – und so scheint sich die ganze Welt auf den Kopf zu stellen."
+  }
+ },
+ "Following Eyes": {
+  "todo": {
+   "es": "Mira los ojos y camina de un lado a otro. ¿Parece que te siguen?",
+   "ca": "Mira els ulls i camina d'un costat a l'altre. Sembla que et segueixen?",
+   "en": "Look at the eyes and walk around. Does it seem like they're following you?",
+   "fr": "Regardez les yeux et déplacez-vous. Ont-ils l'air de vous suivre ?",
+   "it": "Guarda gli occhi e cammina avanti e indietro. Sembra che ti seguano?",
+   "de": "Sieh die Augen an und geh hin und her. Scheinen sie dir zu folgen?"
+  },
+  "info": {
+   "es": "Tu cerebro interpreta lo que ves a partir de lo que ya da por sabido. Y como «sabe» que una cara es convexa y no cóncava, así es como la ves. Los ojos de esta pieza no pueden moverse como lo harían unos ojos convexos; por eso tu cerebro racionaliza el desajuste haciéndote ver que se mueven y te siguen a donde vayas.\n\nSi te fijas bien verás que la pieza es tridimensional. En realidad las pupilas están hundidas hacia dentro, y eso es lo que hace posible el efecto.",
+   "ca": "El teu cervell interpreta el que veus a partir del que ja dona per sabut. I com que «sap» que una cara és convexa i no còncava, així és com la veus. Els ulls d'aquesta peça no es poden moure com ho farien uns ulls convexos; per això el teu cervell racionalitza el desajustament fent-te veure que es mouen i et segueixen allà on vagis.\n\nSi t'hi fixes bé veuràs que la peça és tridimensional. En realitat les pupil·les estan enfonsades cap endins, i això és el que fa possible l'efecte.",
+   "en": "Your brain processes how you perceive what you see. Since your brain 'knows' that a face is convex and not concave, this is how you see it. The eyes in the exhibit can't move as convex eyes would; that's why your brain rationalizes the glitch to make you see the eyes move and follow you wherever you go!\n\nIf you look closely enough, you'll see that the exhibit is three-dimensional. In reality, the eye's pupils are concave, which makes the effect possible.",
+   "fr": "Votre cerveau interprète ce que vous voyez à partir de ce qu'il tient pour acquis. Comme il « sait » qu'un visage est convexe et non concave, c'est ainsi que vous le voyez. Les yeux de cette œuvre ne peuvent pas bouger comme le feraient des yeux convexes ; votre cerveau rationalise donc l'anomalie en vous faisant croire qu'ils bougent et vous suivent partout.\n\nEn regardant de près, vous verrez que l'installation est tridimensionnelle. En réalité, les pupilles sont creusées vers l'intérieur, et c'est ce qui rend l'effet possible.",
+   "it": "Il tuo cervello interpreta ciò che vedi a partire da ciò che dà per scontato. Poiché «sa» che un volto è convesso e non concavo, è così che lo vedi. Gli occhi di quest'opera non possono muoversi come farebbero occhi convessi; per questo il cervello razionalizza l'anomalia facendoti vedere che si muovono e ti seguono ovunque tu vada.\n\nSe guardi bene vedrai che l'installazione è tridimensionale. In realtà le pupille sono incavate verso l'interno, ed è questo che rende possibile l'effetto.",
+   "de": "Dein Gehirn deutet das Gesehene anhand dessen, was es ohnehin für selbstverständlich hält. Weil es „weiß“, dass ein Gesicht nach außen gewölbt und nicht eingedellt ist, siehst du es auch so. Die Augen dieses Exponats können sich nicht bewegen wie nach außen gewölbte Augen; darum erklärt sich dein Gehirn den Widerspruch, indem es dich sehen lässt, wie sie sich bewegen und dir überallhin folgen.\n\nSchau genau hin, dann erkennst du, dass das Exponat dreidimensional ist. In Wirklichkeit sind die Pupillen nach innen gewölbt – und genau das macht den Effekt möglich."
+  }
+ }
+};
+Object.entries(PANELES_C).forEach(([t, d]) => {
+  S.filter(s => s.t === t).forEach(s => { s.todo = d.todo; s.d = d.info; });
+});
+
 /* ── Textos oficiales del museo (EN / ES / CA) ──────────────
    Se fusionan sobre las paradas por su título. Para añadir más
    exhibiciones sólo hay que ampliar este objeto. */
@@ -1597,10 +1657,10 @@ const FOTOS = {
    "img/fotos/50_kaleidoscope_1.webp"
   ]
  },
- "Mirror": {
-  "img": "img/fotos/36_mirrors_hero.webp",
+ "Infinity Room": {
+  "img": "img/fotos/19_infinity-room_hero.webp",
   "fotos": [
-   "img/fotos/36_mirrors_1.webp"
+   "img/fotos/19_infinity-room_1.webp"
   ]
  },
  "Paradox Challenge": {
@@ -1617,7 +1677,7 @@ const FOTOS = {
    "img/fotos/42_sofa_2.webp"
   ]
  },
- "Infinity Tunnel": {
+ "Paradox Tunnel": {
   "img": "img/fotos/16_tunnel_hero.webp",
   "fotos": [
    "img/fotos/16_tunnel_1.webp",
