@@ -31,27 +31,27 @@ img{max-width:100%}
 #cam[hidden]{display:none}
 #cam .camtop{flex:0 0 auto;display:flex;align-items:center;gap:10px;
   padding:calc(11px + env(safe-area-inset-top,0px)) 14px 11px}
-#cam .camtop b{font-size:13.5px;font-weight:800;letter-spacing:-.01em;flex:1;min-width:0;
+#cam .camtop b{font-size:13.5px;font-weight:800;letter-spacing:.004em;flex:1;min-width:0;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#cam .camtop button{width:34px;height:34px;border-radius:999px;background:#ffffff1f;
+#cam .camtop button{width:34px;height:34px;border-radius:2px;background:#ffffff1f;
   display:grid;place-items:center;font-size:15px;color:#fff;flex:0 0 auto}
 #cam .camstage{flex:1;position:relative;overflow:hidden;background:#000;
   display:grid;place-items:center}
 #cam video,#cam .shotimg{width:100%;height:100%;object-fit:cover;display:block}
 #cam video.flip{transform:scaleX(-1)}
 #cam .guide{position:absolute;left:14px;right:14px;bottom:14px;background:#05051ac2;
-  border-radius:16px;padding:11px 13px;backdrop-filter:blur(7px)}
+  border-radius:2px;padding:11px 13px;backdrop-filter:blur(7px)}
 #cam .guide p{font-size:13.5px;line-height:1.4;font-weight:600;margin:0}
 #cam .guide .rot{display:inline-flex;align-items:center;gap:5px;margin-bottom:7px;
-  background:var(--acc);color:var(--accink);border-radius:999px;padding:3px 9px;
+  background:var(--acc);color:var(--accink);border-radius:2px;padding:3px 9px;
   font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.07em}
 #cam .cambar{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:24px;
   padding:16px 16px calc(20px + env(safe-area-inset-bottom,0px))}
-#cam .shutter{width:68px;height:68px;border-radius:999px;background:var(--acc);
+#cam .shutter{width:68px;height:68px;border-radius:999px;§KEEP§background:var(--acc);
   border:4px solid #05051a;box-shadow:0 0 0 3px var(--acc);flex:0 0 auto}
 #cam .shutter:active{transform:scale(.93)}
 #cam .after{display:flex;gap:9px;width:100%}
-#cam .after button{flex:1;border-radius:999px;padding:14px 10px;font-size:14px;font-weight:800}
+#cam .after button{flex:1;border-radius:2px;padding:14px 10px;font-size:14px;font-weight:800}
 #cam .after .keep{background:var(--acc);color:var(--accink)}
 #cam .after .redo{background:#ffffff1f;color:#fff}
 #cam .camerr{position:absolute;inset:14px;display:grid;place-items:center;text-align:center}
@@ -59,35 +59,35 @@ img{max-width:100%}
 
 /* botón de cámara dentro de la ficha */
 .camcta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
-  background:var(--acc);color:var(--accink);border-radius:999px;padding:15px 16px;
-  font-size:15px;font-weight:800;letter-spacing:-.01em}
+  background:var(--acc);color:var(--accink);border-radius:2px;padding:15px 16px;
+  font-size:15px;font-weight:800;letter-spacing:.004em}
 .camcta:active{transform:scale(.985)}
 .camwrap{padding:4px max(16px,env(safe-area-inset-left,0px)) 0}
 .camwrap .hint{display:block;margin-top:8px;text-align:center;font-family:var(--f-mono);
   font-size:9.5px;color:var(--muted);letter-spacing:.05em}
 /* ── Castaween ──────────────────────────────────────────────── */
 .castwrap{padding:18px 0 24px}
-.casthero{border-radius:24px;padding:26px 20px 24px;position:relative;overflow:hidden;
+.casthero{border-radius:0;padding:26px 20px 24px;position:relative;overflow:hidden;
   background:linear-gradient(150deg,#FF4C2A 0%,#FB48C4 58%,#3737FF 100%)}
 .casthero::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:repeating-linear-gradient(115deg,#ffffff14 0 11px,transparent 11px 22px)}
 .casthero>*{position:relative;z-index:1}
 .castkick{display:inline-block;font-family:var(--f-mono);font-size:8.5px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;background:var(--acc);color:var(--accink);
-  border-radius:999px;padding:4px 11px}
+  border-radius:2px;padding:4px 11px}
 .casthero h2{margin:14px 0 0;font-size:clamp(34px,11vw,46px);font-weight:800;
-  letter-spacing:-.045em;line-height:.92;color:#fff}
+  letter-spacing:-.012em;line-height:.92;color:#fff}
 .castlead{margin:14px 0 0;font-size:15px;line-height:1.55;color:#ffffffeb}
 .castlink{color:var(--acc);font-weight:800;text-decoration:underline;
   text-underline-offset:3px;text-decoration-thickness:2px}
 .castcta{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;
-  background:var(--acc);color:var(--accink);border-radius:999px;padding:15px 16px;
-  font-size:15px;font-weight:800;letter-spacing:-.01em;text-decoration:none}
+  background:var(--acc);color:var(--accink);border-radius:2px;padding:15px 16px;
+  font-size:15px;font-weight:800;letter-spacing:.004em;text-decoration:none}
 .castcta:active{transform:scale(.985)}
 /* ── tarjeta de bienvenida ──────────────────────────────────── */
-.stop.bienvenida{background:none;border-radius:26px;overflow:hidden;margin:2px 0 14px;
+.stop.bienvenida{background:none;border-radius:2px;overflow:hidden;margin:2px 0 14px;
   position:relative;padding:0}
-.bvbox{display:block;position:relative;border-radius:26px;overflow:hidden;
+.bvbox{display:block;position:relative;border-radius:0;overflow:hidden;
   background:linear-gradient(152deg,#FF4C2A 0%,#FB48C4 34%,#3737FF 68%,#00D9A0 100%);
   padding:26px 20px 23px;text-align:left}
 /* Franjas que se desplazan muy despacio: un guiño al moiré del museo. */
@@ -102,40 +102,40 @@ img{max-width:100%}
 .bvbox>*{position:relative;z-index:1}
 .bvkick{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);
   font-size:9.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
-  background:var(--acc);color:var(--accink);border-radius:999px;padding:4px 11px}
+  background:var(--acc);color:var(--accink);border-radius:2px;padding:4px 11px}
 .bvbox h2{margin:14px 0 0;font-size:clamp(30px,9.2vw,40px);font-weight:800;
-  letter-spacing:-.045em;line-height:.9;color:#fff;text-wrap:balance}
-.bvbox h2 em{font-style:normal;color:var(--acc);display:block}
+  letter-spacing:-.012em;line-height:.9;color:#fff;text-wrap:balance}
+.bvbox h2 em{font-style:normal;color:var(--acc);display:block;text-transform:uppercase}
 .bvbox p{margin:12px 0 0;font-size:14px;line-height:1.48;color:#ffffffe8;max-width:34ch}
 .bvgo{display:inline-flex;align-items:center;gap:9px;margin-top:20px;
-  background:var(--acc);color:var(--accink);border-radius:999px;padding:13px 20px;
-  font-size:14.5px;font-weight:800;letter-spacing:-.01em}
+  background:var(--acc);color:var(--accink);border-radius:2px;padding:13px 20px;
+  font-size:14.5px;font-weight:800;letter-spacing:.004em}
 .bvstats{display:flex;gap:7px;margin-top:17px;flex-wrap:wrap}
 .bvstats span{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.07em;
-  background:#0b0b2b5c;border-radius:999px;padding:5px 10px;color:#fff}
+  background:#0b0b2b5c;border-radius:2px;padding:5px 10px;color:#fff}
 .stop.bienvenida.done .bvbox{opacity:.72}
 /* el juego de campaña ocupa toda la pantalla, dentro de la guía */
 main.castmode{display:flex;flex-direction:column;padding-bottom:0;overflow:hidden}
 .castpane{flex:1;display:flex;flex-direction:column;min-height:0;padding:16px 0 0}
-.castframe{flex:1;min-height:320px;margin-top:16px;border-radius:20px;overflow:hidden;
+.castframe{flex:1;min-height:320px;margin-top:16px;border-radius:2px;overflow:hidden;
   background:#0b0b2b;border:1px solid var(--line)}
 .castframe iframe{width:100%;height:100%;border:0;display:block;background:#0b0b2b}
 .castout{display:block;padding:11px 0 14px;text-align:center;font-family:var(--f-mono);
   font-size:9.5px;letter-spacing:.06em;color:var(--muted);text-decoration:none}
 .castwhen{display:inline-block;margin-top:8px;font-family:var(--f-mono);font-size:10px;
-  letter-spacing:.07em;background:var(--acc);color:var(--accink);border-radius:999px;
+  letter-spacing:.07em;background:var(--acc);color:var(--accink);border-radius:2px;
   padding:4px 11px}
 .castlead b{color:var(--acc)}
 /* ── reseña al terminar el recorrido ────────────────────────── */
-.revbox{background:#ffffff14;border-radius:22px;padding:22px 18px 20px;text-align:center}
-.revbox h3{margin:11px 0 0;font-size:21px;font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.revbox{background:#ffffff14;border-radius:0;padding:22px 18px 20px;text-align:center}
+.revbox h3{margin:11px 0 0;font-size:21px;font-weight:800;letter-spacing:-.004em;line-height:1.15}
 .revbox p{margin:9px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
 .stars{display:flex;gap:6px;justify-content:center;margin-top:18px}
 .stars button{font-size:38px;line-height:1;color:#ffffff3d;transition:transform .12s,color .12s}
 .stars button.on{color:var(--acc)}
 .stars button:active{transform:scale(.88)}
 .revcta{display:block;margin-top:18px;background:var(--acc);color:var(--accink);
-  border-radius:999px;padding:14px;font-size:14.5px;font-weight:800;text-align:center;
+  border-radius:2px;padding:14px;font-size:14.5px;font-weight:800;text-align:center;
   text-decoration:none}
 .revcta:active{transform:scale(.985)}
 /* el juego de campaña, a pantalla completa dentro de la guía */
@@ -143,89 +143,103 @@ main.castmode{padding:0}
 .castfull{position:relative;height:100%;background:#0b0b2b}
 .castfull iframe{width:100%;height:100%;border:0;display:block;background:#0b0b2b}
 .castesc{position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;
-  border-radius:999px;background:#05051ab0;color:#fff;display:grid;place-items:center;
+  border-radius:2px;background:#05051ab0;color:#fff;display:grid;place-items:center;
   font-size:14px;text-decoration:none;backdrop-filter:blur(6px)}
 /* ── Misión Castaween ───────────────────────────────────────── */
 .cjuego{padding:16px 0 0}
 .cjhero{display:flex;align-items:center;gap:13px}
-.cjbruja{flex:0 0 auto;width:104px;height:104px;border-radius:20px;display:block;
+.cjbruja{flex:0 0 auto;width:104px;height:104px;border-radius:0;display:block;
   object-fit:cover;box-shadow:0 10px 26px #0b0b2b5c}
 .cjhead{flex:1;min-width:0}
-.cjhead h2{margin:10px 0 0;font-size:23px;font-weight:800;letter-spacing:-.035em;line-height:1}
+.cjhead h2{margin:10px 0 0;font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:-.008em;line-height:1}
 .cjuego>.cjhero+.cjbar{margin-top:16px}
 .cjhero+.cjbar::before{content:""}
 .cjintro{margin:13px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
 
 .cjbar{display:flex;align-items:center;gap:11px;margin-top:15px}
 .cjpips{flex:1;display:flex;gap:5px}
-.cjpips i{flex:1;height:6px;border-radius:999px;background:#ffffff26;transition:background .25s}
+.cjpips i{flex:1;height:6px;border-radius:2px;background:#ffffff26;transition:background .25s}
 .cjpips i.on{background:var(--acc)}
 .cjbar b{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.07em;
   color:var(--muted)}
 
 .cjform{display:flex;gap:8px;margin-top:15px}
 .cjform input{flex:1;min-width:0;background:#ffffff14;border:1px solid var(--line);
-  border-radius:999px;padding:14px 18px;color:#fff;font-family:var(--f-mono);
+  border-radius:2px;padding:14px 18px;color:#fff;font-family:var(--f-mono);
   font-size:16px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
 .cjform input::placeholder{letter-spacing:.06em;text-transform:none;color:#ffffff6b;
   font-size:13px;font-weight:400}
 .cjform input:focus{outline:none;border-color:var(--acc)}
-.cjform button{flex:0 0 auto;background:var(--acc);color:var(--accink);border-radius:999px;
+.cjform button{flex:0 0 auto;background:var(--acc);color:var(--accink);border-radius:2px;
   padding:14px 20px;font-size:14.5px;font-weight:800}
 .cjmsg{margin-top:11px;font-size:13.5px;line-height:1.45;color:var(--muted);text-align:center}
 .cjmsg.bien{color:var(--acc);font-weight:700}
 .cjmsg.mal{color:#FF9B86}
 
 .cjgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.cjcard{position:relative;background:#ffffff14;border-radius:18px;padding:12px 10px 13px;
+.cjcard{position:relative;background:#ffffff14;border-radius:0;padding:12px 10px 13px;
   text-align:center;overflow:hidden}
-.cjph{display:block;height:98px}
+.cjph{display:block;height:98px;border-radius:0}
 .cjph img{width:100%;height:100%;display:block;object-fit:contain}
-.cjcard b{display:block;margin-top:9px;font-size:12.5px;font-weight:800;line-height:1.2;
-  letter-spacing:-.01em;color:#fff}
+.cjcard b{text-transform:uppercase;display:block;margin-top:9px;font-size:12.5px;font-weight:800;line-height:1.2;
+  letter-spacing:.004em;color:#fff}
 .cjcard.on{background:#ffffff26;outline:2px solid var(--acc);outline-offset:-2px}
-.cjtick{position:absolute;top:9px;right:9px;width:21px;height:21px;border-radius:999px;
+.cjtick{position:absolute;top:9px;right:9px;width:21px;height:21px;border-radius:2px;
   background:var(--acc);color:var(--accink);display:grid;place-items:center;
   font-size:11px;font-weight:700}
 .cjcard.recien{animation:cjpop .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes cjpop{0%{transform:scale(.88)}60%{transform:scale(1.05)}100%{transform:none}}
 @media (prefers-reduced-motion: reduce){.cjcard.recien{animation:none}}
 
-.cjfin{margin-top:16px;border-radius:20px;padding:20px 17px;text-align:center;
+.cjfin{margin-top:16px;border-radius:0;padding:20px 17px;text-align:center;
   background:linear-gradient(145deg,#FF4C2A,#FB48C4 58%,#3737FF)}
-.cjfin h3{font-size:23px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.cjfin h3{font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:-.006em;line-height:1.05}
 .cjfin p{margin-top:9px;font-size:14px;line-height:1.5;color:#ffffffeb}
-.cjreset{margin-top:15px;background:#0b0b2b5c;color:#fff;border-radius:999px;
+.cjreset{margin-top:15px;background:#0b0b2b5c;color:#fff;border-radius:2px;
   padding:11px 18px;font-size:12.5px;font-weight:700}
-.cjpuerta{margin-top:20px;background:#ffffff14;border-radius:22px;padding:22px 18px 20px;
+.cjpuerta{margin-top:20px;background:#ffffff14;border-radius:0;padding:22px 18px 20px;
   text-align:center}
-.cjpuerta h3{font-size:19px;font-weight:800;letter-spacing:-.025em;line-height:1.2}
+.cjpuerta h3{font-size:19px;font-weight:800;letter-spacing:-.004em;line-height:1.2}
 .cjpuerta p{margin-top:9px;font-size:13.5px;line-height:1.5;color:var(--muted)}
 .cjpuerta .cjform input{text-align:center;letter-spacing:.42em;font-size:21px}
 .cjpuerta .cjform input::placeholder{letter-spacing:.42em;font-size:21px;color:#ffffff40}
 .cjent{flex:0 0 auto;font-size:10px;font-weight:700;letter-spacing:.06em;
-  background:var(--acc);color:var(--accink);border-radius:999px;padding:4px 9px;
+  background:var(--acc);color:var(--accink);border-radius:2px;padding:4px 9px;
   font-variant-numeric:tabular-nums}
 .cjpremios{display:block}
 .cjpremio{display:inline-flex;align-items:baseline;gap:7px;margin:16px auto 0;
-  background:#0b0b2b5c;border-radius:999px;padding:9px 18px}
-.cjpremio b{font-size:27px;font-weight:800;letter-spacing:-.03em;line-height:1;
+  background:#0b0b2b5c;border-radius:2px;padding:9px 18px}
+.cjpremio b{font-size:27px;font-weight:800;letter-spacing:-.006em;line-height:1;
   color:var(--acc);font-variant-numeric:tabular-nums}
 .cjpremio span{font-size:13px;font-weight:700;color:#fff}
-.cjbienv{margin-top:20px;background:#ffffff14;border-radius:22px;padding:21px 18px 20px}
-.cjbienv h3{font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.cjbienv{margin-top:20px;background:#ffffff14;border-radius:0;padding:21px 18px 20px}
+.cjbienv h3{font-size:21px;font-weight:800;letter-spacing:-.006em;line-height:1.15}
 .cjpasos{margin:15px 0 0;padding:0;list-style:none;counter-reset:paso}
 .cjpasos li{counter-increment:paso;position:relative;padding-left:32px;margin-top:12px;
   font-size:13.5px;line-height:1.5;color:#ffffffdb}
 .cjpasos li::before{content:counter(paso);position:absolute;left:0;top:0;width:22px;height:22px;
-  border-radius:999px;background:var(--acc);color:var(--accink);display:grid;place-items:center;
+  border-radius:2px;background:var(--acc);color:var(--accink);display:grid;place-items:center;
   font-size:11px;font-weight:800}
 .cjticket{margin-top:21px;padding-top:19px;border-top:1px solid var(--line)}
-.cjticket h4{font-size:15.5px;font-weight:800;letter-spacing:-.02em;text-align:center}
+.cjticket h4{font-size:15.5px;font-weight:800;letter-spacing:-.002em;text-align:center}
 .cjticket .cjform input{text-align:center;letter-spacing:.04em;font-size:17px}
 .cjticket .cjform input::placeholder{letter-spacing:.03em;font-size:13px}
 .cjticket .cjform input::-webkit-outer-spin-button,
 .cjticket .cjform input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+/* el código, en cuatro recuadros */
+.cjcodigo{margin-top:17px;display:flex;flex-direction:column;align-items:center;gap:13px}
+.cjboxes{display:flex;gap:9px}
+.cjbox{width:54px;height:62px;text-align:center;background:#ffffff14;
+  border:1px solid var(--line);border-radius:2px;color:#fff;
+  font-family:var(--f-ui);font-size:26px;font-weight:700;caret-color:var(--acc)}
+.cjbox:focus{outline:none;border-color:var(--acc);background:#ffffff1f}
+.cjcodigo button{background:var(--acc);color:var(--accink);border-radius:2px;
+  padding:13px 26px;font-size:14.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase}
+.cjcodigo.tiembla{animation:tiembla .3s}
+@keyframes tiembla{0%,100%{transform:none}25%{transform:translateX(-7px)}
+  75%{transform:translateX(7px)}}
+@media (prefers-reduced-motion: reduce){.cjcodigo.tiembla{animation:none}}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preload" href="fonts/jokker-700.woff2" as="font" type="font/woff2" crossorigin>
@@ -295,39 +309,39 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
 
 .sechead{display:flex;align-items:center;gap:8px;padding:19px 0 9px;position:sticky;top:0;
   background:linear-gradient(var(--bg) 74%,transparent);z-index:2}
-.sechead b{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;padding:5px 11px;border-radius:999px}
+.sechead b{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;padding:5px 11px;border-radius:2px}
 .sechead em{font-family:var(--f-mono);font-size:9.5px;color:var(--muted);font-style:normal}
 
 /* Tarjeta póster: una cápsula por exhibición, sin líneas separadoras. */
-.stop{display:block;width:100%;text-align:left;background:#ffffff14;border-radius:19px;
+.stop{display:block;width:100%;text-align:left;background:#ffffff14;border-radius:0;
   overflow:hidden;margin-bottom:9px;transition:transform .12s}
 .stop:active{transform:scale(.985)}
-.thumb{position:relative;display:block;aspect-ratio:2/1;background:#ffffff14}
+.thumb{border-radius:0;position:relative;display:block;aspect-ratio:2/1;background:#ffffff14;border-radius:0}
 .thumb svg,.thumb img{width:100%;height:100%;display:block;object-fit:cover;transition:opacity .15s}
 .thumb.art{aspect-ratio:16/5;background:#2A2ADB;display:flex;align-items:center;
   justify-content:center}
 .thumb.art svg{width:auto;height:100%;padding:11px 0;opacity:.6}
 .num{position:absolute;left:9px;bottom:9px;min-width:22px;height:20px;padding:0 7px;
-  display:grid;place-items:center;border-radius:7px;font-family:var(--f-mono);font-size:10.5px;
+  display:grid;place-items:center;border-radius:2px;font-family:var(--f-mono);font-size:10.5px;
   font-weight:600;color:var(--accink);background:var(--acc)}
-.tick{position:absolute;right:9px;top:9px;width:24px;height:24px;border-radius:999px;
+.tick{position:absolute;right:9px;top:9px;width:24px;height:24px;border-radius:2px;
   background:#0b0b2bb5;display:grid;place-items:center;font-size:11px;color:#ffffff5c;
   transition:.12s}
 .stop .cambadge{position:absolute;right:9px;bottom:9px;display:flex;align-items:center;gap:5px;
-  background:#0b0b2bb5;border-radius:999px;padding:4px 9px;font-family:var(--f-mono);
+  background:#0b0b2bb5;border-radius:2px;padding:4px 9px;font-family:var(--f-mono);
   font-size:8.5px;font-weight:600;letter-spacing:.07em;color:var(--acc)}
 .stop .meta{display:block;padding:9px 13px 11px}
-.stop .meta b{display:block;font-size:15px;font-weight:800;line-height:1.18;
-  letter-spacing:-.02em}
+.stop .meta b{text-transform:uppercase;display:block;font-size:14.5px;font-weight:700;line-height:1.26;
+  letter-spacing:-.002em}
 .stop .meta span{display:block;font-size:9.5px;color:var(--muted);margin-top:5px;
   font-family:var(--f-mono);letter-spacing:.06em}
 .stop.done .thumb svg,.stop.done .thumb img{opacity:.55}
 .stop.done .tick{background:var(--acc);color:var(--accink)}
 .stop.done .meta b{color:var(--muted)}
 
-.roomcard{display:block;width:100%;border:1px solid var(--line);padding:15px 16px;margin-top:9px}
-.roomcard b{display:inline-block;font-size:14px;font-weight:800;letter-spacing:-.01em;
+.roomcard{display:block;width:100%;border:1px solid var(--line);padding:15px 16px;margin-top:9px;border-radius:0}
+.roomcard b{text-transform:uppercase;display:inline-block;font-size:14px;font-weight:800;letter-spacing:.004em;
   padding:4px 9px}
 .roomcard span{display:block;font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
 .roomcard .pips{display:flex;gap:3px;flex-wrap:wrap;margin-top:11px}
@@ -344,13 +358,13 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
 .dtop .count{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
 .dbody{flex:1;overflow-y:auto;overscroll-behavior:contain}
 
-.hero{position:relative;aspect-ratio:1/1;max-width:100%;overflow:hidden}
+.hero{position:relative;aspect-ratio:1/1;max-width:100%;overflow:hidden;border-radius:0}
 .hero svg,.hero img{width:100%;height:100%;display:block;object-fit:cover}
 .hero .tag{position:absolute;left:0;bottom:0;background:#0b0b2bd9;padding:6px 10px;color:#fff}
 .dtext{padding:20px max(16px,env(safe-area-inset-left,0px)) 10px}
 .droom{display:inline-block;padding:4px 9px}
-.dtext h1{margin:12px 0 0;font-size:27px;font-weight:800;line-height:1.08;
-  letter-spacing:-.025em;text-wrap:balance;color:var(--acc)}
+.dtext h1{text-transform:uppercase;margin:12px 0 0;font-size:26px;font-weight:700;line-height:1.14;
+  letter-spacing:-.004em;text-wrap:balance;color:var(--acc)}
 .dtext h1 .hn{font-family:var(--f-mono);font-size:19px;font-weight:600;
   color:#ffffff8f;margin-right:9px;letter-spacing:0}
 
@@ -359,7 +373,7 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
 .block > .lbl::after{content:"";flex:1;height:1px;background:var(--line)}
 .lead{margin:0;font-size:16px;line-height:1.6;max-width:62ch}
 .lead + .lead{margin-top:15px}
-.hook{margin:0;font-size:19px;line-height:1.42;font-weight:700;letter-spacing:-.015em;
+.hook{margin:0;font-size:19px;line-height:1.42;font-weight:700;letter-spacing:0em;
   max-width:46ch;color:var(--fg)}
 .sub{margin:10px 0 0;font-size:13.5px;line-height:1.6;color:var(--grey);max-width:62ch}
 
@@ -367,13 +381,13 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
   margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));
   padding-inline:max(16px,env(safe-area-inset-left,0px))}
 .gal img{flex:0 0 auto;height:190px;width:auto;max-width:none;display:block;
-  border:1px solid var(--line)}
+  border:1px solid var(--line);border-radius:0}
 .howrow{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;
   margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));
   padding-inline:max(16px,env(safe-area-inset-left,0px))}
 .howcard{flex:0 0 150px}
 .howcard .ph{aspect-ratio:3/4;background:var(--panel2);border:1px solid var(--line);
-  position:relative;overflow:hidden}
+  position:relative;overflow:hidden;border-radius:0}
 .howcard .ph svg,.howcard .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .howcard .ph em{position:absolute;inset:auto 0 0 0;background:#0b0b2bd9;padding:4px 6px;
   font-style:normal;color:var(--muted);font-family:var(--f-mono);font-size:9px;
@@ -386,7 +400,7 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
 
 .quiz{background:#ffffff1f;padding:18px 16px;margin:0 max(16px,env(safe-area-inset-left,0px))}
 .quiz .lbl{color:var(--yellow)}
-.quiz p{margin:9px 0 0;font-size:17px;font-weight:700;line-height:1.35;letter-spacing:-.01em}
+.quiz p{margin:9px 0 0;font-size:17px;font-weight:700;line-height:1.35;letter-spacing:.004em}
 .quiz .reveal{margin-top:14px;background:var(--yellow);color:#000;padding:11px 14px;
   width:100%;font-size:13.5px;font-weight:800;text-align:center}
 .quiz .ans{margin:13px 0 0;font-size:14.5px;line-height:1.55;color:#fff;font-weight:400}
@@ -407,7 +421,7 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
 .nextrow .prev:disabled{opacity:.25;cursor:default}
 .nextrow .next{flex:1;height:54px;background:var(--acc);color:var(--accink);display:flex;
   align-items:center;justify-content:space-between;padding:0 16px;font-size:15px;
-  font-weight:800;letter-spacing:-.01em;min-width:0}
+  font-weight:800;letter-spacing:.004em;min-width:0}
 .nextrow .next:disabled{background:var(--panel2);color:var(--muted);cursor:default}
 .nextrow .next i{font-style:normal;font-size:19px;flex:0 0 auto;padding-left:10px}
 .nextrow .next span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -421,7 +435,7 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
 #gate .inner{margin:auto 0;padding:34px 0}
 #gate img{width:min(270px,72%);height:auto;display:block}
 #gate h1{margin:30px 0 0;font-size:41px;font-weight:800;line-height:.98;
-  letter-spacing:-.035em;color:var(--acc)}
+  letter-spacing:-.008em;color:var(--acc)}
 #gate h1 em{font-style:normal;color:#fff}
 #gate p{margin:16px 0 0;font-size:14.5px;line-height:1.55;color:#fff;max-width:32ch}
 #gate .pick{margin-top:30px;color:#ffffffb3}
@@ -2803,7 +2817,7 @@ const PAL=[["#FFDB00","102"],["#FB48C4","813"],["#3737FF","2728"],
 
 function renderStyle(){
   let h=`<div style="height:18px"></div>
-    <h2 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-.025em">${L().styleTitle}</h2>
+    <h2 style="margin:0;font-size:22px;font-weight:800;letter-spacing:-.004em">${L().styleTitle}</h2>
     <p style="margin:10px 0 0;font-size:13.5px;line-height:1.55;color:var(--grey);max-width:50ch">${L().styleIntro}</p>
     <div class="styleGrid">`;
   STYLES.forEach(st=>{
@@ -2926,23 +2940,49 @@ function renderCastPuerta(){
     <div class="cjuego">${castCabecera(c)}
       <div class="cjpuerta">
         <h3>${T.pq}</h3>
-        <form class="cjform" id="cjPForm" autocomplete="off">
-          <input id="cjPIn" type="text" inputmode="numeric" maxlength="4"
-                 placeholder="${T.pph}" aria-label="${T.pq}" spellcheck="false">
+        <form class="cjcodigo" id="cjPForm" autocomplete="off">
+          <div class="cjboxes">${[0,1,2,3].map(i =>
+            `<input class="cjbox" data-i="${i}" type="text" inputmode="numeric"
+                    maxlength="1" aria-label="${i+1}/4" spellcheck="false">`).join("")}</div>
           <button type="submit">${T.pbtn}</button>
         </form>
         <div class="cjmsg" id="cjPMsg" hidden></div>
       </div>
     </div>`;
-  el("cjPForm").onsubmit = ev => {
-    ev.preventDefault();
+  const cajas = [...document.querySelectorAll(".cjbox")];
+  const leido = () => cajas.map(x => x.value).join("").replace(/[^0-9]/g, "");
+  const comprueba = () => {
     const T = castT();
-    if((el("cjPIn").value || "").replace(/[^0-9]/g, "") !== CAST_CODIGO){
+    if(leido() !== CAST_CODIGO){
       const m = el("cjPMsg"); m.hidden = false; m.className = "cjmsg mal";
-      m.textContent = T.pmal; el("cjPIn").value = ""; return;
+      m.textContent = T.pmal;
+      cajas.forEach(x => x.value = ""); cajas[0].focus();
+      const f = el("cjPForm"); f.classList.remove("tiembla");
+      void f.offsetWidth; f.classList.add("tiembla");
+      return;
     }
     store.set("castOk", 1); renderCastBienvenida();
   };
+  cajas.forEach((caja, i) => {
+    caja.addEventListener("input", () => {
+      caja.value = caja.value.replace(/[^0-9]/g, "").slice(0, 1);
+      if(caja.value && cajas[i + 1]) cajas[i + 1].focus();
+      if(leido().length === 4) comprueba();
+    });
+    caja.addEventListener("keydown", e => {
+      if(e.key === "Backspace" && !caja.value && cajas[i - 1]){ cajas[i - 1].focus(); }
+      if(e.key === "ArrowLeft" && cajas[i - 1]) cajas[i - 1].focus();
+      if(e.key === "ArrowRight" && cajas[i + 1]) cajas[i + 1].focus();
+    });
+    caja.addEventListener("paste", e => {          /* pegar el código de golpe */
+      const t = (e.clipboardData.getData("text") || "").replace(/[^0-9]/g, "").slice(0, 4);
+      if(!t) return;
+      e.preventDefault();
+      t.split("").forEach((d, k) => { if(cajas[k]) cajas[k].value = d; });
+      if(t.length === 4) comprueba(); else cajas[Math.min(t.length, 3)].focus();
+    });
+  });
+  el("cjPForm").onsubmit = ev => { ev.preventDefault(); comprueba(); };
 }
 
 /* 2 · la bienvenida y cuántos tickets trae */
