@@ -2433,6 +2433,13 @@ const CAM_G = {
 S.filter(s => /ilusiones|illusion|Illusion/.test(s.t) && s.list)
  .forEach(s => { s.cam = {rot: 0, g: CAM_G}; });
 
+/* ── orden del recorrido, tal y como se camina el museo ───────
+   Entrada · Sala 1 … Sala 8 · Paradox Boutique · Salida.
+   Los números de las exhibiciones son referencias del plano, no
+   el orden de la visita, así que el orden lo manda esta lista. */
+const ORDEN = ["entrada","s1","s2","s3","s4","s5","zg","s6","s7","tienda","salida"];
+S.sort((a, b) => ORDEN.indexOf(a.r) - ORDEN.indexOf(b.r));
+
 /* ── placeholder art, three selectable drawing styles ───────── */
 const BG="#2A2ADB";
 function shapes(kind,c){
@@ -2980,6 +2987,10 @@ let abreCamara = () => {};
     arranca();
   };
 })();
+
+/* Al cambiar el orden del recorrido, las marcas de "visto" guardadas
+   apuntarían a otra parada: se descartan una sola vez. */
+if(store.get("orden",0)!==2){ store.set("seen",[]); store.set("orden",2); }
 
 seen=new Set(store.get("seen",[]));
 drawStyle=store.get("style","bloque");
