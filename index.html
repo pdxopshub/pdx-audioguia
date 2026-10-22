@@ -55,6 +55,55 @@ img{max-width:100%}
 .camwrap{padding:4px max(16px,env(safe-area-inset-left,0px)) 0}
 .camwrap .hint{display:block;margin-top:8px;text-align:center;font-family:var(--f-mono);
   font-size:9.5px;color:var(--muted);letter-spacing:.05em}
+/* ── Castaween ──────────────────────────────────────────────── */
+.castwrap{padding:18px 0 24px}
+.casthero{border-radius:24px;padding:26px 20px 24px;position:relative;overflow:hidden;
+  background:linear-gradient(150deg,#FF4C2A 0%,#FB48C4 58%,#3737FF 100%)}
+.casthero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(115deg,#ffffff14 0 11px,transparent 11px 22px)}
+.casthero>*{position:relative;z-index:1}
+.castkick{display:inline-block;font-family:var(--f-mono);font-size:9.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;background:var(--acc);color:var(--accink);
+  border-radius:999px;padding:4px 11px}
+.casthero h2{margin:14px 0 0;font-size:clamp(34px,11vw,46px);font-weight:800;
+  letter-spacing:-.045em;line-height:.92;color:#fff}
+.castlead{margin:14px 0 0;font-size:15px;line-height:1.55;color:#ffffffeb}
+.castlink{color:var(--acc);font-weight:800;text-decoration:underline;
+  text-underline-offset:3px;text-decoration-thickness:2px}
+.castcta{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;
+  background:var(--acc);color:var(--accink);border-radius:999px;padding:15px 16px;
+  font-size:15px;font-weight:800;letter-spacing:-.01em;text-decoration:none}
+.castcta:active{transform:scale(.985)}
+/* ── tarjeta de bienvenida ──────────────────────────────────── */
+.stop.bienvenida{background:none;border-radius:26px;overflow:hidden;margin:2px 0 14px;
+  position:relative;padding:0}
+.bvbox{display:block;position:relative;border-radius:26px;overflow:hidden;
+  background:linear-gradient(152deg,#FF4C2A 0%,#FB48C4 34%,#3737FF 68%,#00D9A0 100%);
+  padding:26px 20px 23px;text-align:left}
+/* Franjas que se desplazan muy despacio: un guiño al moiré del museo. */
+.bvbox::before{content:"";position:absolute;inset:-20% -60%;
+  background:repeating-linear-gradient(104deg,#ffffff1f 0 10px,transparent 10px 21px);
+  animation:bvdrift 19s linear infinite}
+.bvbox::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(118% 82% at 12% 6%,#ffffff2e,transparent 58%),
+             linear-gradient(transparent 44%,#0b0b2b4d)}
+@keyframes bvdrift{to{transform:translateX(21px)}}
+@media (prefers-reduced-motion: reduce){.bvbox::before{animation:none}}
+.bvbox>*{position:relative;z-index:1}
+.bvkick{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);
+  font-size:9.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  background:var(--acc);color:var(--accink);border-radius:999px;padding:4px 11px}
+.bvbox h2{margin:14px 0 0;font-size:clamp(30px,9.2vw,40px);font-weight:800;
+  letter-spacing:-.045em;line-height:.9;color:#fff;text-wrap:balance}
+.bvbox h2 em{font-style:normal;color:var(--acc);display:block}
+.bvbox p{margin:12px 0 0;font-size:14px;line-height:1.48;color:#ffffffe8;max-width:34ch}
+.bvgo{display:inline-flex;align-items:center;gap:9px;margin-top:20px;
+  background:var(--acc);color:var(--accink);border-radius:999px;padding:13px 20px;
+  font-size:14.5px;font-weight:800;letter-spacing:-.01em}
+.bvstats{display:flex;gap:7px;margin-top:17px;flex-wrap:wrap}
+.bvstats span{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.07em;
+  background:#0b0b2b5c;border-radius:999px;padding:5px 10px;color:#fff}
+.stop.bienvenida.done .bvbox{opacity:.72}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -316,7 +365,7 @@ main{flex:1;overflow-y:auto;overscroll-behavior:contain;
     <div class="tabs" role="tablist">
       <button data-tab="route" role="tab" aria-selected="true" id="tabRoute">Recorrido</button>
       <button data-tab="rooms" role="tab" aria-selected="false" id="tabRooms">Salas</button>
-      <button data-tab="style" role="tab" aria-selected="false" id="tabStyle">Estilo</button>
+      <button data-tab="cast" role="tab" aria-selected="false" id="tabCast">Castaween</button>
     </div>
   </header>
 
@@ -632,14 +681,14 @@ const C={blue:"#3737FF",mint:"#00FFB9",yellow:"#FFDB00",magenta:"#FB48C4",
 const ROOMS={
  entrada:{c:"#FFFFFF",ink:"#14141c",tc:"#FFFFFF",  n:{"es": "Entrada", "ca": "Entrada", "en": "Entrance", "fr": "Entrée", "it": "Ingresso", "de": "Eingang"}},
  tienda:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{"es": "Paradox Boutique", "ca": "Paradox Boutique", "en": "Paradox Boutique", "fr": "Paradox Boutique", "it": "Paradox Boutique", "de": "Paradox Boutique"}},
- s3:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{"es": "Sala 3 · Green Room", "ca": "Sala 3 · Green Room", "en": "Room 3 · Green Room", "fr": "Salle 3 · Green Room", "it": "Sala 3 · Green Room", "de": "Raum 3 · Green Room"}},
- s2:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{"es": "Sala 2 · Eixample", "ca": "Sala 2 · Eixample", "en": "Room 2 · Eixample", "fr": "Salle 2 · Eixample", "it": "Sala 2 · Eixample", "de": "Raum 2 · Eixample"}},
- s4:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{"es": "Sala 4 · Dodecaedro", "ca": "Sala 4 · Dodecàedre", "en": "Room 4 · Dodecahedron", "fr": "Salle 4 · Dodécaèdre", "it": "Sala 4 · Dodecaedro", "de": "Raum 4 · Dodekaeder"}},
- s5:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{"es": "Sala 5 · Túnel", "ca": "Sala 5 · Túnel", "en": "Room 5 · Tunnel", "fr": "Salle 5 · Tunnel", "it": "Sala 5 · Tunnel", "de": "Raum 5 · Tunnel"}},
- zg:{c:"#FF4C2A",ink:"#FFFFFF",tc:"#FFDB00", n:{"es": "Zero Gravity", "ca": "Zero Gravity", "en": "Zero Gravity", "fr": "Zero Gravity", "it": "Zero Gravity", "de": "Zero Gravity"}},
- s6:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{"es": "Sala 6 · Planta −1", "ca": "Sala 6 · Planta −1", "en": "Room 6 · Lower floor", "fr": "Salle 6 · Niveau −1", "it": "Sala 6 · Piano −1", "de": "Raum 6 · Untergeschoss"}},
- s7:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{"es": "Sala 7 · Planta −1", "ca": "Sala 7 · Planta −1", "en": "Room 7 · Lower floor", "fr": "Salle 7 · Niveau −1", "it": "Sala 7 · Piano −1", "de": "Raum 7 · Untergeschoss"}},
- s1:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{"es": "Sala 1 · Naranja", "ca": "Sala 1 · Taronja", "en": "Room 1 · Orange", "fr": "Salle 1 · Orange", "it": "Sala 1 · Arancione", "de": "Raum 1 · Orange"}},
+ s3:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{es:"Sala 3",ca:"Sala 3",en:"Room 3",fr:"Salle 3",it:"Sala 3",de:"Raum 3"}},
+ s2:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{es:"Sala 2",ca:"Sala 2",en:"Room 2",fr:"Salle 2",it:"Sala 2",de:"Raum 2"}},
+ s4:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{es:"Sala 4",ca:"Sala 4",en:"Room 4",fr:"Salle 4",it:"Sala 4",de:"Raum 4"}},
+ s5:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{es:"Sala 5",ca:"Sala 5",en:"Room 5",fr:"Salle 5",it:"Sala 5",de:"Raum 5"}},
+ zg:{c:"#FF4C2A",ink:"#FFFFFF",tc:"#FF4C2A", n:{es:"Sala 6",ca:"Sala 6",en:"Room 6",fr:"Salle 6",it:"Sala 6",de:"Raum 6"}},
+ s6:{c:"#FB48C4",ink:"#2a0820",tc:"#FFFFFF",n:{es:"Sala 7",ca:"Sala 7",en:"Room 7",fr:"Salle 7",it:"Sala 7",de:"Raum 7"}},
+ s7:{c:"#00FFB9",ink:"#06261f",tc:"#00FFB9",   n:{es:"Sala 8",ca:"Sala 8",en:"Room 8",fr:"Salle 8",it:"Sala 8",de:"Raum 8"}},
+ s1:{c:"#FFDB00",ink:"#14141c",tc:"#FFDB00", n:{es:"Sala 1",ca:"Sala 1",en:"Room 1",fr:"Salle 1",it:"Sala 1",de:"Raum 1"}},
  salida:{c:"#FF4C2A",ink:"#FFFFFF",tc:"#FFFFFF", n:{"es": "Salida", "ca": "Sortida", "en": "Exit", "fr": "Sortie", "it": "Uscita", "de": "Ausgang"}}
 };
 
@@ -2371,11 +2420,18 @@ S.filter(s => s.t === "Shadow Freeze").forEach(s => Object.assign(s.d, {
  de: "Ein starker Blitz auf eine phosphoreszierende Wand friert deinen Schatten für einige Sekunden ein. Die Wand leuchtet weiter, wo das Licht sie getroffen hat, und bleibt genau dort dunkel, wo du gestanden hast."
 }));
 
-/* ── exhibiciones que abren la cámara de la guía ────────────── */
-const CAM_ON = {"Paradox Challenge": 180, "Zero Gravity": 180, "Ames Room": 0, "Beuchet Chair": 0, "Clone Table": 0, "Infinity Room": 0, "PDX Sofa": 0, "Shadow Freeze": 0, "Kaleidoscope": 0, "Camouflage Wall": 0, "Infinity Well": 0, "Paradox Tunnel": 0, "Infinity Dodecahedron": 0, "Infinity Window": 0, "Face Blender": 0};
-Object.entries(CAM_ON).forEach(([t, rot]) => {
-  S.filter(s => s.t === t).forEach(s => { s.cam = {rot: rot}; });
-});
+/* ── exhibiciones que abren la cámara de la guía ──────────────
+   Sólo Bulging Squares, que vive dentro del muro de ilusiones. */
+const CAM_G = {
+ es:"Bulging Squares es la de los cuadrados hinchados. Acerca el móvil, encuádrala recta y dispara: en la foto se ven planos.",
+ ca:"Bulging Squares és la dels quadrats inflats. Acosta el mòbil, enquadra-la recta i dispara: a la foto es veuen plans.",
+ en:"Bulging Squares is the one with the swollen squares. Get close, frame it square on and shoot: in the photo they look flat.",
+ fr:"Bulging Squares, c'est celle aux carrés gonflés. Approchez-vous, cadrez bien droit et déclenchez : sur la photo, ils sont plats.",
+ it:"Bulging Squares è quella dei quadrati gonfi. Avvicinati, inquadrala dritta e scatta: in foto risultano piatti.",
+ de:"Bulging Squares ist das mit den gewölbten Quadraten. Geh nah ran, halte gerade drauf und lös aus: Auf dem Foto sind sie flach."
+};
+S.filter(s => /ilusiones|illusion|Illusion/.test(s.t) && s.list)
+ .forEach(s => { s.cam = {rot: 0, g: CAM_G}; });
 
 /* ── placeholder art, three selectable drawing styles ───────── */
 const BG="#2A2ADB";
@@ -2506,7 +2562,7 @@ const L=()=>Object.assign({}, UI.en, UI[lang]||{});
 const tr=o=>!o?"":(typeof o==="string"?o:(o[lang]||o.en||o.es||""));
 const FLAGS={"es": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#AA151B\"/><rect y=\"5\" width=\"30\" height=\"10\" fill=\"#F1BF00\"/></svg>", "ca": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#FCDD09\"/><g fill=\"#DA121A\"><rect y=\"2.22\" width=\"30\" height=\"2.22\"/><rect y=\"6.67\" width=\"30\" height=\"2.22\"/><rect y=\"11.11\" width=\"30\" height=\"2.22\"/><rect y=\"15.56\" width=\"30\" height=\"2.22\"/></g></svg>", "en": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#012169\"/><path d=\"M0 0 30 20M30 0 0 20\" stroke=\"#fff\" stroke-width=\"4\"/><path d=\"M0 0 30 20M30 0 0 20\" stroke=\"#C8102E\" stroke-width=\"2.4\"/><path d=\"M15 0v20M0 10h30\" stroke=\"#fff\" stroke-width=\"6.6\"/><path d=\"M15 0v20M0 10h30\" stroke=\"#C8102E\" stroke-width=\"4\"/></svg>", "fr": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#fff\"/><rect width=\"10\" height=\"20\" fill=\"#002395\"/><rect x=\"20\" width=\"10\" height=\"20\" fill=\"#ED2939\"/></svg>", "it": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#fff\"/><rect width=\"10\" height=\"20\" fill=\"#008C45\"/><rect x=\"20\" width=\"10\" height=\"20\" fill=\"#CD212A\"/></svg>", "de": "<svg viewBox=\"0 0 30 20\"><rect width=\"30\" height=\"20\" fill=\"#FFCE00\"/><rect width=\"30\" height=\"13.34\" fill=\"#DD0000\"/><rect width=\"30\" height=\"6.67\" fill=\"#000\"/></svg>"};
 const NOMBRES={"es": "Español", "ca": "Català", "en": "English", "fr": "Français", "it": "Italiano", "de": "Deutsch"};
-const LANGS=["es", "ca", "en", "fr", "it", "de"];
+const LANGS=["ca", "es", "en", "fr", "it", "de"];
 const rm=s=>ROOMS[s.r];
 const esc=t=>String(t).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
 const store={
@@ -2515,6 +2571,7 @@ const store={
 };
 
 /* ── render ─────────────────────────────────────────────────── */
+const BIENV = {es:{k:"Empieza aquí",h:"¡BIENVENIDOS!",h2:"Al Paradox Museum",p:"Más de cincuenta ilusiones que van a discutir con tus ojos. Toca cualquier tarjeta y te contamos el truco.",b:"Empezar el recorrido",st:["55 paradas","8 salas","≈90 min"]},ca:{k:"Comença aquí",h:"BENVINGUTS!",h2:"Al Paradox Museum",p:"Més de cinquanta il·lusions que discutiran amb els teus ulls. Toca qualsevol targeta i t'expliquem el truc.",b:"Començar el recorregut",st:["55 parades","8 sales","≈90 min"]},en:{k:"Start here",h:"WELCOME!",h2:"To the Paradox Museum",p:"More than fifty illusions about to argue with your eyes. Tap any card and we'll tell you the trick.",b:"Start the tour",st:["55 stops","8 rooms","≈90 min"]},fr:{k:"Commencez ici",h:"BIENVENUE !",h2:"Au Paradox Museum",p:"Plus de cinquante illusions qui vont contredire vos yeux. Touchez une carte et on vous dit le truc.",b:"Commencer la visite",st:["55 arrêts","8 salles","≈90 min"]},it:{k:"Inizia qui",h:"BENVENUTI!",h2:"Al Paradox Museum",p:"Più di cinquanta illusioni pronte a litigare con i tuoi occhi. Tocca una scheda e ti sveliamo il trucco.",b:"Inizia il percorso",st:["55 tappe","8 sale","≈90 min"]},de:{k:"Hier starten",h:"WILLKOMMEN!",h2:"Im Paradox Museum",p:"Über fünfzig Illusionen, die gleich mit deinen Augen streiten. Tippe auf eine Karte und wir verraten den Trick.",b:"Rundgang starten",st:["55 Stationen","8 Räume","≈90 min"]}};
 function renderRoute(){
   let h=`<div class="progress lbl">
       <div class="bar"><i style="width:${seen.size/S.length*100}%"></i></div>
@@ -2528,6 +2585,19 @@ function renderRoute(){
       const k=S.filter(x=>x.r===cur).length;
       h+=`<div class="sechead"><b style="background:${ROOMS[cur].c};color:${ROOMS[cur].ink}">${tr(ROOMS[cur].n)}</b>
           <em>${k} ${k===1?L().stop1:L().stops}</em></div>`;
+    }
+    if(s.r==="entrada"){
+      const B=BIENV[lang]||BIENV.es;
+      h+=`<button class="stop bienvenida${seen.has(i)?" done":""}" data-i="${i}">
+            <span class="bvbox">
+              <span class="bvkick">◆ ${B.k}</span>
+              <h2>${B.h}<em>${B.h2}</em></h2>
+              <p>${B.p}</p>
+              <span class="bvstats">${B.st.map(x=>`<span>${x}</span>`).join("")}</span>
+              <span class="bvgo">${B.b} →</span>
+            </span>
+          </button>`;
+      return;
     }
     h+=`<button class="stop${seen.has(i)?" done":""}" data-i="${i}">
           <span class="thumb${s.img?"":" art"}">
@@ -2596,12 +2666,30 @@ function renderStyle(){
   el("main").innerHTML=h;
 }
 
+function renderCast(){
+  const C_ = {es:{k:"Caza del tesoro · edición Halloween",t:"Misión Castaween",d:"es una treasure hunt con código.",b:"Abrir Misión Castaween"},ca:{k:"Caça del tresor · edició Halloween",t:"Missió Castaween",d:"és una treasure hunt amb codi.",b:"Obrir Missió Castaween"},en:{k:"Treasure hunt · Halloween edition",t:"Castaween Mission",d:"is a treasure hunt with a code.",b:"Open Castaween Mission"},fr:{k:"Chasse au trésor · édition Halloween",t:"Mission Castaween",d:"est une chasse au trésor avec un code.",b:"Ouvrir Mission Castaween"},it:{k:"Caccia al tesoro · edizione Halloween",t:"Missione Castaween",d:"è una caccia al tesoro con codice.",b:"Apri Missione Castaween"},de:{k:"Schatzsuche · Halloween-Edition",t:"Mission Castaween",d:"ist eine Schatzsuche mit Code.",b:"Mission Castaween öffnen"}}[lang] || {es:{k:"Caza del tesoro · edición Halloween",t:"Misión Castaween",d:"es una treasure hunt con código.",b:"Abrir Misión Castaween"},ca:{k:"Caça del tresor · edició Halloween",t:"Missió Castaween",d:"és una treasure hunt amb codi.",b:"Obrir Missió Castaween"},en:{k:"Treasure hunt · Halloween edition",t:"Castaween Mission",d:"is a treasure hunt with a code.",b:"Open Castaween Mission"},fr:{k:"Chasse au trésor · édition Halloween",t:"Mission Castaween",d:"est une chasse au trésor avec un code.",b:"Ouvrir Mission Castaween"},it:{k:"Caccia al tesoro · edizione Halloween",t:"Missione Castaween",d:"è una caccia al tesoro con codice.",b:"Apri Missione Castaween"},de:{k:"Schatzsuche · Halloween-Edition",t:"Mission Castaween",d:"ist eine Schatzsuche mit Code.",b:"Mission Castaween öffnen"}}["es"];
+  el("main").innerHTML = `
+    <div class="castwrap">
+      <div class="casthero">
+        <span class="castkick">${C_.k}</span>
+        <h2>CASTAWEEN</h2>
+        <p class="castlead">
+          <a class="castlink" href="https://castaweenparadox2026.lovable.app/"
+             target="_blank" rel="noopener">${C_.t} · Paradox Museum</a>
+          ${C_.d}
+        </p>
+        <a class="castcta" href="https://castaweenparadox2026.lovable.app/"
+           target="_blank" rel="noopener">${C_.b} →</a>
+      </div>
+    </div>`;
+}
+
 function render(){
   el("tabRoute").textContent=L().route;
   el("tabRooms").textContent=L().rooms;
-  el("tabStyle").textContent=L().style;
+  el("tabCast").textContent="CASTAWEEN";
   el("backTxt").textContent=L().route;
-  tab==="route"?renderRoute():tab==="rooms"?renderRooms():renderStyle();
+  tab==="route"?renderRoute():tab==="rooms"?renderRooms():renderCast();
 }
 
 function openStop(i){
