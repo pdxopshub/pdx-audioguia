@@ -180,12 +180,10 @@ main.castmode{padding:0}
 .cjcard{position:relative;background:#ffffff14;border-radius:18px;padding:12px 10px 13px;
   text-align:center;overflow:hidden}
 .cjph{display:block;height:98px}
-.cjph img{width:100%;height:100%;display:block;object-fit:contain;
-  filter:brightness(0) opacity(.22);transition:filter .45s}
-.cjcard.on .cjph img{filter:none}
+.cjph img{width:100%;height:100%;display:block;object-fit:contain}
 .cjcard b{display:block;margin-top:9px;font-size:12.5px;font-weight:800;line-height:1.2;
-  letter-spacing:-.01em;color:var(--muted)}
-.cjcard.on b{color:#fff}
+  letter-spacing:-.01em;color:#fff}
+.cjcard.on{background:#ffffff26;outline:2px solid var(--acc);outline-offset:-2px}
 .cjtick{position:absolute;top:9px;right:9px;width:21px;height:21px;border-radius:999px;
   background:var(--acc);color:var(--accink);display:grid;place-items:center;
   font-size:11px;font-weight:700}
@@ -214,6 +212,20 @@ main.castmode{padding:0}
 .cjpremio b{font-size:27px;font-weight:800;letter-spacing:-.03em;line-height:1;
   color:var(--acc);font-variant-numeric:tabular-nums}
 .cjpremio span{font-size:13px;font-weight:700;color:#fff}
+.cjbienv{margin-top:20px;background:#ffffff14;border-radius:22px;padding:21px 18px 20px}
+.cjbienv h3{font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.cjpasos{margin:15px 0 0;padding:0;list-style:none;counter-reset:paso}
+.cjpasos li{counter-increment:paso;position:relative;padding-left:32px;margin-top:12px;
+  font-size:13.5px;line-height:1.5;color:#ffffffdb}
+.cjpasos li::before{content:counter(paso);position:absolute;left:0;top:0;width:22px;height:22px;
+  border-radius:999px;background:var(--acc);color:var(--accink);display:grid;place-items:center;
+  font-size:11px;font-weight:800}
+.cjticket{margin-top:21px;padding-top:19px;border-top:1px solid var(--line)}
+.cjticket h4{font-size:15.5px;font-weight:800;letter-spacing:-.02em;text-align:center}
+.cjticket .cjform input{text-align:center;letter-spacing:.04em;font-size:17px}
+.cjticket .cjform input::placeholder{letter-spacing:.03em;font-size:13px}
+.cjticket .cjform input::-webkit-outer-spin-button,
+.cjticket .cjform input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preload" href="fonts/jokker-700.woff2" as="font" type="font/woff2" crossorigin>
@@ -2876,67 +2888,102 @@ const CAST_UI = {
    el cartel, teclea su código y se le va llenando el pasaporte.
    El progreso se guarda en el móvil, así que aguanta si cierra. */
 const CAST_JUEGO = [{"id": "murcielago", "c": "K7MA", "img": "img/castaween/murcielago.webp", "n": {"ca": "Ratpenat juganer", "es": "Murciélago juguetón", "en": "Playful bat", "fr": "Chauve-souris joueuse", "it": "Pipistrello giocherellone", "de": "Verspielte Fledermaus"}}, {"id": "hojas", "c": "R4VE", "img": "img/castaween/hojas.webp", "n": {"ca": "Fulles màgiques", "es": "Hojas mágicas", "en": "Magic leaves", "fr": "Feuilles magiques", "it": "Foglie magiche", "de": "Magische Blätter"}}, {"id": "castana", "c": "T9CA", "img": "img/castaween/castana.webp", "n": {"ca": "Castanya saltironera", "es": "Castaña saltarina", "en": "Bouncing chestnut", "fr": "Châtaigne sauteuse", "it": "Castagna saltellante", "de": "Hüpfende Kastanie"}}, {"id": "fantasma", "c": "F6NU", "img": "img/castaween/fantasma.webp", "n": {"ca": "Fantasma simpàtic", "es": "Fantasma simpático", "en": "Friendly ghost", "fr": "Gentil fantôme", "it": "Fantasma simpatico", "de": "Netter Geist"}}, {"id": "arbol", "c": "B3RA", "img": "img/castaween/arbol.webp", "n": {"ca": "Arbre màgic", "es": "Árbol mágico", "en": "Magic tree", "fr": "Arbre magique", "it": "Albero magico", "de": "Magischer Baum"}}, {"id": "calabaza", "c": "P8ZA", "img": "img/castaween/calabaza.webp", "n": {"ca": "Carbassa amagada", "es": "Calabaza escondida", "en": "Hidden pumpkin", "fr": "Citrouille cachée", "it": "Zucca nascosta", "de": "Versteckter Kürbis"}}];
-const CAST_T = {"ca": {"intro": "Sis personatges amagats pel museu. Troba'ls, escriu el seu codi i completa el passaport.", "ph": "Codi de 4 caràcters", "val": "Validar", "pend": "Per trobar", "ok": "Trobat!", "mal": "Aquest codi no és de cap. Mira bé el cartell.", "rep": "Aquest ja el tenies.", "de": "de", "fin": "Passaport complet!", "finp": "Ensenya'l a la botiga i recull el teu regal.", "reset": "Començar de zero", "cerrar": "Tancar"}, "es": {"intro": "Seis personajes escondidos por el museo. Encuéntralos, escribe su código y completa el pasaporte.", "ph": "Código de 4 caracteres", "val": "Validar", "pend": "Por encontrar", "ok": "¡Encontrado!", "mal": "Ese código no es de ninguno. Mira bien el cartel.", "rep": "Ese ya lo tenías.", "de": "de", "fin": "¡Pasaporte completo!", "finp": "Enséñalo en la tienda y recoge tu regalo.", "reset": "Empezar de cero", "cerrar": "Cerrar"}, "en": {"intro": "Six characters hidden around the museum. Find them, type their code and fill the passport.", "ph": "4-character code", "val": "Check", "pend": "Still hidden", "ok": "Found!", "mal": "That code isn't any of them. Look at the sign again.", "rep": "You already had that one.", "de": "of", "fin": "Passport complete!", "finp": "Show it at the shop and pick up your gift.", "reset": "Start over", "cerrar": "Close"}, "fr": {"intro": "Six personnages cachés dans le musée. Trouvez-les, tapez leur code et remplissez le passeport.", "ph": "Code à 4 caractères", "val": "Valider", "pend": "À trouver", "ok": "Trouvé !", "mal": "Ce code n'est celui d'aucun. Regardez bien le panneau.", "rep": "Celui-là, vous l'aviez déjà.", "de": "sur", "fin": "Passeport complet !", "finp": "Montrez-le à la boutique et récupérez votre cadeau.", "reset": "Tout recommencer", "cerrar": "Fermer"}, "it": {"intro": "Sei personaggi nascosti nel museo. Trovali, scrivi il loro codice e completa il passaporto.", "ph": "Codice di 4 caratteri", "val": "Conferma", "pend": "Da trovare", "ok": "Trovato!", "mal": "Questo codice non è di nessuno. Guarda bene il cartello.", "rep": "Questo ce l'avevi già.", "de": "di", "fin": "Passaporto completo!", "finp": "Mostralo in negozio e ritira il tuo regalo.", "reset": "Ricomincia", "cerrar": "Chiudi"}, "de": {"intro": "Sechs Figuren sind im Museum versteckt. Finde sie, gib ihren Code ein und füll den Pass.", "ph": "Code mit 4 Zeichen", "val": "Prüfen", "pend": "Noch versteckt", "ok": "Gefunden!", "mal": "Dieser Code gehört zu keiner. Schau noch mal aufs Schild.", "rep": "Die hattest du schon.", "de": "von", "fin": "Pass vollständig!", "finp": "Zeig ihn im Shop und hol dir dein Geschenk.", "reset": "Neu anfangen", "cerrar": "Schließen"}};
 
-function castHallados(){ return new Set(store.get("cast", [])); }
 
 /* ── puerta de Castaween ────────────────────────────────────────
    En taquilla dan un código de cuatro cifras al comprar las
    entradas del juego. Cada código vale por un número de entradas,
    y es ese número el que se reclama al final en la tienda. */
-const CAST_CODIGOS = {"0042": 4};
-const CAST_P = {"ca": {"q": "Quantes entrades de Castaween heu comprat?", "sub": "Escriu el codi de 4 xifres que t'han donat a taquilla.", "ph": "0000", "btn": "Entrar", "mal": "Aquest codi no ens quadra. Demana'l a l'equip de taquilla.", "ent": "entrades", "ent1": "entrada", "fin": "Enhorabona!", "finp": "Reclama el teu premi a la botiga.", "otro": "Canviar de codi"}, "es": {"q": "¿Cuántas entradas de Castaween habéis comprado?", "sub": "Escribe el código de 4 dígitos que te han dado en taquilla.", "ph": "0000", "btn": "Entrar", "mal": "Ese código no nos cuadra. Pídeselo al equipo de taquilla.", "ent": "entradas", "ent1": "entrada", "fin": "¡Enhorabuena!", "finp": "Reclama tu premio en la tienda.", "otro": "Cambiar de código"}, "en": {"q": "How many Castaween tickets did you buy?", "sub": "Type the 4-digit code you were given at the ticket desk.", "ph": "0000", "btn": "Enter", "mal": "That code doesn't add up. Ask the ticket desk for it.", "ent": "tickets", "ent1": "ticket", "fin": "Congratulations!", "finp": "Claim your prize at the shop.", "otro": "Use another code"}, "fr": {"q": "Combien de billets Castaween avez-vous achetés ?", "sub": "Tapez le code à 4 chiffres qu'on vous a donné à la billetterie.", "ph": "0000", "btn": "Entrer", "mal": "Ce code ne colle pas. Demandez-le à la billetterie.", "ent": "billets", "ent1": "billet", "fin": "Félicitations !", "finp": "Récupérez votre prix à la boutique.", "otro": "Changer de code"}, "it": {"q": "Quanti biglietti Castaween avete comprato?", "sub": "Scrivi il codice di 4 cifre che ti hanno dato in biglietteria.", "ph": "0000", "btn": "Entra", "mal": "Questo codice non torna. Chiedilo alla biglietteria.", "ent": "biglietti", "ent1": "biglietto", "fin": "Congratulazioni!", "finp": "Ritira il tuo premio in negozio.", "otro": "Cambiare codice"}, "de": {"q": "Wie viele Castaween-Tickets habt ihr gekauft?", "sub": "Gib den vierstelligen Code ein, den du an der Kasse bekommen hast.", "ph": "0000", "btn": "Los", "mal": "Dieser Code passt nicht. Frag an der Kasse danach.", "ent": "Tickets", "ent1": "Ticket", "fin": "Glückwunsch!", "finp": "Hol dir deinen Preis im Shop.", "otro": "Anderen Code eingeben"}};
 
-function castEntradas(){ return store.get("castEnt", 0); }
 
-function renderCastPuerta(){
-  const P = CAST_P[lang] || CAST_P.es, c = campana();
-  el("main").innerHTML = `
-    <div class="cjuego">
-      <div class="cjhero">
-        <img class="cjbruja" src="img/castaween/bruja.webp" alt="" decoding="async">
-        <div class="cjhead">
-          <span class="castkick">${esc(tr(c.k))}</span>
-          <h2>${esc(tr(c.t))}</h2>
-        </div>
+
+
+/* ── Misión Castaween, en tres pasos ────────────────────────────
+   1. el código que da el museo para entrar
+   2. la bienvenida, con cuántos tickets trae el visitante
+   3. los seis monstruos, siempre en color: hay que saber qué buscar */
+const CAST_CODIGO = "0042";
+const CAST_T = {"ca": {"pq": "Introdueix el codi per entrar a la caça del tresor.", "pph": "0000", "pbtn": "Entrar", "pmal": "Aquest codi no és. Demana'l a l'equip del museu.", "bh": "Benvingut a la caça del tresor!", "b1": "Sis personatges s'amaguen pel museu, repartits per les sales.", "b2": "Cadascun té el seu cartell amb un codi de quatre caràcters.", "b3": "Escriu aquí els sis codis i, quan els tinguis tots, ensenya la pantalla final a la botiga.", "tq": "Quants tickets tens de Castaween?", "tph": "Nombre de tickets", "tbtn": "Següent", "tmal": "Escriu quants tickets teniu.", "intro": "Troba'ls pel museu i escriu el codi del seu cartell.", "ph": "Codi de 4 caràcters", "val": "Validar", "ok": "Trobat!", "mal": "Aquest codi no és de cap. Mira bé el cartell.", "rep": "Aquest ja el tenies.", "de": "de", "fin": "Enhorabona!", "finp": "Reclama el teu premi a la botiga.", "ent": "tickets", "ent1": "ticket", "reset": "Començar de zero"}, "es": {"pq": "Introduce el código para entrar en la caza del tesoro.", "pph": "0000", "pbtn": "Entrar", "pmal": "Ese código no es. Pídeselo al equipo del museo.", "bh": "¡Bienvenido a la caza del tesoro!", "b1": "Seis personajes se esconden por el museo, repartidos por las salas.", "b2": "Cada uno tiene su cartel con un código de cuatro caracteres.", "b3": "Escribe aquí los seis códigos y, cuando los tengas todos, enseña la pantalla final en la tienda.", "tq": "¿Cuántos tickets tienes de Castaween?", "tph": "Nº de tickets", "tbtn": "Siguiente", "tmal": "Escribe cuántos tickets tenéis.", "intro": "Búscalos por el museo y escribe el código de su cartel.", "ph": "Código de 4 caracteres", "val": "Validar", "ok": "¡Encontrado!", "mal": "Ese código no es de ninguno. Mira bien el cartel.", "rep": "Ese ya lo tenías.", "de": "de", "fin": "¡Enhorabuena!", "finp": "Reclama tu premio en la tienda.", "ent": "tickets", "ent1": "ticket", "reset": "Empezar de cero"}, "en": {"pq": "Enter the code to start the treasure hunt.", "pph": "0000", "pbtn": "Enter", "pmal": "That's not the code. Ask the museum team for it.", "bh": "Welcome to the treasure hunt!", "b1": "Six characters are hiding around the museum, spread across the rooms.", "b2": "Each one has its own sign with a four-character code.", "b3": "Type the six codes here and, once you have them all, show the final screen at the shop.", "tq": "How many Castaween tickets do you have?", "tph": "Number of tickets", "tbtn": "Next", "tmal": "Type how many tickets you have.", "intro": "Hunt them down around the museum and type the code on their sign.", "ph": "4-character code", "val": "Check", "ok": "Found!", "mal": "That code isn't any of them. Look at the sign again.", "rep": "You already had that one.", "de": "of", "fin": "Congratulations!", "finp": "Claim your prize at the shop.", "ent": "tickets", "ent1": "ticket", "reset": "Start over"}, "fr": {"pq": "Saisissez le code pour entrer dans la chasse au trésor.", "pph": "0000", "pbtn": "Entrer", "pmal": "Ce n'est pas le bon code. Demandez-le à l'équipe du musée.", "bh": "Bienvenue dans la chasse au trésor !", "b1": "Six personnages se cachent dans le musée, répartis dans les salles.", "b2": "Chacun a son panneau avec un code à quatre caractères.", "b3": "Tapez ici les six codes et, quand vous les aurez tous, montrez l'écran final à la boutique.", "tq": "Combien de billets Castaween avez-vous ?", "tph": "Nombre de billets", "tbtn": "Suivant", "tmal": "Indiquez combien de billets vous avez.", "intro": "Cherchez-les dans le musée et tapez le code de leur panneau.", "ph": "Code à 4 caractères", "val": "Valider", "ok": "Trouvé !", "mal": "Ce code n'est celui d'aucun. Regardez bien le panneau.", "rep": "Celui-là, vous l'aviez déjà.", "de": "sur", "fin": "Félicitations !", "finp": "Récupérez votre prix à la boutique.", "ent": "billets", "ent1": "billet", "reset": "Tout recommencer"}, "it": {"pq": "Inserisci il codice per entrare nella caccia al tesoro.", "pph": "0000", "pbtn": "Entra", "pmal": "Questo codice non è quello giusto. Chiedilo allo staff del museo.", "bh": "Benvenuto alla caccia al tesoro!", "b1": "Sei personaggi si nascondono nel museo, sparsi per le sale.", "b2": "Ognuno ha il suo cartello con un codice di quattro caratteri.", "b3": "Scrivi qui i sei codici e, quando li hai tutti, mostra la schermata finale in negozio.", "tq": "Quanti biglietti Castaween hai?", "tph": "Numero di biglietti", "tbtn": "Avanti", "tmal": "Scrivi quanti biglietti avete.", "intro": "Cercali nel museo e scrivi il codice del loro cartello.", "ph": "Codice di 4 caratteri", "val": "Conferma", "ok": "Trovato!", "mal": "Questo codice non è di nessuno. Guarda bene il cartello.", "rep": "Questo ce l'avevi già.", "de": "di", "fin": "Congratulazioni!", "finp": "Ritira il tuo premio in negozio.", "ent": "biglietti", "ent1": "biglietto", "reset": "Ricomincia"}, "de": {"pq": "Gib den Code ein, um die Schatzsuche zu starten.", "pph": "0000", "pbtn": "Los", "pmal": "Das ist nicht der Code. Frag das Museumsteam danach.", "bh": "Willkommen bei der Schatzsuche!", "b1": "Sechs Figuren verstecken sich im Museum, verteilt auf die Räume.", "b2": "Jede hat ihr eigenes Schild mit einem Code aus vier Zeichen.", "b3": "Gib hier die sechs Codes ein und zeig den Abschlussbildschirm im Shop, wenn du alle hast.", "tq": "Wie viele Castaween-Tickets hast du?", "tph": "Anzahl der Tickets", "tbtn": "Weiter", "tmal": "Gib an, wie viele Tickets ihr habt.", "intro": "Such sie im Museum und gib den Code von ihrem Schild ein.", "ph": "Code mit 4 Zeichen", "val": "Prüfen", "ok": "Gefunden!", "mal": "Dieser Code gehört zu keiner. Schau noch mal aufs Schild.", "rep": "Die hattest du schon.", "de": "von", "fin": "Glückwunsch!", "finp": "Hol dir deinen Preis im Shop.", "ent": "Tickets", "ent1": "Ticket", "reset": "Neu anfangen"}};
+
+const castT = () => CAST_T[lang] || CAST_T.es;
+const castHallados = () => new Set(store.get("cast", []));
+const castTickets  = () => store.get("castEnt", 0);
+
+function castCabecera(c){
+  return `<div class="cjhero">
+      <img class="cjbruja" src="img/castaween/bruja.webp" alt="" decoding="async">
+      <div class="cjhead">
+        <span class="castkick">${esc(tr(c.k))}</span>
+        <h2>${esc(tr(c.t))}</h2>
       </div>
+    </div>`;
+}
+
+/* 1 · el código de entrada */
+function renderCastPuerta(){
+  const T = castT(), c = campana();
+  el("main").innerHTML = `
+    <div class="cjuego">${castCabecera(c)}
       <div class="cjpuerta">
-        <h3>${P.q}</h3>
-        <p>${P.sub}</p>
+        <h3>${T.pq}</h3>
         <form class="cjform" id="cjPForm" autocomplete="off">
           <input id="cjPIn" type="text" inputmode="numeric" maxlength="4"
-                 placeholder="${P.ph}" aria-label="${P.q}" spellcheck="false">
-          <button type="submit">${P.btn}</button>
+                 placeholder="${T.pph}" aria-label="${T.pq}" spellcheck="false">
+          <button type="submit">${T.pbtn}</button>
         </form>
         <div class="cjmsg" id="cjPMsg" hidden></div>
       </div>
     </div>`;
   el("cjPForm").onsubmit = ev => {
     ev.preventDefault();
-    const P = CAST_P[lang] || CAST_P.es;
-    const v = (el("cjPIn").value || "").replace(/[^0-9]/g, "");
-    const n = CAST_CODIGOS[v];
-    if(!n){ const m = el("cjPMsg"); m.hidden = false; m.className = "cjmsg mal";
-            m.textContent = P.mal; el("cjPIn").value = ""; return; }
-    store.set("castEnt", n);
-    renderJuegoCast();
+    const T = castT();
+    if((el("cjPIn").value || "").replace(/[^0-9]/g, "") !== CAST_CODIGO){
+      const m = el("cjPMsg"); m.hidden = false; m.className = "cjmsg mal";
+      m.textContent = T.pmal; el("cjPIn").value = ""; return;
+    }
+    store.set("castOk", 1); renderCastBienvenida();
   };
 }
 
+/* 2 · la bienvenida y cuántos tickets trae */
+function renderCastBienvenida(){
+  const T = castT(), c = campana();
+  el("main").innerHTML = `
+    <div class="cjuego">${castCabecera(c)}
+      <div class="cjbienv">
+        <h3>${T.bh}</h3>
+        <ol class="cjpasos">
+          <li>${T.b1}</li><li>${T.b2}</li><li>${T.b3}</li>
+        </ol>
+        <div class="cjticket">
+          <h4>${T.tq}</h4>
+          <form class="cjform" id="cjTForm" autocomplete="off">
+            <input id="cjTIn" type="number" inputmode="numeric" min="1" max="99"
+                   placeholder="${T.tph}" aria-label="${T.tq}">
+            <button type="submit">${T.tbtn}</button>
+          </form>
+          <div class="cjmsg" id="cjTMsg" hidden></div>
+        </div>
+      </div>
+    </div>`;
+  el("cjTForm").onsubmit = ev => {
+    ev.preventDefault();
+    const T = castT(), n = parseInt(el("cjTIn").value, 10);
+    if(!(n >= 1 && n <= 99)){
+      const m = el("cjTMsg"); m.hidden = false; m.className = "cjmsg mal";
+      m.textContent = T.tmal; return;
+    }
+    store.set("castEnt", n); renderJuegoCast();
+  };
+}
+
+/* 3 · los seis monstruos, en color desde el principio */
 function renderJuegoCast(){
-  const T = CAST_T[lang] || CAST_T.es, P = CAST_P[lang] || CAST_P.es;
-  const hall = castHallados(), c = campana(), ent = castEntradas();
+  const T = castT(), c = campana(), hall = castHallados(), ent = castTickets();
   const total = CAST_JUEGO.length, hechos = CAST_JUEGO.filter(p => hall.has(p.id)).length;
   const lleno = hechos === total;
   el("main").innerHTML = `
-    <div class="cjuego">
-      <div class="cjhero">
-        <img class="cjbruja" src="img/castaween/bruja.webp" alt="" decoding="async">
-        <div class="cjhead">
-          <span class="castkick">${esc(tr(c.k))}</span>
-          <h2>${esc(tr(c.t))}</h2>
-        </div>
-      </div>
+    <div class="cjuego">${castCabecera(c)}
       <p class="cjintro">${T.intro}</p>
 
       <div class="cjbar">
@@ -2947,9 +2994,9 @@ function renderJuegoCast(){
       </div>
 
       ${lleno ? `<div class="cjfin">
-          <h3>${P.fin}</h3><p>${P.finp}</p>
+          <h3>${T.fin}</h3><p>${T.finp}</p>
           <div class="cjpremios"><span class="cjpremio"><b>×${ent}</b>
-            <span>${ent === 1 ? P.ent1 : P.ent}</span></span></div>
+            <span>${ent === 1 ? T.ent1 : T.ent}</span></span></div>
           <div><button class="cjreset" id="cjReset" type="button">${T.reset}</button></div>
         </div>` : `
         <form class="cjform" id="cjForm" autocomplete="off">
@@ -2960,13 +3007,12 @@ function renderJuegoCast(){
         <div class="cjmsg" id="cjMsg" hidden></div>`}
 
       <div class="cjgrid">
-        ${CAST_JUEGO.map(p => {
-          const on = hall.has(p.id);
-          return `<div class="cjcard${on ? " on" : ""}" data-id="${p.id}">
+        ${CAST_JUEGO.map(p => `
+          <div class="cjcard${hall.has(p.id) ? " on" : ""}" data-id="${p.id}">
             <span class="cjph"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>
-            <b>${on ? esc(tr(p.n)) : T.pend}</b>
-            ${on ? `<span class="cjtick">✓</span>` : ""}
-          </div>`; }).join("")}
+            <b>${esc(tr(p.n))}</b>
+            ${hall.has(p.id) ? `<span class="cjtick">✓</span>` : ""}
+          </div>`).join("")}
       </div>
       <div style="height:22px"></div>
     </div>`;
@@ -2974,15 +3020,14 @@ function renderJuegoCast(){
   const f = el("cjForm");
   if(f) f.onsubmit = ev => {
     ev.preventDefault();
-    const T = CAST_T[lang] || CAST_T.es;
+    const T = castT();
     const v = (el("cjIn").value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
-    const p = CAST_JUEGO.find(x => x.c === v);
-    const msg = el("cjMsg");
+    const p = CAST_JUEGO.find(x => x.c === v), msg = el("cjMsg");
     if(!p){ msg.hidden = false; msg.className = "cjmsg mal"; msg.textContent = T.mal;
             el("cjIn").value = ""; return; }
     const hall = castHallados();
-    if(hall.has(p.id)){ msg.hidden = false; msg.className = "cjmsg"; msg.textContent = T.rep;
-                        el("cjIn").value = ""; return; }
+    if(hall.has(p.id)){ msg.hidden = false; msg.className = "cjmsg";
+                        msg.textContent = T.rep; el("cjIn").value = ""; return; }
     hall.add(p.id); store.set("cast", [...hall]);
     renderJuegoCast();
     const nuevo = document.querySelector(`.cjcard[data-id="${p.id}"]`);
@@ -2995,11 +3040,16 @@ function renderJuegoCast(){
   if(r) r.onclick = () => { store.set("cast", []); renderJuegoCast(); };
 }
 
+function renderCastaween(){
+  if(!store.get("castOk", 0)) return renderCastPuerta();
+  if(!castTickets()) return renderCastBienvenida();
+  return renderJuegoCast();
+}
+
 function renderCast(){
   const c = campana(), U = CAST_UI[lang] || CAST_UI.es;
   const fecha = c.desde.split("-").reverse().join("/");
-  if(c.juego === "castaween")
-    return castEntradas() ? renderJuegoCast() : renderCastPuerta();
+  if(c.juego === "castaween") return renderCastaween();
   if(!c.url){
     el("main").innerHTML = `
       <div class="castpane">
