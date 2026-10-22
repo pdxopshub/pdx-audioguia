@@ -128,6 +128,13 @@ main.castmode{display:flex;flex-direction:column;padding-bottom:0;overflow:hidde
   border-radius:999px;padding:14px;font-size:14.5px;font-weight:800;text-align:center;
   text-decoration:none}
 .revcta:active{transform:scale(.985)}
+/* el juego de campaña, a pantalla completa dentro de la guía */
+main.castmode{padding:0}
+.castfull{position:relative;height:100%;background:#0b0b2b}
+.castfull iframe{width:100%;height:100%;border:0;display:block;background:#0b0b2b}
+.castesc{position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;
+  border-radius:999px;background:#05051ab0;color:#fff;display:grid;place-items:center;
+  font-size:14px;text-decoration:none;backdrop-filter:blur(6px)}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2787,21 +2794,28 @@ const CAST_UI = {
 function renderCast(){
   const c = campana(), U = CAST_UI[lang] || CAST_UI.es;
   const fecha = c.desde.split("-").reverse().join("/");
+  if(!c.url){
+    el("main").innerHTML = `
+      <div class="castpane">
+        <div class="casthero">
+          <span class="castkick">${esc(tr(c.k))}</span>
+          <h2>${esc(tr(c.n)).toUpperCase()}</h2>
+          <p class="castlead">${U.pronto}<br>
+            <span class="castwhen">${U.desde} ${fecha}</span></p>
+        </div>
+      </div>`;
+    return;
+  }
+  /* El juego ocupa la pantalla entera, sin cabecera por encima.
+     El botón de rescate queda arriba a la derecha por si el juego
+     no se deja incrustar y el recuadro sale en blanco. */
   el("main").innerHTML = `
-    <div class="castpane">
-      <div class="casthero">
-        <span class="castkick">${esc(tr(c.k))}</span>
-        <h2>${esc(tr(c.n)).toUpperCase()}</h2>
-        ${c.url ? `<p class="castlead"><b>${esc(tr(c.t))} · Paradox Museum</b> ${esc(tr(c.d))}</p>`
-                : `<p class="castlead">${U.pronto}<br><span class="castwhen">${U.desde} ${fecha}</span></p>`}
-      </div>
-      ${c.url ? `
-      <div class="castframe">
-        <iframe src="${c.url}" title="${esc(tr(c.t))}" loading="lazy"
-          allow="clipboard-write; camera; geolocation"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-      <a class="castout" href="${c.url}" target="_blank" rel="noopener">${U.fuera} ↗</a>` : ""}
+    <div class="castfull">
+      <iframe src="${c.url}" title="${esc(tr(c.t))}"
+        allow="clipboard-write; camera; geolocation"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <a class="castesc" href="${c.url}" target="_blank" rel="noopener"
+         title="${U.fuera}" aria-label="${U.fuera}">↗</a>
     </div>`;
 }
 
