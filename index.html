@@ -199,6 +199,21 @@ main.castmode{padding:0}
 .cjfin p{margin-top:9px;font-size:14px;line-height:1.5;color:#ffffffeb}
 .cjreset{margin-top:15px;background:#0b0b2b5c;color:#fff;border-radius:999px;
   padding:11px 18px;font-size:12.5px;font-weight:700}
+.cjpuerta{margin-top:20px;background:#ffffff14;border-radius:22px;padding:22px 18px 20px;
+  text-align:center}
+.cjpuerta h3{font-size:19px;font-weight:800;letter-spacing:-.025em;line-height:1.2}
+.cjpuerta p{margin-top:9px;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.cjpuerta .cjform input{text-align:center;letter-spacing:.42em;font-size:21px}
+.cjpuerta .cjform input::placeholder{letter-spacing:.42em;font-size:21px;color:#ffffff40}
+.cjent{flex:0 0 auto;font-size:10px;font-weight:700;letter-spacing:.06em;
+  background:var(--acc);color:var(--accink);border-radius:999px;padding:4px 9px;
+  font-variant-numeric:tabular-nums}
+.cjpremios{display:block}
+.cjpremio{display:inline-flex;align-items:baseline;gap:7px;margin:16px auto 0;
+  background:#0b0b2b5c;border-radius:999px;padding:9px 18px}
+.cjpremio b{font-size:27px;font-weight:800;letter-spacing:-.03em;line-height:1;
+  color:var(--acc);font-variant-numeric:tabular-nums}
+.cjpremio span{font-size:13px;font-weight:700;color:#fff}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preload" href="fonts/jokker-700.woff2" as="font" type="font/woff2" crossorigin>
@@ -2865,8 +2880,52 @@ const CAST_T = {"ca": {"intro": "Sis personatges amagats pel museu. Troba'ls, es
 
 function castHallados(){ return new Set(store.get("cast", [])); }
 
+/* ── puerta de Castaween ────────────────────────────────────────
+   En taquilla dan un código de cuatro cifras al comprar las
+   entradas del juego. Cada código vale por un número de entradas,
+   y es ese número el que se reclama al final en la tienda. */
+const CAST_CODIGOS = {"0042": 4};
+const CAST_P = {"ca": {"q": "Quantes entrades de Castaween heu comprat?", "sub": "Escriu el codi de 4 xifres que t'han donat a taquilla.", "ph": "0000", "btn": "Entrar", "mal": "Aquest codi no ens quadra. Demana'l a l'equip de taquilla.", "ent": "entrades", "ent1": "entrada", "fin": "Enhorabona!", "finp": "Reclama el teu premi a la botiga.", "otro": "Canviar de codi"}, "es": {"q": "¿Cuántas entradas de Castaween habéis comprado?", "sub": "Escribe el código de 4 dígitos que te han dado en taquilla.", "ph": "0000", "btn": "Entrar", "mal": "Ese código no nos cuadra. Pídeselo al equipo de taquilla.", "ent": "entradas", "ent1": "entrada", "fin": "¡Enhorabuena!", "finp": "Reclama tu premio en la tienda.", "otro": "Cambiar de código"}, "en": {"q": "How many Castaween tickets did you buy?", "sub": "Type the 4-digit code you were given at the ticket desk.", "ph": "0000", "btn": "Enter", "mal": "That code doesn't add up. Ask the ticket desk for it.", "ent": "tickets", "ent1": "ticket", "fin": "Congratulations!", "finp": "Claim your prize at the shop.", "otro": "Use another code"}, "fr": {"q": "Combien de billets Castaween avez-vous achetés ?", "sub": "Tapez le code à 4 chiffres qu'on vous a donné à la billetterie.", "ph": "0000", "btn": "Entrer", "mal": "Ce code ne colle pas. Demandez-le à la billetterie.", "ent": "billets", "ent1": "billet", "fin": "Félicitations !", "finp": "Récupérez votre prix à la boutique.", "otro": "Changer de code"}, "it": {"q": "Quanti biglietti Castaween avete comprato?", "sub": "Scrivi il codice di 4 cifre che ti hanno dato in biglietteria.", "ph": "0000", "btn": "Entra", "mal": "Questo codice non torna. Chiedilo alla biglietteria.", "ent": "biglietti", "ent1": "biglietto", "fin": "Congratulazioni!", "finp": "Ritira il tuo premio in negozio.", "otro": "Cambiare codice"}, "de": {"q": "Wie viele Castaween-Tickets habt ihr gekauft?", "sub": "Gib den vierstelligen Code ein, den du an der Kasse bekommen hast.", "ph": "0000", "btn": "Los", "mal": "Dieser Code passt nicht. Frag an der Kasse danach.", "ent": "Tickets", "ent1": "Ticket", "fin": "Glückwunsch!", "finp": "Hol dir deinen Preis im Shop.", "otro": "Anderen Code eingeben"}};
+
+function castEntradas(){ return store.get("castEnt", 0); }
+
+function renderCastPuerta(){
+  const P = CAST_P[lang] || CAST_P.es, c = campana();
+  el("main").innerHTML = `
+    <div class="cjuego">
+      <div class="cjhero">
+        <img class="cjbruja" src="img/castaween/bruja.webp" alt="" decoding="async">
+        <div class="cjhead">
+          <span class="castkick">${esc(tr(c.k))}</span>
+          <h2>${esc(tr(c.t))}</h2>
+        </div>
+      </div>
+      <div class="cjpuerta">
+        <h3>${P.q}</h3>
+        <p>${P.sub}</p>
+        <form class="cjform" id="cjPForm" autocomplete="off">
+          <input id="cjPIn" type="text" inputmode="numeric" maxlength="4"
+                 placeholder="${P.ph}" aria-label="${P.q}" spellcheck="false">
+          <button type="submit">${P.btn}</button>
+        </form>
+        <div class="cjmsg" id="cjPMsg" hidden></div>
+      </div>
+    </div>`;
+  el("cjPForm").onsubmit = ev => {
+    ev.preventDefault();
+    const P = CAST_P[lang] || CAST_P.es;
+    const v = (el("cjPIn").value || "").replace(/[^0-9]/g, "");
+    const n = CAST_CODIGOS[v];
+    if(!n){ const m = el("cjPMsg"); m.hidden = false; m.className = "cjmsg mal";
+            m.textContent = P.mal; el("cjPIn").value = ""; return; }
+    store.set("castEnt", n);
+    renderJuegoCast();
+  };
+}
+
 function renderJuegoCast(){
-  const T = CAST_T[lang] || CAST_T.es, hall = castHallados(), c = campana();
+  const T = CAST_T[lang] || CAST_T.es, P = CAST_P[lang] || CAST_P.es;
+  const hall = castHallados(), c = campana(), ent = castEntradas();
   const total = CAST_JUEGO.length, hechos = CAST_JUEGO.filter(p => hall.has(p.id)).length;
   const lleno = hechos === total;
   el("main").innerHTML = `
@@ -2884,11 +2943,14 @@ function renderJuegoCast(){
         <div class="cjpips">${CAST_JUEGO.map(p =>
           `<i class="${hall.has(p.id) ? "on" : ""}"></i>`).join("")}</div>
         <b>${hechos} ${T.de} ${total}</b>
+        ${ent ? `<span class="cjent">×${ent}</span>` : ""}
       </div>
 
       ${lleno ? `<div class="cjfin">
-          <h3>${T.fin}</h3><p>${T.finp}</p>
-          <button class="cjreset" id="cjReset" type="button">${T.reset}</button>
+          <h3>${P.fin}</h3><p>${P.finp}</p>
+          <div class="cjpremios"><span class="cjpremio"><b>×${ent}</b>
+            <span>${ent === 1 ? P.ent1 : P.ent}</span></span></div>
+          <div><button class="cjreset" id="cjReset" type="button">${T.reset}</button></div>
         </div>` : `
         <form class="cjform" id="cjForm" autocomplete="off">
           <input id="cjIn" type="text" inputmode="latin" maxlength="6"
@@ -2936,7 +2998,8 @@ function renderJuegoCast(){
 function renderCast(){
   const c = campana(), U = CAST_UI[lang] || CAST_UI.es;
   const fecha = c.desde.split("-").reverse().join("/");
-  if(c.juego === "castaween") return renderJuegoCast();
+  if(c.juego === "castaween")
+    return castEntradas() ? renderJuegoCast() : renderCastPuerta();
   if(!c.url){
     el("main").innerHTML = `
       <div class="castpane">
