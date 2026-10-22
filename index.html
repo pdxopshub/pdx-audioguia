@@ -2738,6 +2738,19 @@ const store={
   set(k,v){try{localStorage.setItem("pdx2:"+k,JSON.stringify(v));}catch(_){}}
 };
 
+/* ── modo prueba ────────────────────────────────────────────────
+   Mientras la guía no esté lanzada, cada visita arranca de cero:
+   idioma sin elegir, ninguna parada vista y Castaween sin empezar.
+   PARA LANZARLA: poner DEMO en false y subir la versión del sw.js. */
+const DEMO = true;
+if(DEMO){
+  try{
+    Object.keys(localStorage)
+      .filter(k => k.indexOf("pdx2:") === 0)
+      .forEach(k => localStorage.removeItem(k));
+  }catch(_){}
+}
+
 /* ── render ─────────────────────────────────────────────────── */
 /* Ficha real de Paradox Museum Barcelona en Google. */
 const GOOGLE_REVIEW="https://search.google.com/local/writereview?placeid=ChIJO2pwNamjpBIRRSeCb_-Fyx0";
