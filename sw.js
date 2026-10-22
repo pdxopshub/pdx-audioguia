@@ -1,14 +1,18 @@
 /* Paradox — audioguía: caché para que funcione sin cobertura (sótano incluido).
    IMPORTANTE: sube el número de VERSION cada vez que publiques cambios,
    o los visitantes seguirán viendo la versión antigua guardada en su móvil. */
-const VERSION = "pdx-guia-v14";
+const VERSION = "pdx-guia-v15";
 
 const SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./img/logo.png",
-  "./img/icon-192.png"
+  "./img/icon-192.png",
+  "./fonts/jokker-400.woff2",
+  "./fonts/jokker-600.woff2",
+  "./fonts/jokker-700.woff2",
+  "./fonts/jokker-800.woff2"
 ];
 
 self.addEventListener("install", e => {

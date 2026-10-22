@@ -13,6 +13,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Paradox">
 <style>
+/* Jokker, la tipografía de la marca, servida desde la propia guía. */
+@font-face{font-family:Jokker;src:url("fonts/jokker-400.woff2") format("woff2");
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Jokker;src:url("fonts/jokker-600.woff2") format("woff2");
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:Jokker;src:url("fonts/jokker-700.woff2") format("woff2");
+  font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:Jokker;src:url("fonts/jokker-800.woff2") format("woff2");
+  font-weight:800;font-style:normal;font-display:swap}
+
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
 [hidden]{display:none!important}
@@ -191,9 +201,8 @@ main.castmode{padding:0}
   padding:11px 18px;font-size:12.5px;font-weight:700}
 </style>
 <title>Paradox Audioguía</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="preload" href="fonts/jokker-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jokker-400.woff2" as="font" type="font/woff2" crossorigin>
 
 <style>
 /* Black ground so all five brand colours keep their punch (the brand book's
@@ -206,10 +215,12 @@ main.castmode{padding:0}
   --fg:#fff; --muted:#ffffffab;
   --acc:#FFDB00; --accink:#14141c;   /* amarillo protagonista */
   color-scheme:dark;
-  --f-ui:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --f-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --f-ui:Jokker,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:Jokker,system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 *{box-sizing:border-box}
+.lbl,.num,.sechead em,.cjbar b,.progress span,.dtop .count,.cjform input,
+.castkick,.bvstats span,.stop .meta span,.cambadge,.castwhen{font-variant-numeric:tabular-nums}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-ui);
   overflow:hidden;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
