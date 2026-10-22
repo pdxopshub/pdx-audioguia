@@ -104,6 +104,30 @@ img{max-width:100%}
 .bvstats span{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.07em;
   background:#0b0b2b5c;border-radius:999px;padding:5px 10px;color:#fff}
 .stop.bienvenida.done .bvbox{opacity:.72}
+/* el juego de campaña ocupa toda la pantalla, dentro de la guía */
+main.castmode{display:flex;flex-direction:column;padding-bottom:0;overflow:hidden}
+.castpane{flex:1;display:flex;flex-direction:column;min-height:0;padding:16px 0 0}
+.castframe{flex:1;min-height:320px;margin-top:16px;border-radius:20px;overflow:hidden;
+  background:#0b0b2b;border:1px solid var(--line)}
+.castframe iframe{width:100%;height:100%;border:0;display:block;background:#0b0b2b}
+.castout{display:block;padding:11px 0 14px;text-align:center;font-family:var(--f-mono);
+  font-size:9.5px;letter-spacing:.06em;color:var(--muted);text-decoration:none}
+.castwhen{display:inline-block;margin-top:8px;font-family:var(--f-mono);font-size:10px;
+  letter-spacing:.07em;background:var(--acc);color:var(--accink);border-radius:999px;
+  padding:4px 11px}
+.castlead b{color:var(--acc)}
+/* ── reseña al terminar el recorrido ────────────────────────── */
+.revbox{background:#ffffff14;border-radius:22px;padding:22px 18px 20px;text-align:center}
+.revbox h3{margin:11px 0 0;font-size:21px;font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.revbox p{margin:9px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.stars{display:flex;gap:6px;justify-content:center;margin-top:18px}
+.stars button{font-size:38px;line-height:1;color:#ffffff3d;transition:transform .12s,color .12s}
+.stars button.on{color:var(--acc)}
+.stars button:active{transform:scale(.88)}
+.revcta{display:block;margin-top:18px;background:var(--acc);color:var(--accink);
+  border-radius:999px;padding:14px;font-size:14.5px;font-weight:800;text-align:center;
+  text-decoration:none}
+.revcta:active{transform:scale(.985)}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -429,6 +453,10 @@ document.getElementById("gateLogo").src=LOGO;
 
 const UI={
  "es": {
+  "revKick": "¿Qué te ha parecido?",
+  "revTitle": "¿Nos dejas una reseña?",
+  "revSub": "Tardas quince segundos y nos ayuda muchísimo.",
+  "revCta": "Dejar la reseña en Google",
   "camBadge": "Cámara",
   "camOpen": "Abrir la cámara",
   "camShot": "Disparar",
@@ -470,6 +498,10 @@ const UI={
   "lang": "Idioma"
  },
  "ca": {
+  "revKick": "Què t'ha semblat?",
+  "revTitle": "Ens deixes una ressenya?",
+  "revSub": "Trigues quinze segons i ens ajuda moltíssim.",
+  "revCta": "Deixar la ressenya a Google",
   "camBadge": "Càmera",
   "camOpen": "Obrir la càmera",
   "camShot": "Disparar",
@@ -511,6 +543,10 @@ const UI={
   "lang": "Idioma"
  },
  "en": {
+  "revKick": "How was it?",
+  "revTitle": "Would you leave us a review?",
+  "revSub": "It takes fifteen seconds and helps us enormously.",
+  "revCta": "Leave the review on Google",
   "camBadge": "Camera",
   "camOpen": "Open the camera",
   "camShot": "Take the photo",
@@ -552,6 +588,10 @@ const UI={
   "lang": "Language"
  },
  "fr": {
+  "revKick": "Alors, verdict ?",
+  "revTitle": "Vous nous laissez un avis ?",
+  "revSub": "Quinze secondes, et ça nous aide énormément.",
+  "revCta": "Laisser l'avis sur Google",
   "camBadge": "Appareil",
   "camOpen": "Ouvrir l'appareil photo",
   "camShot": "Déclencher",
@@ -593,6 +633,10 @@ const UI={
   "lang": "Langue"
  },
  "it": {
+  "revKick": "Che te ne pare?",
+  "revTitle": "Ci lasci una recensione?",
+  "revSub": "Ci metti quindici secondi e ci aiuta moltissimo.",
+  "revCta": "Lascia la recensione su Google",
   "camBadge": "Fotocamera",
   "camOpen": "Apri la fotocamera",
   "camShot": "Scatta",
@@ -634,6 +678,10 @@ const UI={
   "lang": "Lingua"
  },
  "de": {
+  "revKick": "Wie war's?",
+  "revTitle": "Lässt du uns eine Bewertung da?",
+  "revSub": "Fünfzehn Sekunden, und es hilft uns enorm.",
+  "revCta": "Bewertung bei Google abgeben",
   "camBadge": "Kamera",
   "camOpen": "Kamera öffnen",
   "camShot": "Auslösen",
@@ -2578,6 +2626,8 @@ const store={
 };
 
 /* ── render ─────────────────────────────────────────────────── */
+/* Ficha real de Paradox Museum Barcelona en Google. */
+const GOOGLE_REVIEW="https://search.google.com/local/writereview?placeid=ChIJO2pwNamjpBIRRSeCb_-Fyx0";
 const BIENV = {es:{k:"Empieza aquí",h:"¡BIENVENIDOS!",h2:"Al Paradox Museum",p:"Más de cincuenta ilusiones que van a discutir con tus ojos. Toca cualquier tarjeta y te contamos el truco.",b:"Empezar el recorrido",st:["55 paradas","8 salas","≈90 min"]},ca:{k:"Comença aquí",h:"BENVINGUTS!",h2:"Al Paradox Museum",p:"Més de cinquanta il·lusions que discutiran amb els teus ulls. Toca qualsevol targeta i t'expliquem el truc.",b:"Començar el recorregut",st:["55 parades","8 sales","≈90 min"]},en:{k:"Start here",h:"WELCOME!",h2:"To the Paradox Museum",p:"More than fifty illusions about to argue with your eyes. Tap any card and we'll tell you the trick.",b:"Start the tour",st:["55 stops","8 rooms","≈90 min"]},fr:{k:"Commencez ici",h:"BIENVENUE !",h2:"Au Paradox Museum",p:"Plus de cinquante illusions qui vont contredire vos yeux. Touchez une carte et on vous dit le truc.",b:"Commencer la visite",st:["55 arrêts","8 salles","≈90 min"]},it:{k:"Inizia qui",h:"BENVENUTI!",h2:"Al Paradox Museum",p:"Più di cinquanta illusioni pronte a litigare con i tuoi occhi. Tocca una scheda e ti sveliamo il trucco.",b:"Inizia il percorso",st:["55 tappe","8 sale","≈90 min"]},de:{k:"Hier starten",h:"WILLKOMMEN!",h2:"Im Paradox Museum",p:"Über fünfzig Illusionen, die gleich mit deinen Augen streiten. Tippe auf eine Karte und wir verraten den Trick.",b:"Rundgang starten",st:["55 Stationen","8 Räume","≈90 min"]}};
 function renderRoute(){
   let h=`<div class="progress lbl">
@@ -2673,29 +2723,94 @@ function renderStyle(){
   el("main").innerHTML=h;
 }
 
+
+/* ── campañas: un juego por temporada, dentro de la propia app ──
+   Para cambiar de campaña basta con añadir su bloque aquí: la
+   pestaña toma su nombre y su juego sola, según la fecha. */
+const CAMPANAS = [
+ {id:"castaween", desde:"2026-10-01", hasta:"2026-11-09",
+  url:"https://castaweenparadox2026.lovable.app/",
+  n:{ca:"Castaween",es:"Castaween",en:"Castaween",fr:"Castaween",it:"Castaween",de:"Castaween"},
+  t:{ca:"Missió Castaween",es:"Misión Castaween",en:"Castaween Mission",
+     fr:"Mission Castaween",it:"Missione Castaween",de:"Mission Castaween"},
+  k:{ca:"Caça del tresor · edició Halloween",es:"Caza del tesoro · edición Halloween",
+     en:"Treasure hunt · Halloween edition",fr:"Chasse au trésor · édition Halloween",
+     it:"Caccia al tesoro · edizione Halloween",de:"Schatzsuche · Halloween-Edition"},
+  d:{ca:"és una treasure hunt amb codi.",es:"es una treasure hunt con código.",
+     en:"is a treasure hunt with a code.",fr:"est une chasse au trésor avec un code.",
+     it:"è una caccia al tesoro con codice.",de:"ist eine Schatzsuche mit Code."}},
+
+ /* Pendientes de enlace: cuando exista el juego, se pega su url aquí. */
+ {id:"navidad", desde:"2026-11-25", hasta:"2027-01-08", url:null,
+  n:{ca:"Nadal",es:"Navidad",en:"Christmas",fr:"Noël",it:"Natale",de:"Weihnachten"},
+  t:{ca:"Joc de Nadal",es:"Juego de Navidad",en:"Christmas game",
+     fr:"Jeu de Noël",it:"Gioco di Natale",de:"Weihnachtsspiel"},
+  k:{ca:"Campanya de Nadal",es:"Campaña de Navidad",en:"Christmas campaign",
+     fr:"Campagne de Noël",it:"Campagna di Natale",de:"Weihnachtskampagne"}, d:{}},
+ {id:"pasqua", desde:"2027-03-20", hasta:"2027-04-11", url:null,
+  n:{ca:"Pasqua",es:"Semana Santa",en:"Easter",fr:"Pâques",it:"Pasqua",de:"Ostern"},
+  t:{ca:"Joc de Pasqua",es:"Juego de Semana Santa",en:"Easter game",
+     fr:"Jeu de Pâques",it:"Gioco di Pasqua",de:"Osterspiel"},
+  k:{ca:"Campanya de Pasqua",es:"Campaña de Semana Santa",en:"Easter campaign",
+     fr:"Campagne de Pâques",it:"Campagna di Pasqua",de:"Osterkampagne"}, d:{}},
+ {id:"estiu", desde:"2027-06-21", hasta:"2027-09-15", url:null,
+  n:{ca:"Estiu",es:"Verano",en:"Summer",fr:"Été",it:"Estate",de:"Sommer"},
+  t:{ca:"Joc d'estiu",es:"Juego de verano",en:"Summer game",
+     fr:"Jeu d'été",it:"Gioco d'estate",de:"Sommerspiel"},
+  k:{ca:"Campanya d'estiu",es:"Campaña d'estiu",en:"Summer campaign",
+     fr:"Campagne d'été",it:"Campagna estiva",de:"Sommerkampagne"}, d:{}}
+];
+
+/* La campaña de hoy; si ninguna está en fechas, la siguiente que venga. */
+function campana(){
+  const hoy = new Date().toISOString().slice(0,10);
+  return CAMPANAS.find(c => hoy >= c.desde && hoy <= c.hasta)
+      || CAMPANAS.find(c => hoy < c.desde)
+      || CAMPANAS[0];
+}
+
+const CAST_UI = {
+ ca:{abrir:"Obrir el joc", fuera:"Si el joc no es veu aquí, obre'l en una pestanya",
+     pronto:"Encara no està obert. Torna-hi quan arrenqui la campanya.", desde:"A partir del"},
+ es:{abrir:"Abrir el juego", fuera:"Si el juego no se ve aquí, ábrelo en una pestaña",
+     pronto:"Todavía no está abierto. Vuelve cuando arranque la campaña.", desde:"A partir del"},
+ en:{abrir:"Open the game", fuera:"If the game doesn't show here, open it in a tab",
+     pronto:"Not open yet. Come back when the campaign starts.", desde:"From"},
+ fr:{abrir:"Ouvrir le jeu", fuera:"Si le jeu ne s'affiche pas ici, ouvrez-le dans un onglet",
+     pronto:"Pas encore ouvert. Revenez au lancement de la campagne.", desde:"À partir du"},
+ it:{abrir:"Apri il gioco", fuera:"Se il gioco non si vede qui, aprilo in una scheda",
+     pronto:"Non è ancora aperto. Torna quando parte la campagna.", desde:"Dal"},
+ de:{abrir:"Spiel öffnen", fuera:"Wenn das Spiel hier nicht erscheint, öffne es in einem Tab",
+     pronto:"Noch nicht offen. Komm wieder, wenn die Kampagne startet.", desde:"Ab dem"}
+};
+
 function renderCast(){
-  const C_ = {es:{k:"Caza del tesoro · edición Halloween",t:"Misión Castaween",d:"es una treasure hunt con código.",b:"Abrir Misión Castaween"},ca:{k:"Caça del tresor · edició Halloween",t:"Missió Castaween",d:"és una treasure hunt amb codi.",b:"Obrir Missió Castaween"},en:{k:"Treasure hunt · Halloween edition",t:"Castaween Mission",d:"is a treasure hunt with a code.",b:"Open Castaween Mission"},fr:{k:"Chasse au trésor · édition Halloween",t:"Mission Castaween",d:"est une chasse au trésor avec un code.",b:"Ouvrir Mission Castaween"},it:{k:"Caccia al tesoro · edizione Halloween",t:"Missione Castaween",d:"è una caccia al tesoro con codice.",b:"Apri Missione Castaween"},de:{k:"Schatzsuche · Halloween-Edition",t:"Mission Castaween",d:"ist eine Schatzsuche mit Code.",b:"Mission Castaween öffnen"}}[lang] || {es:{k:"Caza del tesoro · edición Halloween",t:"Misión Castaween",d:"es una treasure hunt con código.",b:"Abrir Misión Castaween"},ca:{k:"Caça del tresor · edició Halloween",t:"Missió Castaween",d:"és una treasure hunt amb codi.",b:"Obrir Missió Castaween"},en:{k:"Treasure hunt · Halloween edition",t:"Castaween Mission",d:"is a treasure hunt with a code.",b:"Open Castaween Mission"},fr:{k:"Chasse au trésor · édition Halloween",t:"Mission Castaween",d:"est une chasse au trésor avec un code.",b:"Ouvrir Mission Castaween"},it:{k:"Caccia al tesoro · edizione Halloween",t:"Missione Castaween",d:"è una caccia al tesoro con codice.",b:"Apri Missione Castaween"},de:{k:"Schatzsuche · Halloween-Edition",t:"Mission Castaween",d:"ist eine Schatzsuche mit Code.",b:"Mission Castaween öffnen"}}["es"];
+  const c = campana(), U = CAST_UI[lang] || CAST_UI.es;
+  const fecha = c.desde.split("-").reverse().join("/");
   el("main").innerHTML = `
-    <div class="castwrap">
+    <div class="castpane">
       <div class="casthero">
-        <span class="castkick">${C_.k}</span>
-        <h2>CASTAWEEN</h2>
-        <p class="castlead">
-          <a class="castlink" href="https://castaweenparadox2026.lovable.app/"
-             target="_blank" rel="noopener">${C_.t} · Paradox Museum</a>
-          ${C_.d}
-        </p>
-        <a class="castcta" href="https://castaweenparadox2026.lovable.app/"
-           target="_blank" rel="noopener">${C_.b} →</a>
+        <span class="castkick">${esc(tr(c.k))}</span>
+        <h2>${esc(tr(c.n)).toUpperCase()}</h2>
+        ${c.url ? `<p class="castlead"><b>${esc(tr(c.t))} · Paradox Museum</b> ${esc(tr(c.d))}</p>`
+                : `<p class="castlead">${U.pronto}<br><span class="castwhen">${U.desde} ${fecha}</span></p>`}
       </div>
+      ${c.url ? `
+      <div class="castframe">
+        <iframe src="${c.url}" title="${esc(tr(c.t))}" loading="lazy"
+          allow="clipboard-write; camera; geolocation"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <a class="castout" href="${c.url}" target="_blank" rel="noopener">${U.fuera} ↗</a>` : ""}
     </div>`;
 }
 
 function render(){
   el("tabRoute").textContent=L().route;
   el("tabRooms").textContent=L().rooms;
-  el("tabCast").textContent="CASTAWEEN";
+  el("tabCast").textContent=tr(campana().n).toUpperCase();
   el("backTxt").textContent=L().route;
+  el("main").classList.toggle("castmode", tab==="cast");
   tab==="route"?renderRoute():tab==="rooms"?renderRooms():renderCast();
 }
 
@@ -2743,16 +2858,27 @@ function openStop(i){
       <div class="gal">${s.fotos.map(f=>`<img src="${f}" alt="" loading="lazy" decoding="async">`).join("")}</div>
       </div>`:""}
 
+    ${(s.r==="entrada"||s.r==="salida")&&!s.how&&!s.todo?"":`
     <div class="block"><div class="lbl">${L().lblHow}</div>
       ${s.todo?`<p class="lead">${esc(tr(s.todo))}</p>`:""}
       ${(s.todo&&s.how)?`<div style="height:14px"></div>`:""}
-      ${s.how?how:(s.todo?"":how)}</div>
+      ${s.how?how:(s.todo?"":how)}</div>`}
 
     ${s.quiz?`<div class="block"><div class="quiz">
         <div class="lbl">${L().lblQuiz}</div>
         <p>${esc(tr(s.quiz.q))}</p>
         <button class="reveal" id="reveal">${L().reveal}</button>
         <p class="ans" id="ans" hidden>${tr(s.quiz.a)}</p>
+      </div></div>`:""}
+
+    ${s.r==="salida"?`<div class="block"><div class="revbox">
+        <span class="lbl">${L().revKick}</span>
+        <h3>${L().revTitle}</h3>
+        <p>${L().revSub}</p>
+        <div class="stars" id="revStars">${[1,2,3,4,5].map(n=>
+          `<button type="button" data-n="${n}" aria-label="${n}">★</button>`).join("")}</div>
+        <a class="revcta" id="revCta" href="${GOOGLE_REVIEW}"
+           target="_blank" rel="noopener">${L().revCta} →</a>
       </div></div>`:""}
 
     <div style="height:30px"></div>`;
@@ -2768,6 +2894,15 @@ function openStop(i){
   if(rv) rv.onclick=()=>{el("ans").hidden=false; rv.hidden=true;};
   const cg=el("camGo");
   if(cg) cg.onclick=()=>abreCamara(s);
+  const rs=el("revStars");
+  if(rs) rs.addEventListener("click", ev=>{
+    const b=ev.target.closest("button"); if(!b) return;
+    const n=+b.dataset.n;
+    [...rs.children].forEach(x=>x.classList.toggle("on", +x.dataset.n<=n));
+    /* Google no deja escribir la reseña dentro de otra web, así que
+       se abre su cuadro de reseña ya en la ficha del museo. */
+    setTimeout(()=>window.open(GOOGLE_REVIEW,"_blank","noopener"), 260);
+  });
 }
 function syncDone(){
   const on=seen.has(idx), b=el("done");
