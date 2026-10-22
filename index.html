@@ -62,7 +62,7 @@ img{max-width:100%}
 .casthero::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:repeating-linear-gradient(115deg,#ffffff14 0 11px,transparent 11px 22px)}
 .casthero>*{position:relative;z-index:1}
-.castkick{display:inline-block;font-family:var(--f-mono);font-size:9.5px;font-weight:600;
+.castkick{display:inline-block;font-family:var(--f-mono);font-size:8.5px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;background:var(--acc);color:var(--accink);
   border-radius:999px;padding:4px 11px}
 .casthero h2{margin:14px 0 0;font-size:clamp(34px,11vw,46px);font-weight:800;
@@ -135,6 +135,60 @@ main.castmode{padding:0}
 .castesc{position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;
   border-radius:999px;background:#05051ab0;color:#fff;display:grid;place-items:center;
   font-size:14px;text-decoration:none;backdrop-filter:blur(6px)}
+/* ── Misión Castaween ───────────────────────────────────────── */
+.cjuego{padding:16px 0 0}
+.cjhero{display:flex;align-items:center;gap:13px}
+.cjbruja{flex:0 0 auto;width:104px;height:104px;border-radius:20px;display:block;
+  object-fit:cover;box-shadow:0 10px 26px #0b0b2b5c}
+.cjhead{flex:1;min-width:0}
+.cjhead h2{margin:10px 0 0;font-size:23px;font-weight:800;letter-spacing:-.035em;line-height:1}
+.cjuego>.cjhero+.cjbar{margin-top:16px}
+.cjhero+.cjbar::before{content:""}
+.cjintro{margin:13px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+
+.cjbar{display:flex;align-items:center;gap:11px;margin-top:15px}
+.cjpips{flex:1;display:flex;gap:5px}
+.cjpips i{flex:1;height:6px;border-radius:999px;background:#ffffff26;transition:background .25s}
+.cjpips i.on{background:var(--acc)}
+.cjbar b{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.07em;
+  color:var(--muted)}
+
+.cjform{display:flex;gap:8px;margin-top:15px}
+.cjform input{flex:1;min-width:0;background:#ffffff14;border:1px solid var(--line);
+  border-radius:999px;padding:14px 18px;color:#fff;font-family:var(--f-mono);
+  font-size:16px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.cjform input::placeholder{letter-spacing:.06em;text-transform:none;color:#ffffff6b;
+  font-size:13px;font-weight:400}
+.cjform input:focus{outline:none;border-color:var(--acc)}
+.cjform button{flex:0 0 auto;background:var(--acc);color:var(--accink);border-radius:999px;
+  padding:14px 20px;font-size:14.5px;font-weight:800}
+.cjmsg{margin-top:11px;font-size:13.5px;line-height:1.45;color:var(--muted);text-align:center}
+.cjmsg.bien{color:var(--acc);font-weight:700}
+.cjmsg.mal{color:#FF9B86}
+
+.cjgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.cjcard{position:relative;background:#ffffff14;border-radius:18px;padding:12px 10px 13px;
+  text-align:center;overflow:hidden}
+.cjph{display:block;height:98px}
+.cjph img{width:100%;height:100%;display:block;object-fit:contain;
+  filter:brightness(0) opacity(.22);transition:filter .45s}
+.cjcard.on .cjph img{filter:none}
+.cjcard b{display:block;margin-top:9px;font-size:12.5px;font-weight:800;line-height:1.2;
+  letter-spacing:-.01em;color:var(--muted)}
+.cjcard.on b{color:#fff}
+.cjtick{position:absolute;top:9px;right:9px;width:21px;height:21px;border-radius:999px;
+  background:var(--acc);color:var(--accink);display:grid;place-items:center;
+  font-size:11px;font-weight:700}
+.cjcard.recien{animation:cjpop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cjpop{0%{transform:scale(.88)}60%{transform:scale(1.05)}100%{transform:none}}
+@media (prefers-reduced-motion: reduce){.cjcard.recien{animation:none}}
+
+.cjfin{margin-top:16px;border-radius:20px;padding:20px 17px;text-align:center;
+  background:linear-gradient(145deg,#FF4C2A,#FB48C4 58%,#3737FF)}
+.cjfin h3{font-size:23px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.cjfin p{margin-top:9px;font-size:14px;line-height:1.5;color:#ffffffeb}
+.cjreset{margin-top:15px;background:#0b0b2b5c;color:#fff;border-radius:999px;
+  padding:11px 18px;font-size:12.5px;font-weight:700}
 </style>
 <title>Paradox Audioguía</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2736,7 +2790,7 @@ function renderStyle(){
    pestaña toma su nombre y su juego sola, según la fecha. */
 const CAMPANAS = [
  {id:"castaween", desde:"2026-10-01", hasta:"2026-11-09",
-  url:"https://castaweenparadox2026.lovable.app/",
+  url:null, juego:"castaween",
   n:{ca:"Castaween",es:"Castaween",en:"Castaween",fr:"Castaween",it:"Castaween",de:"Castaween"},
   t:{ca:"Missió Castaween",es:"Misión Castaween",en:"Castaween Mission",
      fr:"Mission Castaween",it:"Missione Castaween",de:"Mission Castaween"},
@@ -2791,9 +2845,87 @@ const CAST_UI = {
      pronto:"Noch nicht offen. Komm wieder, wenn die Kampagne startet.", desde:"Ab dem"}
 };
 
+/* ── Misión Castaween, dentro de la propia guía ─────────────────
+   Seis personajes escondidos por el museo: el visitante encuentra
+   el cartel, teclea su código y se le va llenando el pasaporte.
+   El progreso se guarda en el móvil, así que aguanta si cierra. */
+const CAST_JUEGO = [{"id": "murcielago", "c": "K7MA", "img": "img/castaween/murcielago.webp", "n": {"ca": "Ratpenat juganer", "es": "Murciélago juguetón", "en": "Playful bat", "fr": "Chauve-souris joueuse", "it": "Pipistrello giocherellone", "de": "Verspielte Fledermaus"}}, {"id": "hojas", "c": "R4VE", "img": "img/castaween/hojas.webp", "n": {"ca": "Fulles màgiques", "es": "Hojas mágicas", "en": "Magic leaves", "fr": "Feuilles magiques", "it": "Foglie magiche", "de": "Magische Blätter"}}, {"id": "castana", "c": "T9CA", "img": "img/castaween/castana.webp", "n": {"ca": "Castanya saltironera", "es": "Castaña saltarina", "en": "Bouncing chestnut", "fr": "Châtaigne sauteuse", "it": "Castagna saltellante", "de": "Hüpfende Kastanie"}}, {"id": "fantasma", "c": "F6NU", "img": "img/castaween/fantasma.webp", "n": {"ca": "Fantasma simpàtic", "es": "Fantasma simpático", "en": "Friendly ghost", "fr": "Gentil fantôme", "it": "Fantasma simpatico", "de": "Netter Geist"}}, {"id": "arbol", "c": "B3RA", "img": "img/castaween/arbol.webp", "n": {"ca": "Arbre màgic", "es": "Árbol mágico", "en": "Magic tree", "fr": "Arbre magique", "it": "Albero magico", "de": "Magischer Baum"}}, {"id": "calabaza", "c": "P8ZA", "img": "img/castaween/calabaza.webp", "n": {"ca": "Carbassa amagada", "es": "Calabaza escondida", "en": "Hidden pumpkin", "fr": "Citrouille cachée", "it": "Zucca nascosta", "de": "Versteckter Kürbis"}}];
+const CAST_T = {"ca": {"intro": "Sis personatges amagats pel museu. Troba'ls, escriu el seu codi i completa el passaport.", "ph": "Codi de 4 caràcters", "val": "Validar", "pend": "Per trobar", "ok": "Trobat!", "mal": "Aquest codi no és de cap. Mira bé el cartell.", "rep": "Aquest ja el tenies.", "de": "de", "fin": "Passaport complet!", "finp": "Ensenya'l a la botiga i recull el teu regal.", "reset": "Començar de zero", "cerrar": "Tancar"}, "es": {"intro": "Seis personajes escondidos por el museo. Encuéntralos, escribe su código y completa el pasaporte.", "ph": "Código de 4 caracteres", "val": "Validar", "pend": "Por encontrar", "ok": "¡Encontrado!", "mal": "Ese código no es de ninguno. Mira bien el cartel.", "rep": "Ese ya lo tenías.", "de": "de", "fin": "¡Pasaporte completo!", "finp": "Enséñalo en la tienda y recoge tu regalo.", "reset": "Empezar de cero", "cerrar": "Cerrar"}, "en": {"intro": "Six characters hidden around the museum. Find them, type their code and fill the passport.", "ph": "4-character code", "val": "Check", "pend": "Still hidden", "ok": "Found!", "mal": "That code isn't any of them. Look at the sign again.", "rep": "You already had that one.", "de": "of", "fin": "Passport complete!", "finp": "Show it at the shop and pick up your gift.", "reset": "Start over", "cerrar": "Close"}, "fr": {"intro": "Six personnages cachés dans le musée. Trouvez-les, tapez leur code et remplissez le passeport.", "ph": "Code à 4 caractères", "val": "Valider", "pend": "À trouver", "ok": "Trouvé !", "mal": "Ce code n'est celui d'aucun. Regardez bien le panneau.", "rep": "Celui-là, vous l'aviez déjà.", "de": "sur", "fin": "Passeport complet !", "finp": "Montrez-le à la boutique et récupérez votre cadeau.", "reset": "Tout recommencer", "cerrar": "Fermer"}, "it": {"intro": "Sei personaggi nascosti nel museo. Trovali, scrivi il loro codice e completa il passaporto.", "ph": "Codice di 4 caratteri", "val": "Conferma", "pend": "Da trovare", "ok": "Trovato!", "mal": "Questo codice non è di nessuno. Guarda bene il cartello.", "rep": "Questo ce l'avevi già.", "de": "di", "fin": "Passaporto completo!", "finp": "Mostralo in negozio e ritira il tuo regalo.", "reset": "Ricomincia", "cerrar": "Chiudi"}, "de": {"intro": "Sechs Figuren sind im Museum versteckt. Finde sie, gib ihren Code ein und füll den Pass.", "ph": "Code mit 4 Zeichen", "val": "Prüfen", "pend": "Noch versteckt", "ok": "Gefunden!", "mal": "Dieser Code gehört zu keiner. Schau noch mal aufs Schild.", "rep": "Die hattest du schon.", "de": "von", "fin": "Pass vollständig!", "finp": "Zeig ihn im Shop und hol dir dein Geschenk.", "reset": "Neu anfangen", "cerrar": "Schließen"}};
+
+function castHallados(){ return new Set(store.get("cast", [])); }
+
+function renderJuegoCast(){
+  const T = CAST_T[lang] || CAST_T.es, hall = castHallados(), c = campana();
+  const total = CAST_JUEGO.length, hechos = CAST_JUEGO.filter(p => hall.has(p.id)).length;
+  const lleno = hechos === total;
+  el("main").innerHTML = `
+    <div class="cjuego">
+      <div class="cjhero">
+        <img class="cjbruja" src="img/castaween/bruja.webp" alt="" decoding="async">
+        <div class="cjhead">
+          <span class="castkick">${esc(tr(c.k))}</span>
+          <h2>${esc(tr(c.t))}</h2>
+        </div>
+      </div>
+      <p class="cjintro">${T.intro}</p>
+
+      <div class="cjbar">
+        <div class="cjpips">${CAST_JUEGO.map(p =>
+          `<i class="${hall.has(p.id) ? "on" : ""}"></i>`).join("")}</div>
+        <b>${hechos} ${T.de} ${total}</b>
+      </div>
+
+      ${lleno ? `<div class="cjfin">
+          <h3>${T.fin}</h3><p>${T.finp}</p>
+          <button class="cjreset" id="cjReset" type="button">${T.reset}</button>
+        </div>` : `
+        <form class="cjform" id="cjForm" autocomplete="off">
+          <input id="cjIn" type="text" inputmode="latin" maxlength="6"
+                 placeholder="${T.ph}" aria-label="${T.ph}" spellcheck="false">
+          <button type="submit">${T.val}</button>
+        </form>
+        <div class="cjmsg" id="cjMsg" hidden></div>`}
+
+      <div class="cjgrid">
+        ${CAST_JUEGO.map(p => {
+          const on = hall.has(p.id);
+          return `<div class="cjcard${on ? " on" : ""}" data-id="${p.id}">
+            <span class="cjph"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>
+            <b>${on ? esc(tr(p.n)) : T.pend}</b>
+            ${on ? `<span class="cjtick">✓</span>` : ""}
+          </div>`; }).join("")}
+      </div>
+      <div style="height:22px"></div>
+    </div>`;
+
+  const f = el("cjForm");
+  if(f) f.onsubmit = ev => {
+    ev.preventDefault();
+    const T = CAST_T[lang] || CAST_T.es;
+    const v = (el("cjIn").value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    const p = CAST_JUEGO.find(x => x.c === v);
+    const msg = el("cjMsg");
+    if(!p){ msg.hidden = false; msg.className = "cjmsg mal"; msg.textContent = T.mal;
+            el("cjIn").value = ""; return; }
+    const hall = castHallados();
+    if(hall.has(p.id)){ msg.hidden = false; msg.className = "cjmsg"; msg.textContent = T.rep;
+                        el("cjIn").value = ""; return; }
+    hall.add(p.id); store.set("cast", [...hall]);
+    renderJuegoCast();
+    const nuevo = document.querySelector(`.cjcard[data-id="${p.id}"]`);
+    if(nuevo){ nuevo.classList.add("recien");
+               nuevo.scrollIntoView({block:"center", behavior:"smooth"}); }
+    const m2 = el("cjMsg");
+    if(m2){ m2.hidden = false; m2.className = "cjmsg bien"; m2.textContent = T.ok + " " + tr(p.n); }
+  };
+  const r = el("cjReset");
+  if(r) r.onclick = () => { store.set("cast", []); renderJuegoCast(); };
+}
+
 function renderCast(){
   const c = campana(), U = CAST_UI[lang] || CAST_UI.es;
   const fecha = c.desde.split("-").reverse().join("/");
+  if(c.juego === "castaween") return renderJuegoCast();
   if(!c.url){
     el("main").innerHTML = `
       <div class="castpane">
@@ -2824,7 +2956,7 @@ function render(){
   el("tabRooms").textContent=L().rooms;
   el("tabCast").textContent=tr(campana().n).toUpperCase();
   el("backTxt").textContent=L().route;
-  el("main").classList.toggle("castmode", tab==="cast");
+  el("main").classList.toggle("castmode", tab==="cast" && !!campana().url);
   tab==="route"?renderRoute():tab==="rooms"?renderRooms():renderCast();
 }
 
